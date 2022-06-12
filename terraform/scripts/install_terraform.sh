@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 echo $PATH
 
 # older version of terraform
