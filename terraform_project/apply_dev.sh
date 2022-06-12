@@ -14,6 +14,8 @@ echo $env
 
 echo $VAR_FILE
 
+cd terraform_project
+
 terraform init -backend-config key="employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 
 terraform plan -var-file=$VAR_FILE 
