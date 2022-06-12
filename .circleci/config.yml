@@ -3,18 +3,44 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:latest
-        # environment:
-        #   aws_access_key_id: AKIAZ332BW4JK4JM2BMC
-        #   aws_secret_access_key: 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
+      - image: circleci/node:14
+      environment:
+          TARGET_ENV_DEV        : dev
+          TARGET_ENV_QA         : qa
+          TARGET_ENV_UAT        : uat
+          TARGET_ENV_PROD       : prod
+          TARGET_AWS_REGION : my-value-2
+    working_directory: ~/node-server-employee-data
     steps:
-      - run: echo "build"
+     - checkout
+     - setup_remote_docker
+     - run: echo "build docker image with required instllation of node and git"
+     - run: echo "Node versiopn in docker is"
+     - run: node --version
+     - run: npm install --save-dev
+    
+  npm_build_and_test: &npm_build_and_test # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm run test
+          name: Run tests
+      - run:
+          command: npm run build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
 
   deploy: &deploy-env
     docker:
-      - image: circleci/python:latest
+      - image: circleci/node:14
     
-    working_directory: ~/node-server-employee-data
+    working_directory: ~/node-server-employee-data/terraform
 
     steps:
       - checkout 
@@ -28,9 +54,11 @@ jobs:
       - run: echo "deploy"
       - run: echo ${tag}
       - run: bash ./scripts/install_terraform.sh
-      # - run: bash ./scripts/apply_${tag}.sh
-      - run: bash ./scripts/terraform_plan.sh
-      - run: bash ./scripts/terraform_apply.sh
+      - run: bash ./scripts/apply_${tag}.sh
+      # - run: bash terraform -v
+      # - run: bash terraform init
+      # - run: bash ./scripts/terraform_plan.sh
+      # - run: bash ./scripts/terraform_apply.sh
       - run: echo `deployed successfully in ${tag} environment`
 
   deploy_dev:
@@ -52,6 +80,11 @@ jobs:
     <<: *deploy-env
     environment:
       tag: prod
+  
+  npm_build_test:
+    <<: *npm_build_and_test
+    environment:
+      tag: dev
 
 workflows:
   version: 2
@@ -62,6 +95,12 @@ workflows:
           filters:
             branches:
               only: main
+      - npm_build_test:
+         filters:
+            branches:
+              only: main
+          requires:
+            - build
       - deploy_dev:
           filters:
             branches:

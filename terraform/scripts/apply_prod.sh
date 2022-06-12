@@ -8,7 +8,7 @@ echo $env
 
 echo $(pwd)
 
-terraform init
+terraform init -backend-config key="employe-node-server/${TARGET_ENV_PROD}/terraform.tfstate"
 
 terraform plan -var-file=$FILE 
 
