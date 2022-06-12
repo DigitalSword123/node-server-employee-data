@@ -14,7 +14,7 @@ VAR_FILE = < ./terraform_project/vars/dev-ap-south-1.tfvars
 
 echo $env
 
-echo $VAR_FILE
+# echo $VAR_FILE
 
 cd terraform_project
 
