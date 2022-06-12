@@ -1,9 +1,10 @@
 version: 2
-
+orbs:
+ browser-tools: circleci/browser-tools@1.1.0
 jobs:
   build:
     docker:
-      - image: cimg/node:18.3.0
+      - image: cimg/node:15.0.1-browsers
       environment:
           TARGET_ENV_DEV        : dev
           TARGET_ENV_QA         : qa
@@ -12,6 +13,7 @@ jobs:
           TARGET_AWS_REGION : my-value-2
     working_directory: ~/node-server-employee-data
     steps:
+     - browser-tools/install-browser-tools
      - checkout
      - setup_remote_docker
      - run: echo "build docker image with required instllation of node and git"
