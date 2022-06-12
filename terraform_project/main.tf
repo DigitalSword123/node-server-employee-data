@@ -18,6 +18,8 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current_account" {}
+
 data "aws_ssm_parameter" "private_subnets" {
   # name = "/project/${lower(var.env)}/private/subnets"
   value = "subnet-0c14e9c0fe63b3a69,subnet-0930e143f6943384d,subnet-06234b18eb06fc83a"
