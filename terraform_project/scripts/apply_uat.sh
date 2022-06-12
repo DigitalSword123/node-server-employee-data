@@ -12,8 +12,8 @@ echo $env
 
 cd terraform_project
 ls -al
-terraform init -backend-config key="employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate"
+terraform -chdir=./terraform init -backend-config key="employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate"
 
-terraform -chdir=./terraform plan -var-file=$VAR_FILE 
+terraform plan -var-file=$VAR_FILE 
 
-terraform -chdir=./terraform apply -var-file=$VAR_FILE  -auto-approve
+terraform apply -var-file=$VAR_FILE  -auto-approve
