@@ -18,6 +18,6 @@ ls -al
 
 terraform init -backend-config key="employe-node-server/${TARGET_ENV_QA}/terraform.tfstate"
 
-terraform plan -var-file=$VAR_FILE 
+terraform -chdir=./terraform plan -var-file=$VAR_FILE 
 
-terraform apply -var-file=$VAR_FILE  -auto-approve
+terraform -chdir=./terraform apply -var-file=$VAR_FILE  -auto-approve

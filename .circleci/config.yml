@@ -75,7 +75,7 @@ jobs:
             sudo mv terraform /usr/local/bin
             terraform -v
       - run: ls -al
-      - run: bash ./terraform_project/apply_${tag}.sh
+      - run: bash ./terraform_project/scripts/apply_${tag}.sh
       # - run: bash terraform -v
       # - run: bash terraform init
       # - run: bash ./scripts/terraform_plan.sh
