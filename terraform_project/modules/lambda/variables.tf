@@ -72,8 +72,3 @@ variable "principal_ids" {
   description = "Resource name"
   type        = set(string)
 }
-
-variable "subnet_ids" {
-  description = "which subnets to associate with lambda"
-  type        = list(string)
-}
