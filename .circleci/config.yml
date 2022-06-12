@@ -62,8 +62,8 @@ jobs:
       # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
       - run : 
+          name: terraform installed
           command: |
-            sudo apt-get install gfortran
             sudo apt-get install wget unzip -y
             wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
             unzip terraform_1.2.2_linux_amd64.zip
