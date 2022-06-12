@@ -4,6 +4,8 @@ set env = "dev"
 
 echo $(pwd)
 
+ls -al
+
 # VAR_FILE ?= vars/dev-ap-south-1.tfvars
 
 VAR_FILE="$(cat ./vars/dev-ap-south-1.tfvars)"
