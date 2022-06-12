@@ -28,12 +28,12 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: npm
+          pkg-manager: yarn
       - run:
-          command: npm run test
+          command: yarn run test
           name: Run tests
       - run:
-          command: npm run build
+          command: yarn run build
           name: Build app
       - persist_to_workspace:
           root: ~/node-server-employee-data
