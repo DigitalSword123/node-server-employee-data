@@ -18,7 +18,7 @@ cd terraform_project
 
 ls -al
 
-terraform -chdir=./terraform init -backend-config key="employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
+terraform init -backend-config key="employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 
 terraform plan -var-file=$VAR_FILE 
 
