@@ -1,10 +1,10 @@
 version: 2
-orbs:
-  browser-tools: circleci/browser-tools@1.1.0
+# orbs:
+#   browser-tools: circleci/browser-tools@1.1.0
 jobs:
   build:
     docker:
-      - image: node:14.17.3
+      - image: node:11.10.1
       # - image: circleci/node:erbium-bullseye-browsers-legacy
       environment:
           TARGET_ENV_DEV        : dev
@@ -14,7 +14,7 @@ jobs:
           TARGET_AWS_REGION : my-value-2
     working_directory: ~/node-server-employee-data
     steps:
-     - browser-tools/install-browser-tools
+    #  - browser-tools/install-browser-tools
      - checkout
      - setup_remote_docker
      - run: echo "build docker image with required instllation of node and git"
