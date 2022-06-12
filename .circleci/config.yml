@@ -4,7 +4,8 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:15.0.1-browsers
+      # - image: cimg/node:15.0.1-browsers
+      - image: circleci/node:erbium-bullseye-browsers-legacy
       environment:
           TARGET_ENV_DEV        : dev
           TARGET_ENV_QA         : qa
