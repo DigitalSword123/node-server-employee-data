@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node@18.3.0
+      - image: circleci/node@18.3.0
       environment:
           TARGET_ENV_DEV        : dev
           TARGET_ENV_QA         : qa
