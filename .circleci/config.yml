@@ -73,7 +73,6 @@ jobs:
             uname -a
             sudo mv terraform /usr/local/bin
             terraform -v
-            EOF
 
       - run: bash apply_${tag}.sh
       # - run: bash terraform -v
