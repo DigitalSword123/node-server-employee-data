@@ -59,8 +59,8 @@ jobs:
       - run: echo $(pwd)
       - run: echo ${tag}
       - run: echo $PATH
-      - run: bash ./scripts/install_terraform.sh
-      - run: bash ./scripts/apply_${tag}.sh
+      - run: bash install_terraform.sh
+      - run: bash apply_${tag}.sh
       # - run: bash terraform -v
       # - run: bash terraform init
       # - run: bash ./scripts/terraform_plan.sh
