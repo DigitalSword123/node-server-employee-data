@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.19.3
       environment:
           TARGET_ENV_DEV        : dev
           TARGET_ENV_QA         : qa
