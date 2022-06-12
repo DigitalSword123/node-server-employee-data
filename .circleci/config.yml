@@ -56,6 +56,7 @@ jobs:
       # - run: echo "deployed successfully"
 
       - run: echo "deploy"
+      - run: echo $(pwd)
       - run: echo ${tag}
       - run: bash ./scripts/install_terraform.sh
       - run: bash ./scripts/apply_${tag}.sh
