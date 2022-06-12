@@ -2,13 +2,15 @@ set -e
 
 set env = "dev"
 
+echo $(pwd)
+
 # VAR_FILE ?= vars/dev-ap-south-1.tfvars
 
 VAR_FILE="$(cat vars/dev-ap-south-1.tfvars)"
 
 echo $env
 
-echo $(pwd)
+echo $VAR_FILE
 
 terraform init -backend-config key="employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 

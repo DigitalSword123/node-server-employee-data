@@ -2,6 +2,7 @@ set -e
 
 set env = "qa"
 
+echo $(pwd)
 
 # export VAR_FILE ?= vars/qa-ap-south-1.tfvars
 
@@ -11,7 +12,6 @@ echo $env
 
 echo $VAR_FILE
 
-echo $(pwd)
 
 terraform init -backend-config key="employe-node-server/${TARGET_ENV_QA}/terraform.tfstate"
 
