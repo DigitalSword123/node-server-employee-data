@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: cimg/node:14.17.3
       # - image: circleci/node:erbium-bullseye-browsers-legacy
-    working_directory: ~/node-server-employee-data
+    working_directory: ~/node-server-employee-data/terraform
     environment:
       TARGET_ENV_DEV        : dev
       TARGET_ENV_QA         : qa
