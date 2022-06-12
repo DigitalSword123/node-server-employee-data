@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/node:14.17.3
+      - image: circleci/node:latest
       # - image: circleci/node:erbium-bullseye-browsers-legacy
     working_directory: ~/node-server-employee-data
     environment:
@@ -24,7 +24,7 @@ jobs:
     
   npm_build_and_test: &npm_build_and_test # this can be any name you choose
     docker:
-      - image: cimg/node:14.17.3 # use the default executor defined within the orb
+      - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
       - node/install-packages:
@@ -42,7 +42,7 @@ jobs:
 
   deploy: &deploy-env
     docker:
-      - image: cimg/node:14.17.3
+      - image: circleci/node:latest
     
     working_directory: ~/node-server-employee-data/terraform_project
 
@@ -73,7 +73,7 @@ jobs:
             uname -a
             sudo mv terraform /usr/local/bin
             terraform -v
-
+      - run: ls -al
       - run: bash apply_${tag}.sh
       # - run: bash terraform -v
       # - run: bash terraform init
