@@ -65,6 +65,7 @@ jobs:
           name: terraform installation
           command: |
             sudo apt-get install wget unzip -y
+            sudo apt-get install file
             wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
             unzip terraform_1.2.2_linux_amd64.zip
             ls -a
