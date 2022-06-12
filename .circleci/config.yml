@@ -1,0 +1,89 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:latest
+        # environment:
+        #   aws_access_key_id: AKIAZ332BW4JK4JM2BMC
+        #   aws_secret_access_key: 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
+    steps:
+      - run: echo "build"
+
+  deploy: &deploy-env
+    docker:
+      - image: circleci/python:latest
+    
+    working_directory: ~/node-server-employee-data
+
+    steps:
+      - checkout 
+      - setup_remote_docker
+
+      # - run: echo "deploy"
+      # - run: bash ./scripts/install_terraform.sh
+      # - run: bash ./scripts/apply_${tag}.sh
+      # - run: echo "deployed successfully"
+
+      - run: echo "deploy"
+      - run: echo ${tag}
+      - run: bash ./scripts/install_terraform.sh
+      # - run: bash ./scripts/apply_${tag}.sh
+      - run: bash ./scripts/terraform_plan.sh
+      - run: bash ./scripts/terraform_apply.sh
+      - run: echo `deployed successfully in ${tag} environment`
+
+  deploy_dev:
+    <<: *deploy-env
+    environment:
+      tag: dev
+
+  deploy_qa:
+    <<: *deploy-env
+    environment:
+      tag: qa
+  
+  deploy_uat:
+    <<: *deploy-env
+    environment:
+      tag: uat
+
+  deploy_prod:
+    <<: *deploy-env
+    environment:
+      tag: prod
+
+workflows:
+  version: 2
+
+  stage_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
+      - deploy_dev:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build 
+      - deploy_qa:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build 
+      - deploy_uat:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build 
+      - deploy_prod:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build 
+            

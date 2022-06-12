@@ -1,43 +1,5 @@
-variable "function_name" {
-  description = "lambda function name"
-}
-
 variable "tags" {
   description = "lambda tags"
-}
-
-variable "environment_variables" {
-  description = "environment variables"
-}
-
-variable "handler" {
-  description = "lambda handler"
-}
-
-variable "runtime" {
-  description = "lambda runtime"
-}
-
-
-variable "filename" {
-  description = "name of the zip file"
-}
-
-variable "role" {
-  description = "lambda execution role"
-}
-
-variable "memory" {
-  description = "lambda memory"
-}
-
-variable "timeout" {
-  description = "lambda timeout"
-}
-
-variable "subnet_ids" {
-  description = "which subnets to associate with lambda"
-  type        = list(string)
 }
 
 variable "security_group_ids" {
@@ -68,15 +30,15 @@ variable "ssm-path" {
   default     = "/project"
 }
 
-variable "principal_ids" {
-  description = "Resource name"
-  type        = set(string)
-}
+# variable "principal_ids" {
+#   description = "Resource name"
+#   type        = set(string)
+# }
 
-variable "ingresscidr" {
-  type = list(string)
-}
+# variable "ingresscidr" {
+#   type = list(string)
+# }
 
-variable "vpc_id" {
-  description = "vpc to associate security groups with"
-}
+# variable "vpc_id" {
+#   description = "vpc to associate security groups with"
+# }

@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+// https://node-server-employee-data-aws.herokuapp.com/
 
 const db = new Client({
     user: 'postgres',
@@ -26,7 +27,7 @@ app.post('/create', (req, res) => {
     const wage = req.body.wage;
     const position = req.body.position;
 
-    let dbQuery=`INSERT INTO "employeeTable"(name, age, country, position, wage) VALUES ('${name}','${age}','${country}','${position}','${wage}')`;
+    let dbQuery = `INSERT INTO "employeeTable"(name, age, country, position, wage) VALUES ('${name}','${age}','${country}','${position}','${wage}')`;
     db.query(dbQuery,
         (err, result) => {
             if (err) {

@@ -1,6 +1,6 @@
 variable "project" {
   description = "project name for tags and resource naming"
-  default     = "node"
+  default     = "employee"
 }
 
 variable "name" {
@@ -44,13 +44,13 @@ variable "_lambda_properties" {
   type        = map(string)
   default = {
     Lambda_function_name          = "node_employee_data"
-    lambda_zip_file_employee_data = "employee-data.${version}.zip"
+    lambda_zip_file_employee_data = "employee-node-data.${version}.zip"
     lambda_handler                = "index.handler"
   }
 }
 
 variable "environment_variables" {
-  description = "region to which this API to be deployed"
+  description = "lambda env variables"
   type        = map(string)
   default     = {}
 }

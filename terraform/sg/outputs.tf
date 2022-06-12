@@ -1,3 +1,3 @@
 output "sg_id" {
-  value = aws.security_group.registration_sg.id
+  value = aws.security_group.employee_data_sg.id
 }

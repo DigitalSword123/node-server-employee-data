@@ -60,7 +60,7 @@ variable "environment" {
 variable "state-bucket" {
   type        = string
   default     = "state-bucket-name"
-  description = "state s3 "
+  description = "employee-data-node-terraform-state-bucket"
 }
 
 variable "ssm-path" {
@@ -71,4 +71,9 @@ variable "ssm-path" {
 variable "principal_ids" {
   description = "Resource name"
   type        = set(string)
+}
+
+variable "subnet_ids" {
+  description = "which subnets to associate with lambda"
+  type        = list(string)
 }
