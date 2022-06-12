@@ -4,9 +4,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:11.10.1
+      - image: cimg/node:14.17.3
       # - image: circleci/node:erbium-bullseye-browsers-legacy
-      environment:
+      - environment:
           TARGET_ENV_DEV        : dev
           TARGET_ENV_QA         : qa
           TARGET_ENV_UAT        : uat
