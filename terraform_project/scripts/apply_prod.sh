@@ -6,7 +6,7 @@ echo $(pwd)
 
 # VAR_FILE ?= vars/prod-ap-south-1.tfvars
 
-set VAR_FILE="$(cat ./terraform_project/vars/prod-ap-south-1.tfvars)"
+VAR_FILE="$(cat ./terraform_project/vars/prod-ap-south-1.tfvars)"
 
 echo $env
 
