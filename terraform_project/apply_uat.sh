@@ -2,7 +2,9 @@ set -e
 
 set env = "uat"
 
-VAR_FILE ?= vars/uat-ap-south-1.tfvars
+# VAR_FILE ?= vars/uat-ap-south-1.tfvars
+
+VAR_FILE="$(cat vars/uat-ap-south-1.tfvars)"
 
 echo $env
 

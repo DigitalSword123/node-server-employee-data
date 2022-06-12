@@ -2,7 +2,9 @@ set -e
 
 set env = "dev"
 
-VAR_FILE ?= vars/dev-ap-south-1.tfvars
+# VAR_FILE ?= vars/dev-ap-south-1.tfvars
+
+VAR_FILE="$(cat vars/dev-ap-south-1.tfvars)"
 
 echo $env
 

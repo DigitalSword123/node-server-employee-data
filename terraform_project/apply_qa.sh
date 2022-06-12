@@ -2,9 +2,14 @@ set -e
 
 set env = "qa"
 
-VAR_FILE ?= vars/qa-ap-south-1.tfvars
+
+# export VAR_FILE ?= vars/qa-ap-south-1.tfvars
+
+VAR_FILE="$(cat vars/qa-ap-south-1.tfvars)"
 
 echo $env
+
+echo $VAR_FILE
 
 echo $(pwd)
 
