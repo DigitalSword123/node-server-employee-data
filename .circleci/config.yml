@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: cimg/node:14.17.3
       # - image: circleci/node:erbium-bullseye-browsers-legacy
-    working_directory: ~/node-server-employee-data/terraform
+    working_directory: ~/node-server-employee-data
     environment:
       TARGET_ENV_DEV        : dev
       TARGET_ENV_QA         : qa
@@ -59,7 +59,7 @@ jobs:
       - run: echo $(pwd)
       - run: echo ${tag}
       - run: echo $PATH
-      - run: chmod +x install_terraform.sh
+      - run: sudo chmod 777 install_terraform.sh
       - run: bash install_terraform.sh
       - run: bash apply_${tag}.sh
       # - run: bash terraform -v
