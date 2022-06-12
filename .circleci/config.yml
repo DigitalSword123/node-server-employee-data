@@ -44,7 +44,7 @@ jobs:
     docker:
       - image: cimg/node:14.17.3
     
-    working_directory: ~/node-server-employee-data/terraform
+    working_directory: ~/node-server-employee-data/terraform_project
 
     steps:
       - checkout 
@@ -62,16 +62,16 @@ jobs:
       # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
       - run : 
-          name: terraform installed
+          name: terraform installation
           command: |
             sudo apt-get install wget unzip -y
             wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
-            unzip -f terraform_1.2.2_linux_amd64.zip
+            unzip terraform_1.2.2_linux_amd64.zip
             ls -a
             chmod +x terraform
             file terraform
             uname -a
-            sudo mv terraform /usr/local/bin
+            sudo mv terraform/terraform /usr/local/bin
             terraform -v
             EOF
 
