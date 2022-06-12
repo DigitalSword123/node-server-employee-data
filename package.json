@@ -1,6 +1,6 @@
 {
     "name": "node-server-employee-data",
-    "version": "1.0.0",
+    "version": "1.0.0-SNAPSHOT",
     "description": "employee data repository",
     "main": "src/index.js",
     "scripts": {
