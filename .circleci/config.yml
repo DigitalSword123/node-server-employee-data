@@ -59,7 +59,7 @@ jobs:
       - run: echo $(pwd)
       - run: echo ${tag}
       - run: echo $PATH
-      - run: sudo chmod 777 install_terraform.sh
+      # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
       - run : 
           command: |
@@ -73,7 +73,7 @@ jobs:
             uname -a
             sudo mv terraform /usr/local/bin
             terraform -v
-            
+
       - run: bash apply_${tag}.sh
       # - run: bash terraform -v
       # - run: bash terraform init
