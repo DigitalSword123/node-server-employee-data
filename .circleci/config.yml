@@ -1,6 +1,6 @@
 version: 2
-# orbs:
-#   browser-tools: circleci/browser-tools@1.1.0
+orbs:
+  node: circleci/node@14.17.3
 jobs:
   build:
     docker:
@@ -23,7 +23,7 @@ jobs:
      - run: npm install --save-dev
     
   npm_build_and_test: &npm_build_and_test # this can be any name you choose
-    executor: cimg/node:14.17.3 # use the default executor defined within the orb
+    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
       - node/install-packages:
