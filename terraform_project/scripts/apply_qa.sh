@@ -18,7 +18,7 @@ ls -al
 
 echo ${TARGET_ENV_QA}
 
-terraform init -backend-config="key=employe-node-server/${TARGET_ENV_QA}/terraform.tfstate"
+terraform init -backend-config="key=employe-node-server/$env/terraform.tfstate"
 
 terraform plan -var-file=qa-ap-south-1.tfvars
 
