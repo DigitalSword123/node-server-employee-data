@@ -10,6 +10,8 @@ data "terraform_remote_state" "paramerstore" {
     bucket = "employee-data-node-terraform-state-bucket" #var.state-bucket
     key    = "param-store/${lower(var.environment)}/terraform.tfstate"
     region = var.destination-region
+    access_key = "AKIAZ332BW4JK4JM2BMC"
+    secret_key = "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"
   }
 }
 
