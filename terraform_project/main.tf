@@ -6,15 +6,15 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    # bucket  = "employee-data-node-terraform-state-bucket"
-    # encrypt = false
+    bucket  = "employee-data-node-terraform-state-bucket"
+    encrypt = false
 
-    # # key     = "employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate" # this key 
-    # # is being called in shell commands present in scripts folder
+    # key     = "employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate" # this key 
+    # is being called in shell commands present in scripts folder
 
-    # region     = "ap-south-1"
-    # access_key = "AKIAZ332BW4JK4JM2BMC"
-    # secret_key = "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"
+    region     = "ap-south-1"
+    access_key = "AKIAZ332BW4JK4JM2BMC"
+    secret_key = "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"
   }
 }
 
