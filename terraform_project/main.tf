@@ -1,26 +1,9 @@
 provider "aws" {
+  # shared_credentials_file = "$HOME/.aws/credentials"
+  # profile = "default"
   region     = "ap-south-1"
-  # access_key = "AKIAZ332BW4JK4JM2BMC"
-  # secret_key = "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"
-  access_key = "AKIAZ332BW4JOYRQTLGD"
-  secret_key = "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"
-}
-
-terraform {
-  backend "s3" {
-    bucket  = "employee-data-node-terraform-state-bucket"
-    encrypt = false
-
-    # key     = "employe-node-server/env/terraform.tfstate" # this key 
-    # is being called in shell commands present in scripts folder
-
-    region     = "ap-south-1"
-    access_key = "AKIAZ332BW4JOYRQTLGD"
-    secret_key = "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"
-
-    # access_key = "AKIAZ332BW4JK4JM2BMC"
-    # secret_key = "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"
-  }
+  access_key = "AKIAZ332BW4JK4JM2BMC"
+  secret_key = "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"
 }
 
 data "aws_caller_identity" "current_account" {}
