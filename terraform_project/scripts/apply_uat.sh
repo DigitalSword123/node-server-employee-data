@@ -13,6 +13,8 @@ echo $env
 cd terraform_project
 ls -al
 
+echo ${TARGET_ENV_UAT}
+
 terraform init -backend-config="key=employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate"
 
 terraform plan -var-file=uat-ap-south-1.tfvars

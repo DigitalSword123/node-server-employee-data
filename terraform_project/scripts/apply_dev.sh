@@ -14,6 +14,8 @@ ls -al
 
 echo $env
 
+echo ${TARGET_ENV_DEV}
+
 # echo $VAR_FILE
 
 cd terraform_project

@@ -16,6 +16,7 @@ cd terraform_project
 
 ls -al
 
+echo ${TARGET_ENV_QA}
 
 terraform init -backend-config="key=employe-node-server/${TARGET_ENV_QA}/terraform.tfstate"
 
