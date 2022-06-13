@@ -19,7 +19,6 @@ jobs:
      - setup_remote_docker
      - run: echo "build docker image with required instllation of node and git"
      - run: echo "Node versiopn in docker is"
-     - run: echo $TARGET_ENV_DEV
      - run: node --version
      - run: npm install --save-dev
     
@@ -60,6 +59,7 @@ jobs:
       - run: echo $(pwd)
       - run: echo ${tag}
       - run: echo $PATH
+      - run: echo $TARGET_ENV_DEV
       # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
       - run : 
