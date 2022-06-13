@@ -10,13 +10,13 @@ variable "environment_variables" {
   description = "environment variables"
 }
 
-variable "handler" {
-  description = "lambda handler"
-}
+# variable "handler" {
+#   description = "lambda handler"
+# }
 
-variable "runtime" {
-  description = "lambda runtime"
-}
+# variable "runtime" {
+#   description = "lambda runtime"
+# }
 
 
 variable "filename" {
@@ -31,9 +31,9 @@ variable "memory" {
   description = "lambda memory"
 }
 
-variable "timeout" {
-  description = "lambda timeout"
-}
+# variable "timeout" {
+#   description = "lambda timeout"
+# }
 
 variable "subnet_ids" {
   description = "which subnets to associate with lambda"

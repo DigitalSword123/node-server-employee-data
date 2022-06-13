@@ -29,13 +29,13 @@ locals {
 
 resource "aws_lambda_function" "lambda" {
   function_name    = var.function_name
-  filename         = "${path.module}/${var.filename}"
-  source_code_hash = filebase64sha256(var.filename)
+  filename         = var.filename
+  source_code_hash = filebase64sha256("${path.module}/${var.filename}")
   role             = var.role
-  handler          = var.handler
-  runtime          = var.runtime
-  memory_size      = var.memory
-  timeout          = var.timeout
+  handler          = "index.handler"
+  runtime          = "nodejs14.x"
+  memory_size      = 128
+  timeout          = 60
 
   vpc_config {
     subnet_ids         = var.subnet_ids
