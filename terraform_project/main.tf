@@ -82,11 +82,11 @@ module "lambda_employee_data" {
   security_group_ids    = [module.lambda_node_project_sg.sg_id]                                         #done
   filename              = var._lambda_properties["lambda_zip_file_employee_data"]                       #done
   function_name         = "${var.project}-${var._lambda_properties["Lambda_function_name"]}-${var.env}" #done
-  handler               = var._lambda_properties["lambda_handler"]                                      #done
+  # handler               = var._lambda_properties["lambda_handler"]                                      #done
   role                  = data.aws_ssm_parameter.lambda_role.value                                      # done
-  runtime               = data.aws_ssm_parameter.run_time                                               #done
+  # runtime               = data.aws_ssm_parameter.run_time                                               #done
   memory                = data.aws_ssm_parameter.lambda_memory                                          #done
-  timeout               = data.aws_ssm_parameter.lambda_timeout                                         #done
+  # timeout               = data.aws_ssm_parameter.lambda_timeout                                         #done
   subnet_ids            = split(",", data.aws_ssm_parameter.private_subnets.value)                      # done
   principal_ids         = toset(split(",", data.aws_ssm_parameter.principal_ids.value))                 # done
   state-bucket          = data.aws_ssm_parameter.lambda_state_bucket.value                              #done
