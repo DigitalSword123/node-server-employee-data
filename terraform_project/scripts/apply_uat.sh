@@ -13,8 +13,7 @@ echo $env
 cd terraform_project
 ls -al
 
-terraform init -backend=true \
-  -backend-config key=employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate
+terraform init -backend-config="key=employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate"
 
 terraform plan -var-file="$VAR_FILE"
 
