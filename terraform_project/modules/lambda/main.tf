@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current_account" {}
 
 data "aws_ssm_parameter" "lambda-execution-role-arn" {
-  name = "/project/${data.aws_caller_identity.current_account.account_id}/iam/lambda-execution-role-arn"
+  name = "/project/${var.environment}/${data.aws_caller_identity.current_account.account_id}/iam/lambda-execution-role-arn"
 }
 
 data "terraform_remote_state" "paramerstore" {
@@ -15,7 +15,7 @@ data "terraform_remote_state" "paramerstore" {
 
 data "aws_ssm_parameter" "ssm_params" {
   for_each = data.terraform_remote_state.paramerstore.outputs.ssm_map
-  name     = "${var.ssm_path}/${lower(var.environment)}/${each.key}"
+  name     = "${var.ssm-path}/${lower(var.environment)}/${each.key}"
 }
 
 locals {
@@ -28,7 +28,7 @@ locals {
 resource "aws_lambda_function" "lambda" {
   function_name    = var.function_name
   filename         = var.filename
-  source_code_hash = filebasesha256(var.filename)
+  source_code_hash = filebase64sha256(var.filename)
   role             = var.role
   handler          = var.handler
   runtime          = var.runtime

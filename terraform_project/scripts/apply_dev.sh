@@ -24,4 +24,4 @@ terraform init -backend-config key="employe-node-server/${TARGET_ENV_DEV}/terraf
 
 terraform plan -var-file="dev-ap-south-1.tfvars"
 
-terraform apply -var-file="dev-ap-south-1.tfvars"  -auto-approve
+terraform apply -var-file="dev-ap-south-1.tfvars"  -auto-approve 

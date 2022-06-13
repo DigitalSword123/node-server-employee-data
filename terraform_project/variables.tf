@@ -20,7 +20,7 @@ variable "owner" {
 variable "region" {
   description = "region to which this API to be deployed"
   default     = "ap-south-1"
-}
+} 
 
 variable "master_tags" {
   description = "common tags"

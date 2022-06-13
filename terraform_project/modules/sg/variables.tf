@@ -2,10 +2,15 @@ variable "tags" {
   description = "lambda tags"
 }
 
-variable "security_group_ids" {
-  description = "which security_group_ids to associate with lambda"
-  type        = list(string)
+variable "name" {
+  description = "name to be used as prefix"
+  default     = "employee-data-node"
 }
+
+# variable "security_group_ids" {
+#   description = "which security_group_ids to associate with lambda"
+#   type        = list(string)
+# }
 
 variable "destination-region" {
   type        = string
@@ -35,10 +40,10 @@ variable "ssm-path" {
 #   type        = set(string)
 # }
 
-# variable "ingresscidr" {
-#   type = list(string)
-# }
+variable "ingresscidr" {
+  type = list(string)
+}
 
-# variable "vpc_id" {
-#   description = "vpc to associate security groups with"
-# }
+variable "vpc_id" {
+  description = "vpc to associate security groups with"
+}
