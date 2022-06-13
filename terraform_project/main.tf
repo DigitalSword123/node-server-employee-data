@@ -17,7 +17,7 @@ data "aws_ssm_parameter" "private_subnets" {
 # value = "vpc-05b050daa09deb4d0" vpc-id
 # value = "678323926802" # amazon iam user id principal_ids
  # value = "arn:aws:iam::678323926802:role/Lambda-nodejs-executionrole"  lambda_role
-
+ 
 
 data "aws_ssm_parameter" "allowed_ssh_ips" {
   name = "/project/${lower(var.env)}/ssh/ips"
