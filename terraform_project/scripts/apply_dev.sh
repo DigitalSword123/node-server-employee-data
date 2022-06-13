@@ -12,9 +12,9 @@ ls -al
 # VAR_FILE ?= ./terraform_project/vars/dev-ap-south-1.tfvars
 # read VAR_FILE < ./terraform_project/vars/dev-ap-south-1.tfvars
 
-echo $env
+# echo $env
 
-echo ${TARGET_ENV_DEV}
+
 
 # echo $VAR_FILE
 
@@ -22,9 +22,9 @@ cd terraform_project
 
 ls -al
 
-terraform init 
+echo ${TARGET_ENV_DEV}
 
-# -backend-config="key=employe-node-server/$env/terraform.tfstate"
+terraform init -backend-config="key=employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 
 
 terraform plan -var-file=dev-ap-south-1.tfvars
