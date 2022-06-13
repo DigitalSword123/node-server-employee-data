@@ -29,7 +29,7 @@ locals {
 
 resource "aws_lambda_function" "lambda" {
   function_name    = var.function_name
-  filename         = var.filename
+  filename         = "${path.module}/${var.filename}"
   source_code_hash = filebase64sha256("${path.module}/${var.filename}")
   role             = var.role
   handler          = "index.handler"
