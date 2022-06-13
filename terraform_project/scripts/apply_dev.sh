@@ -22,7 +22,9 @@ cd terraform_project
 
 ls -al
 
-terraform init -backend-config="key=employe-node-server/$env/terraform.tfstate"
+terraform init 
+
+# -backend-config="key=employe-node-server/$env/terraform.tfstate"
 
 
 terraform plan -var-file=dev-ap-south-1.tfvars
