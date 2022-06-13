@@ -9,7 +9,7 @@ terraform {
     bucket  = "employee-data-node-terraform-state-bucket"
     encrypt = false
 
-    key     = "employe-node-server/env/terraform.tfstate" # this key 
+    # key     = "employe-node-server/env/terraform.tfstate" # this key 
     # is being called in shell commands present in scripts folder
 
     region     = "ap-south-1"
