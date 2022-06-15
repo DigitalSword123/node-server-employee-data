@@ -24,6 +24,7 @@ ls -al
 
 echo ${TARGET_ENV_DEV}
 
+terraform fmt
 
 terraform init -backend-config="key=employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 

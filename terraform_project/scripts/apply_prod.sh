@@ -16,6 +16,8 @@ ls -al
 
 echo ${TARGET_ENV_PROD}
 
+terraform fmt
+
 terraform init -backend-config="key=employe-node-server/${TARGET_ENV_PROD}/terraform.tfstate"
 
 terraform plan -var-file=prod-ap-south-1.tfvars
