@@ -30,7 +30,7 @@ locals {
 resource "aws_lambda_function" "lambda_employee_node_server" {
   function_name    = var.function_name
   filename         = "${path.module}/${var.filename}"
-  source_code_hash = filebase64sha256("${var.filename}")
+  source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
   role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"
