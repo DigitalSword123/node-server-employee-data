@@ -30,11 +30,11 @@ locals {
 }
  
 locals{
-  lambda_file_zip_location="${var.filename}"
+  lambda_file_zip_location="${path.module}/${var.filename}"
 }
 data "archieve_file" "employee_lambda"{
   type="zip"
-  source_file = "../src/*"
+  source_dir = "../../../src"
   output_path="${local.lambda_file_zip_location}"
 }
 resource "aws_lambda_function" "lambda_employee_node_server" {
