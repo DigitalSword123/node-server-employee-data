@@ -2,8 +2,10 @@ provider "aws" {
   # shared_credentials_file = "$HOME/.aws/credentials"
   # profile = "default"
   region     = "ap-south-1"
-  access_key = "AKIAZ332BW4JK4JM2BMC"
-  secret_key = "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"
+  # access_key = "AKIAZ332BW4JK4JM2BMC"
+  # secret_key = "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"
+  access_key = "AKIAZ332BW4JOYRQTLGD"
+  secret_key = "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"
 }
 
 data "aws_caller_identity" "current_account" {}

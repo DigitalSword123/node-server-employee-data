@@ -9,7 +9,7 @@ terraform {
     bucket     = "employee-data-node-terraform-state-bucket"
     encrypt    = false
     region     = "ap-south-1"
-    access_key = "AKIAZ332BW4JK4JM2BMC"
-    secret_key = "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"
+    access_key = "AKIAZ332BW4JOYRQTLGD"
+    secret_key = "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"
   }
 }
