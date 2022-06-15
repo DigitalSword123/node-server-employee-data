@@ -32,7 +32,7 @@ locals {
 locals{
   lambda_file_zip_location="${var.filename}"
 }
-data "archieve_file" "employee_lambda"{
+data "archive_file" "employee_lambda"{
   type="zip"
   source_dir = "../../../src"
   output_path="${local.lambda_file_zip_location}"
