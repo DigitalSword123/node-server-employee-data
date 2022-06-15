@@ -20,7 +20,7 @@ echo ${TARGET_ENV_QA}
 
 terraform fmt
 
-terraform init -backend-config="key=employe-node-server/${TARGET_ENV_QA}/terraform.tfstate"
+terraform init -backend-config="key=employe-node-server/${TARGET_ENV_QA}/terraform.tfstate" -out=employee-node-data.1.0.0-SNAPSHOT.zip
 
 terraform plan -var-file=qa-ap-south-1.tfvars
 

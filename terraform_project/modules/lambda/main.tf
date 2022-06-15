@@ -37,11 +37,14 @@ data "archive_file" "employee_lambda"{
   source_dir = "../src"
   output_path="${local.lambda_file_zip_location}"
 }
+
+# https://stackoverflow.com/questions/70232248/not-able-to-create-zip-file-for-aws-lambda-fx-in-gitlab-through-terraform
+
 resource "aws_lambda_function" "lambda_employee_node_server" {
   function_name    = var.function_name
-  filename         = "${path.module}/${var.filename}"
+  filename         = data.archive_file.employee_lambda.output_path
   # source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
-  source_code_hash = "${filebase64sha256(local.lambda_file_zip_location)}"
+  source_code_hash = "${filebase64sha256(data.archive_file.employee_lambda.output_path)}"
   role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"

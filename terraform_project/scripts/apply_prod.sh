@@ -18,7 +18,7 @@ echo ${TARGET_ENV_PROD}
 
 terraform fmt
 
-terraform init -backend-config="key=employe-node-server/${TARGET_ENV_PROD}/terraform.tfstate"
+terraform init -backend-config="key=employe-node-server/${TARGET_ENV_PROD}/terraform.tfstate" -out=employee-node-data.1.0.0-SNAPSHOT.zip
 
 terraform plan -var-file=prod-ap-south-1.tfvars
 
