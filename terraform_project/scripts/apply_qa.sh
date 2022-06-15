@@ -24,4 +24,5 @@ terraform init -backend-config="key=employe-node-server/${TARGET_ENV_QA}/terrafo
 
 terraform plan -var-file=qa-ap-south-1.tfvars -out=tfplan
 
-terraform apply "tfplan" -var-file=qa-ap-south-1.tfvars  -auto-approve 
+terraform apply "tfplan" 
+# -var-file=qa-ap-south-1.tfvars -auto-approve 

@@ -21,4 +21,5 @@ terraform init -backend-config="key=employe-node-server/${TARGET_ENV_UAT}/terraf
 
 terraform plan -var-file=uat-ap-south-1.tfvars -out=tfplan
 
-terraform apply "tfplan" -var-file=uat-ap-south-1.tfvars  -auto-approve 
+terraform apply "tfplan" 
+# -var-file=uat-ap-south-1.tfvars -auto-approve 
