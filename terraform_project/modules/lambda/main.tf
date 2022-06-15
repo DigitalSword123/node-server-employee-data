@@ -68,8 +68,8 @@ resource "aws_cloudwatch_log_group" "example" {
 }
 
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
-resource "aws_iam_policy" "lambda_logging" {
-  name = "lambda_logging"
+resource "aws_iam_policy" "lambda_logging_employee" {
+  name = "lambda_logging_employee"
   path = "/"
   description = "IAM policy for logging from a lambda"
 
@@ -92,5 +92,5 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role = var.role
-  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
+  policy_arn = "${aws_iam_policy.lambda_logging_employee.arn}"
 }
