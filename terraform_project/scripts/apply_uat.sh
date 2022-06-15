@@ -17,8 +17,8 @@ echo ${TARGET_ENV_UAT}
 
 terraform fmt
 
-terraform init -backend-config="key=employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate" -out=employee-node-data.1.0.0-SNAPSHOT.zip
+terraform init -backend-config="key=employe-node-server/${TARGET_ENV_UAT}/terraform.tfstate"
 
-terraform plan -var-file=uat-ap-south-1.tfvars
+terraform plan -var-file=uat-ap-south-1.tfvars -out=employee-node-data.1.0.0-SNAPSHOT.zip
 
 terraform apply -var-file=uat-ap-south-1.tfvars  -auto-approve 
