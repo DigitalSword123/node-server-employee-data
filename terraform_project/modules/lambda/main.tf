@@ -27,10 +27,10 @@ locals {
   }
 }
 
-resource "aws_lambda_function" "lambda" {
+resource "aws_lambda_function" "lambda_employee_node_server" {
   function_name    = var.function_name
-  filename         = "${path.module}/${var.filename}"
-  source_code_hash = filebase64sha256("${path.module}/${var.filename}")
+  filename         = var.filename
+  source_code_hash = filebase64sha256("${var.filename}")
   role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"
@@ -52,7 +52,43 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_lambda_permission" "allow_invoke_permission" {
   statement_id  = "Allowingtoinvokeotheraccount-${each.key}"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda.function_name
+  function_name = aws_lambda_function.lambda_employee_node_server.function_name
   for_each      = var.principal_ids
   principal     = each.key
+}
+
+
+# This is to optionally manage the CloudWatch Log Group for the Lambda Function.
+# If skipping this resource configuration, also add "logs:CreateLogGroup" to the IAM policy below.
+resource "aws_cloudwatch_log_group" "example" {
+  name              = "/aws/lambda/${var.function_name}"
+  retention_in_days = 14
+}
+
+# See also the following AWS managed policy: AWSLambdaBasicExecutionRole
+resource "aws_iam_policy" "lambda_logging" {
+  name = "lambda_logging"
+  path = "/"
+  description = "IAM policy for logging from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role = var.role
+  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }
