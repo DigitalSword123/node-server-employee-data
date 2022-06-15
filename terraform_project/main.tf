@@ -28,9 +28,9 @@ data "aws_ssm_parameter" "vpc_id" {
 
 }
 
-data "aws_ssm_parameter" "principal_ids" {
-  name = "/project/${lower(var.env)}/principal/ids"
-}
+# data "aws_ssm_parameter" "principal_ids" {
+#   name = "/project/${lower(var.env)}/principal/ids"
+# }
 
 data "aws_ssm_parameter" "node_project" {
   name = "/project/${lower(var.env)}/lambda/runtime/nodeProject" #"nodejs14.x"
@@ -88,7 +88,7 @@ module "lambda_employee_data" {
   memory                = data.aws_ssm_parameter.lambda_memory                                          #done
   # timeout               = data.aws_ssm_parameter.lambda_timeout                                         #done
   subnet_ids            = split(",", data.aws_ssm_parameter.private_subnets.value)                      # done
-  principal_ids         = toset(split(",", data.aws_ssm_parameter.principal_ids.value))                 # done
+  # principal_ids         = toset(split(",", data.aws_ssm_parameter.principal_ids.value))                 # done
   state-bucket          = data.aws_ssm_parameter.lambda_state_bucket.value                              #done
   tags                  = merge(var.default_master_tags, var.master_tags)                               #done
   environment_variables = var.environment_variables                                                     #done

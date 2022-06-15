@@ -53,8 +53,8 @@ resource "aws_lambda_permission" "allow_invoke_permission" {
   statement_id  = "Allowingtoinvokeotheraccount-${each.key}"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_employee_node_server.function_name
-  for_each      = var.principal_ids
-  principal     = each.key
+  # for_each      = var.principal_ids
+  principal     = "678323926802"
 }
 
 
