@@ -30,7 +30,7 @@ locals {
 }
  
 locals{
-  lambda_file_zip_location="${path.module}/${var.filename}"
+  lambda_file_zip_location="${var.filename}"
 }
 data "archieve_file" "employee_lambda"{
   type="zip"
