@@ -29,6 +29,6 @@ terraform fmt
 terraform init -backend-config="key=employe-node-server/${TARGET_ENV_DEV}/terraform.tfstate"
 
 
-terraform plan -var-file=dev-ap-south-1.tfvars -out=employee-node-data.1.0.0-SNAPSHOT.zip
+terraform plan -var-file=dev-ap-south-1.tfvars -out=tfplan
 
 terraform apply -var-file=dev-ap-south-1.tfvars  -auto-approve 
