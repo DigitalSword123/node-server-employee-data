@@ -29,10 +29,19 @@ locals {
   }
 }
 
+locals{
+  lambda_file_zip_location="${var.filename}"
+}
+data "archieve_file" "employee_lambda"{
+  type="zip"
+  source_file = "../src/*"
+  output_path="${local.lambda_file_zip_location}"
+}
 resource "aws_lambda_function" "lambda_employee_node_server" {
   function_name    = var.function_name
   filename         = "${path.module}/${var.filename}"
-  source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
+  # source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
+  source_code_hash = "${filebase64sha256(local.lambda_file_zip_location)}"
   role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"
