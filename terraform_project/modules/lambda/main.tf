@@ -28,7 +28,7 @@ locals {
     replace(upper(key), "/", "_") => data.aws_ssm_parameter.ssm_params[key].value
   }
 }
-
+ 
 locals{
   lambda_file_zip_location="${var.filename}"
 }
