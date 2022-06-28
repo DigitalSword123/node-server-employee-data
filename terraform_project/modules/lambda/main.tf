@@ -36,12 +36,33 @@ data "archive_file" "employee_lambda"{
 
 # https://stackoverflow.com/questions/70232248/not-able-to-create-zip-file-for-aws-lambda-fx-in-gitlab-through-terraform
 
+resource "aws_iam_role" "iam_for_lambda_node" {
+  name = "iam_for_lambda_node"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+
 resource "aws_lambda_function" "lambda_employee_node_server" {
   function_name    = var.function_name
   filename         = data.archive_file.employee_lambda.output_path
   # source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
   source_code_hash = "${filebase64sha256(data.archive_file.employee_lambda.output_path)}"
-  role             = var.role
+  role             = aws_iam_role.iam_for_lambda_node.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   memory_size      = "128"
