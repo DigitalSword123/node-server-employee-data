@@ -1,8 +1,9 @@
-version: 2
+version: '2.1'
 orbs:
   # node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@2.0
 jobs:
+# https://medium.com/geekculture/configure-aws-credentials-in-circle-ci-8353d765aa15
   aws-cli-cred-setup:
     executor: aws-cli/default
     steps:
@@ -120,9 +121,7 @@ workflows:
   aws-cli:
     jobs:
       - aws-cli-cred-setup:
-          filters:
-            branches:
-              only: main
+          context: aws
       - deploy_dev:
           filters:
             branches:
