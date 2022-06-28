@@ -15,7 +15,7 @@ jobs:
     #   TARGET_AWS_REGION : my-value-2
 
   aws-cli-cred-setup:
-    executor: aws-cli/default
+    executor: circleci/aws-cli@2.0
     steps:
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY
