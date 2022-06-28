@@ -1,6 +1,7 @@
 version: 2
 orbs:
   node: circleci/node@5.0.2
+  aws-cli: circleci/aws-cli@2.0
 jobs:
   build:
     docker:
@@ -13,6 +14,14 @@ jobs:
     #   TARGET_ENV_UAT        : uat
     #   TARGET_ENV_PROD       : prod
     #   TARGET_AWS_REGION : my-value-2
+
+    aws-cli-cred-setup:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_SECRET_KEY
+    
     steps:
     #  - browser-tools/install-browser-tools
      - checkout
@@ -110,7 +119,10 @@ jobs:
 
 workflows:
   version: 2
-
+  aws-cli:
+    jobs:
+      - aws-cli-cred-setup:
+          context: aws
   stage_workflow:
     jobs:
       - build:
