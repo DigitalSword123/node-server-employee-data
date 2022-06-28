@@ -6,7 +6,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
-      # - image: circleci/node:erbium-bullseye-browsers-legacy
     working_directory: ~/node-server-employee-data
     # environment:
     #   TARGET_ENV_DEV        : dev
@@ -23,7 +22,6 @@ jobs:
           aws-secret-access-key: AWS_SECRET_KEY
     
     steps:
-    #  - browser-tools/install-browser-tools
      - checkout
      - setup_remote_docker
      - run: echo "build docker image with required instllation of node and git"
