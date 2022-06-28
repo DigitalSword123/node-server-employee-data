@@ -117,13 +117,38 @@ jobs:
 
 workflows:
   version: 2
-  stage_workflow:
+  aws-cli:
     jobs:
       - aws-cli-cred-setup:
           filters:
             branches:
               only: main
-      # #       # context: aws
+      - deploy_dev:
+          filters:
+            branches:
+              only: main
+          requires:
+            - aws-cli-cred-setup
+      - deploy_qa:
+          filters:
+            branches:
+              only: main
+          requires:
+            - aws-cli-cred-setup
+      - deploy_uat:
+          filters:
+            branches:
+              only: main
+          requires:
+            - aws-cli-cred-setup
+      - deploy_prod:
+          filters:
+            branches:
+              only: main
+          requires:
+            - aws-cli-cred-setup
+  stage_workflow:
+    jobs:
       - build:
           filters:
             branches:
@@ -134,32 +159,3 @@ workflows:
               only: main
           requires:
             - build
-      - deploy_dev:
-          filters:
-            branches:
-              only: main
-          requires:
-            - aws-cli-cred-setup
-            - build 
-      - deploy_qa:
-          filters:
-            branches:
-              only: main
-          requires:
-            - aws-cli-cred-setup
-            - build 
-      - deploy_uat:
-          filters:
-            branches:
-              only: main
-          requires:
-            - aws-cli-cred-setup
-            - build 
-      - deploy_prod:
-          filters:
-            branches:
-              only: main
-          requires:
-            - aws-cli-cred-setup
-            - build 
-            
