@@ -120,6 +120,9 @@ workflows:
   stage_workflow:
     jobs:
       - aws-cli-cred-setup:
+          filters:
+            branches:
+              only: main
             # context: aws
       - build:
           filters:
