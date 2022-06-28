@@ -15,11 +15,11 @@ jobs:
     #   TARGET_AWS_REGION : my-value-2
 
   aws-cli-cred-setup:
-  executor: aws-cli/default
-  steps:
-    - aws-cli/setup:
-        aws-access-key-id: AWS_ACCESS_KEY
-        aws-secret-access-key: AWS_SECRET_KEY
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_SECRET_KEY
     
     steps:
      - checkout
