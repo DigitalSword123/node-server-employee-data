@@ -123,7 +123,7 @@ workflows:
           filters:
             branches:
               only: main
-      #       # context: aws
+      # #       # context: aws
       - build:
           filters:
             branches:
@@ -139,23 +139,27 @@ workflows:
             branches:
               only: main
           requires:
+            - aws-cli-cred-setup
             - build 
       - deploy_qa:
           filters:
             branches:
               only: main
           requires:
+            - aws-cli-cred-setup
             - build 
       - deploy_uat:
           filters:
             branches:
               only: main
           requires:
+            - aws-cli-cred-setup
             - build 
       - deploy_prod:
           filters:
             branches:
               only: main
           requires:
+            - aws-cli-cred-setup
             - build 
             
