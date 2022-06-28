@@ -118,6 +118,7 @@ jobs:
 
 workflows:
   version: 2
+  # this aws-cli workflow for terraform work
   aws-cli:
     jobs:
       - aws-cli-cred-setup:
@@ -146,6 +147,7 @@ workflows:
               only: main
           requires:
             - aws-cli-cred-setup
+    # this stage_workflow for node js code
   stage_workflow:
     jobs:
       - build:

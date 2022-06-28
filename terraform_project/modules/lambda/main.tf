@@ -44,7 +44,7 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"
-  memory_size      = 128
+  memory_size      = "128"
   timeout          = 60
 
   vpc_config {
