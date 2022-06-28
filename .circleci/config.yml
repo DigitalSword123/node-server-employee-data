@@ -3,16 +3,21 @@ orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@2.0
 jobs:
-  aws-cli-cred-setup:
+  # aws-cli-cred-setup:
+  #   executor: aws-cli/default
+  #   steps:
+  #     - aws-cli/setup:
+  #         aws-access-key-id: AWS_ACCESS_KEY
+  #         aws-secret-access-key: AWS_SECRET_KEY
+  
+  build:
+    docker:
+      - image: circleci/node:latest
     executor: aws-cli/default
     steps:
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_KEY
-  
-  build:
-    docker:
-      - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
     # environment:
     #   TARGET_ENV_DEV        : dev
@@ -119,11 +124,11 @@ workflows:
   version: 2
   stage_workflow:
     jobs:
-      - aws-cli-cred-setup:
-          filters:
-            branches:
-              only: main
-            # context: aws
+      # - aws-cli-cred-setup:
+      #     filters:
+      #       branches:
+      #         only: main
+      #       # context: aws
       - build:
           filters:
             branches:
