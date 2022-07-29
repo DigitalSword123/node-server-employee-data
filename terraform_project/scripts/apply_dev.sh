@@ -13,7 +13,7 @@ ls -al
 # echo $env
 
 
-VAR_FILE =`cat vars/${TARGET_ENV_DEV}-ap-south-1.tfvars`
+VAR_FILE=`cat vars/${TARGET_ENV_DEV}-ap-south-1.tfvars`
 
 echo "${VAR_FILE}"
 
