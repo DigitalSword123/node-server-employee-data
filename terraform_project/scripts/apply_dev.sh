@@ -6,12 +6,7 @@ echo $(pwd)
 
 ls -al
 
-# VAR_FILE=$(<./terraform_project/vars/dev-ap-south-1.tfvars)
-# VAR_FILE ?= ./terraform_project/vars/dev-ap-south-1.tfvars
-# read VAR_FILE < ./terraform_project/vars/dev-ap-south-1.tfvars
-
-# echo $env
-
+echo ${TARGET_ENV_DEV}
 
 VAR_FILE=`cat vars/${TARGET_ENV_DEV}-ap-south-1.tfvars`
 
@@ -21,7 +16,6 @@ cd terraform_project
 
 ls -al
 
-echo ${TARGET_ENV_DEV}
 
 terraform fmt
 
