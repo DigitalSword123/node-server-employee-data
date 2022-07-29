@@ -22,6 +22,6 @@ terraform init \
 
 
 
-terraform plan -var-file="${VAR_FILE}" -out=tfplan
+terraform plan -var-file=${VAR_FILE} -out=tfplan
 
 terraform apply "tfplan"
