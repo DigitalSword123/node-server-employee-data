@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 set -e
 
 set env = "dev"
