@@ -15,12 +15,6 @@ jobs:
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
-    # environment:
-    #   TARGET_ENV_DEV        : dev
-    #   TARGET_ENV_QA         : qa
-    #   TARGET_ENV_UAT        : uat
-    #   TARGET_ENV_PROD       : prod
-    #   TARGET_AWS_REGION : my-value-2
     
     steps:
      - checkout
@@ -124,29 +118,35 @@ workflows:
       - aws-cli-cred-setup:
           context: aws
       - deploy_dev:
+          type: approval
           filters:
             branches:
               only: main
           requires:
             - aws-cli-cred-setup
       - deploy_qa:
+          type: approval
           filters:
             branches:
               only: main
           requires:
             - aws-cli-cred-setup
+            - deploy_dev
       - deploy_uat:
+          type: approval
           filters:
             branches:
               only: main
           requires:
             - aws-cli-cred-setup
+            - deploy_qa
       - deploy_prod:
           filters:
             branches:
               only: main
           requires:
             - aws-cli-cred-setup
+            - deploy_uat
     # this stage_workflow for node js code
   stage_workflow:
     jobs:
