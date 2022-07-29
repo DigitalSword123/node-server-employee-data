@@ -74,10 +74,9 @@ data "aws_ssm_parameter" "run_time" {
 #################################
 # Lambda: rest api for employee
 #################################
-
+  # security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later  
 module "lambda_employee_data" {
-  source                = "./modules/lambda"
-  security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later                                  
+  source                = "./modules/lambda"                                
   filename              = var._lambda_properties["lambda_zip_file_employee_data"]                      
   function_name         = "${var.project}-${var._lambda_properties["Lambda_function_name"]}-${var.env}" 
   # handler               = var._lambda_properties["lambda_handler"]                                     
