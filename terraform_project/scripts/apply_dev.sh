@@ -10,7 +10,7 @@ echo $(pwd)
 
 echo ${TARGET_ENV_DEV}
 
-export VAR_FILE=$PATH:/vars/${TARGET_ENV_DEV}-ap-south-1.tfvars`
+export VAR_FILE=$PATH:/vars/${TARGET_ENV_DEV}-ap-south-1.tfvars
 
 # export VAR_FILE=$PATH:/vars/dev-ap-south-1.tfvars
 
