@@ -77,7 +77,7 @@ data "aws_ssm_parameter" "run_time" {
 
 module "lambda_employee_data" {
   source                = "./modules/lambda"
-  # security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later                                  
+  security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later                                  
   filename              = var._lambda_properties["lambda_zip_file_employee_data"]                      
   function_name         = "${var.project}-${var._lambda_properties["Lambda_function_name"]}-${var.env}" 
   # handler               = var._lambda_properties["lambda_handler"]                                     
