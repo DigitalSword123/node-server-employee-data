@@ -81,11 +81,11 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
 }
 
 resource "aws_lambda_permission" "allow_invoke_permission" {
-  statement_id  = "Allowingtoinvokeotheraccount-678323926802"
+  statement_id  = "Allowingtoinvokeotheraccount-877760304415"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_employee_node_server.function_name
   # for_each      = var.principal_ids
-  principal     = "678323926802"
+  principal     = "877760304415"
 }
 
 

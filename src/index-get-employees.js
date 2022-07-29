@@ -23,9 +23,9 @@ const utils = require('./utils');
 const db = new Client({
     user: 'postgres',
     host: 'database-2.c8vulry6drc6.ap-south-1.rds.amazonaws.com',
-    database: 'employee-info',
+    database: 'employee-data',
     password: 'mypassword',
-    port: 5432,
+    port: 5432
 })
 
 // lambda entry point
