@@ -35,15 +35,15 @@ variable "memory" {
 #   description = "lambda timeout"
 # }
 
-variable "subnet_ids" {
-  description = "which subnets to associate with lambda"
-  type        = list(string)
-}
+# variable "subnet_ids" {
+#   description = "which subnets to associate with lambda"
+#   type        = list(string)
+# }
 
-variable "security_group_ids" {
-  description = "which security_group_ids to associate with lambda"
-  type        = list(string)
-}
+# variable "security_group_ids" {
+#   description = "which security_group_ids to associate with lambda"
+#   type        = list(string)
+# }
 
 variable "destination-region" {
   type        = string

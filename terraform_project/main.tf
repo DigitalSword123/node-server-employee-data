@@ -74,17 +74,18 @@ data "aws_ssm_parameter" "run_time" {
 #################################
 # Lambda: rest api for employee
 #################################
-  # security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later  
+   
 module "lambda_employee_data" {
   source                = "./modules/lambda"                                
   filename              = var._lambda_properties["lambda_zip_file_employee_data"]                      
   function_name         = "${var.project}-${var._lambda_properties["Lambda_function_name"]}-${var.env}" 
+  # security_group_ids    = [module.lambda_node_project_sg.sg_id]  # later 
   # handler               = var._lambda_properties["lambda_handler"]                                     
   role                  = data.aws_ssm_parameter.lambda_role.value                                      
   # runtime               = data.aws_ssm_parameter.run_time                                              
   memory                = data.aws_ssm_parameter.lambda_memory                                       
   # timeout               = data.aws_ssm_parameter.lambda_timeout                                         
-  subnet_ids            = split(",", data.aws_ssm_parameter.private_subnets.value)                     
+  # subnet_ids            = split(",", data.aws_ssm_parameter.private_subnets.value)                     
   # principal_ids         = toset(split(",", data.aws_ssm_parameter.principal_ids.value))      # later           
   state-bucket          = data.aws_ssm_parameter.lambda_state_bucket.value                              
   tags                  = merge(var.default_master_tags, var.master_tags)                               

@@ -31,7 +31,7 @@ variable "default_master_tags" {
   description = "common tags"
   type        = map(string)
   default = {
-    createdBy  = "ranaamiys70@gmail.com"
+    createdBy  = "ranaamiya70@gmail.com"
     CostCenter = "8723578"
     AlwaysOn   = "Yes"
     platforms  = "Myproject"
