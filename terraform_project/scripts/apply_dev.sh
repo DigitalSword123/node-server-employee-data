@@ -31,8 +31,8 @@ terraform init \
  -backend-config="access_key=${AWS_ACCESS_KEY}" \
  -backend-config="secret_key=${AWS_SECRET_KEY}"
 
+VAR_FILE ?= vars/${TARGET_ENV_DEV}-ap-south-1.tfvars
 
-terraform plan -var-file=dev-ap-south-1.tfvars -out=tfplan
+terraform plan -var-file="${VAR_FILE}" -out=tfplan
 
 terraform apply "tfplan"
-#  -var-file=dev-ap-south-1.tfvars -auto-approve 
