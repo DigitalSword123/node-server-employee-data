@@ -1,5 +1,3 @@
-SHELL := /bin/bash
-
 set -e
 
 set env = "dev"
@@ -8,8 +6,6 @@ echo $(pwd)
 
 ls -al
 
-# VAR_FILE ?= vars/dev-ap-south-1.tfvars
-
 # VAR_FILE=$(<./terraform_project/vars/dev-ap-south-1.tfvars)
 # VAR_FILE ?= ./terraform_project/vars/dev-ap-south-1.tfvars
 # read VAR_FILE < ./terraform_project/vars/dev-ap-south-1.tfvars
@@ -17,8 +13,9 @@ ls -al
 # echo $env
 
 
+VAR_FILE =`cat vars/${TARGET_ENV_DEV}-ap-south-1.tfvars`
 
-# echo $VAR_FILE
+echo "${VAR_FILE}"
 
 cd terraform_project
 
@@ -33,7 +30,7 @@ terraform init \
  -backend-config="access_key=${AWS_ACCESS_KEY}" \
  -backend-config="secret_key=${AWS_SECRET_KEY}"
 
-VAR_FILE ?= vars/${TARGET_ENV_DEV}-ap-south-1.tfvars
+
 
 terraform plan -var-file="${VAR_FILE}" -out=tfplan
 
