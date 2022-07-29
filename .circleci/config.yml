@@ -115,10 +115,11 @@ workflows:
   # this aws-cli workflow for terraform work
   aws-cli:
     jobs:
+      - hold:
+          type: approval
       - aws-cli-cred-setup:
           context: aws
       - deploy_dev:
-          type: approval
           filters:
             branches:
               only: main
@@ -130,6 +131,7 @@ workflows:
             branches:
               only: main
           requires:
+            - hold
             - aws-cli-cred-setup
             - deploy_dev
       - deploy_uat:
@@ -138,6 +140,7 @@ workflows:
             branches:
               only: main
           requires:
+            - hold
             - aws-cli-cred-setup
             - deploy_qa
       - deploy_prod:
@@ -145,6 +148,7 @@ workflows:
             branches:
               only: main
           requires:
+            - hold
             - aws-cli-cred-setup
             - deploy_uat
     # this stage_workflow for node js code
