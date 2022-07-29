@@ -68,10 +68,10 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   memory_size      = "128"
   timeout          = 60
 
-  vpc_config {
-    subnet_ids         = var.subnet_ids
-    security_group_ids = var.security_group_ids
-  }
+  # vpc_config {
+  #   subnet_ids         = var.subnet_ids
+  #   security_group_ids = var.security_group_ids
+  # }
 
   environment {
     variables = merge(var.environment_variables, local.ssm_map)
