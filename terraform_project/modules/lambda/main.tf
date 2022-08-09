@@ -27,8 +27,10 @@ locals {
 
 data "archive_file" "employee_lambda"{
   type="zip"
-  source_dir = "${path.module}/src"
-  output_path="${path.module}/${var.filename}"
+  # source_dir = "${path.module}/src"
+  # output_path="${path.module}/${var.filename}"
+  source_file = "hello-python.py"
+  output_path = "hello-python.zip"
 }
 
 # https://stackoverflow.com/questions/70232248/not-able-to-create-zip-file-for-aws-lambda-fx-in-gitlab-through-terraform
@@ -59,8 +61,10 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   filename         = data.archive_file.employee_lambda.output_path
   source_code_hash = filebase64sha256(data.archive_file.employee_lambda.output_path)
   role             = aws_iam_role.iam_for_lambda_node.arn
-  handler          = "index.handler"
-  runtime          = "nodejs14.x"
+  # handler          = "index.handler"
+  # runtime          = "nodejs14.x"
+  handler          = "hello-python.lambda_handler"
+  runtime          = "python3.8"
   memory_size      = "128"
   timeout          = 60
 
@@ -69,9 +73,9 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   #   security_group_ids = var.security_group_ids
   # }
 
-  environment {
-    variables = merge(var.environment_variables, local.ssm_map)
-  }
+  # environment {
+  #   variables = merge(var.environment_variables, local.ssm_map)
+  # }
 
   tags = var.tags
 }
