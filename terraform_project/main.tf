@@ -90,5 +90,6 @@ module "lambda_employee_data" {
   state-bucket          = data.aws_ssm_parameter.lambda_state_bucket.value                              
   tags                  = merge(var.default_master_tags, var.master_tags)                               
   environment_variables = var.environment_variables                                                  
-  environment           = lower(var.env)                                                                
+  environment           = lower(var.env) 
+  env                    =  lower(var.env)                                                            
 }
