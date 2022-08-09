@@ -27,7 +27,7 @@ locals {
 
 data "archive_file" "employee_lambda"{
   type="zip"
-  source_dir = "${path.module}/../../../"
+  source_dir = "${path.module}/../../../src/"
   output_path="${path.module}/${var.filename}"
 }
 
@@ -60,7 +60,7 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   source_code_hash = filebase64sha256(data.archive_file.employee_lambda.output_path)
   role             = aws_iam_role.iam_for_lambda_node.arn
   handler          = "index.handler"
-  runtime          = "nodejs16.x"
+  runtime          = "nodejs14.x"
   memory_size      = "128"
   timeout          = 60
 
