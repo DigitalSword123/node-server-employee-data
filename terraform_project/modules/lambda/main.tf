@@ -31,7 +31,7 @@ locals{
 data "archive_file" "employee_lambda"{
   type="zip"
   source_dir = "${path.module}/../../../src"
-  output_path="${local.lambda_file_zip_location}"
+  output_path="${var.filename}"
 }
 
 # https://stackoverflow.com/questions/70232248/not-able-to-create-zip-file-for-aws-lambda-fx-in-gitlab-through-terraform
@@ -63,7 +63,7 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   # source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
   source_code_hash = filebase64sha256(data.archive_file.employee_lambda.output_path)
   # role             = aws_iam_role.iam_for_lambda_node.arn # arn:aws:iam::678323926802:role/iam_for_lambda_node
-  role             = var.role
+  role             = aws_iam_role.iam_for_lambda_node.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   memory_size      = "128"
@@ -121,6 +121,6 @@ POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role = "Lambda-nodejs-executionrole"
+  role = aws_iam_role.iam_for_lambda_node.name
   policy_arn = "${aws_iam_policy.lambda_logging_employee.arn}"
 }
