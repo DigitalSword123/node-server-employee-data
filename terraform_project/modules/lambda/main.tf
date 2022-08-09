@@ -2,7 +2,7 @@ data "aws_caller_identity" "current_account" {}
 
 data "aws_ssm_parameter" "lambda-execution-role-arn" {
    name = "/project/${lower(var.env)}/lambda/role"
-}
+} 
 
 data "terraform_remote_state" "paramerstore" {
   backend = "s3"
