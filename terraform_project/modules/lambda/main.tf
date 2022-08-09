@@ -39,7 +39,7 @@ data "archive_file" "employee_lambda"{
 resource "aws_iam_role" "iam_for_lambda_node" {
   name = "iam_for_lambda_node_${lower(var.environment)}"
 
-  assume_role_policy = <<EOF
+  assume_role_policy = <<-POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -53,7 +53,7 @@ resource "aws_iam_role" "iam_for_lambda_node" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 
@@ -103,7 +103,7 @@ resource "aws_iam_policy" "lambda_logging_employee" {
   path = "/"
   description = "IAM policy for logging from a lambda"
 
-  policy = <<EOF
+  policy = <<-POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -117,10 +117,10 @@ resource "aws_iam_policy" "lambda_logging_employee" {
     }
   ]
 }
-EOF
+POLICY
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role = var.role
+  role = "Lambda-nodejs-executionrole"
   policy_arn = "${aws_iam_policy.lambda_logging_employee.arn}"
 }
