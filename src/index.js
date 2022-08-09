@@ -6,8 +6,6 @@
 
 const { Client } = require('pg')
 const cors = require("cors");
-app.use(cors());
-app.use(express.json());
 const FILE = "src/index.js";
 const utils = require('./utils');
 const postgresUno = require('postgres-uno')
