@@ -7,7 +7,7 @@ data "aws_ssm_parameter" "lambda-execution-role-arn" {
 data "terraform_remote_state" "paramerstore" {
   backend = "s3"
   config = {
-    bucket = "employee-data-node-terraform-state-bucket" #var.state-bucket
+    bucket = "node-terraform-state-bucket" #var.state-bucket
     key    = "param-store/${lower(var.environment)}/terraform.tfstate"
     region = var.destination-region
   }
