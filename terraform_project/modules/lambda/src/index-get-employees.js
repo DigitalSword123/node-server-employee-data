@@ -29,7 +29,7 @@ const db = new Client({
 })
 
 // lambda entry point
-module.exports.handler = async function(event, context, callback) {
+module.exports.handler1 = async function(event, context, callback) {
     let response = null;
     try {
         console.log(FILE, " handler() - start:event" + JSON.stringify(event, null, 2));
