@@ -1,7 +1,7 @@
 data "aws_caller_identity" "current_account" {}
 
 data "aws_ssm_parameter" "lambda-execution-role-arn" {
-  name = "/project/${var.environment}/${data.aws_caller_identity.current_account.account_id}/iam/lambda-execution-role-arn"
+   name = "/project/${lower(var.env)}/lambda/role"
 }
 
 data "terraform_remote_state" "paramerstore" {
@@ -121,6 +121,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role = "Lambda-nodejs-executionrole"
+  role = var.role
   policy_arn = "${aws_iam_policy.lambda_logging_employee.arn}"
 }
