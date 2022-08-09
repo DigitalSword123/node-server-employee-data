@@ -30,7 +30,7 @@ locals{
 }
 data "archive_file" "employee_lambda"{
   type="zip"
-  source_dir = "${path.module}/../../../src"
+  source_dir = "${path.module}/src"
   output_path="${var.filename}"
 }
 
