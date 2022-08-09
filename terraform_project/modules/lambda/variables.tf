@@ -73,6 +73,6 @@ variable "ssm-path" {
 #   type        = set(string)
 # }
 
-# variable "env" {
-#   description = "project environments"
-# }
+variable "env" {
+  description = "project environments"
+}
