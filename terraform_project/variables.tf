@@ -10,6 +10,7 @@ variable "name" {
 
 variable "env" {
   description = "project environments"
+  default = "DEV"
 }
 
 variable "owner" {
