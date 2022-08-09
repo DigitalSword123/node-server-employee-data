@@ -81,7 +81,8 @@ resource "aws_lambda_permission" "allow_invoke_permission" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_employee_node_server.function_name
   # for_each      = var.principal_ids
-  principal     = "877760304415"
+  # principal     = "877760304415"
+  principal     = "events.amazonaws.com"
 }
  
 
