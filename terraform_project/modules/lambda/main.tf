@@ -69,9 +69,9 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   #   security_group_ids = var.security_group_ids
   # }
 
-  # environment {
-  #   variables = merge(var.environment_variables, local.ssm_map)
-  # }
+  environment {
+    variables = merge(var.environment_variables, local.ssm_map)
+  }
 
   tags = var.tags
 }

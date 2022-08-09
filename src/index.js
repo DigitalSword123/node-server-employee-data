@@ -21,8 +21,8 @@ const postgresUno = require('postgres-uno')
 
 var dbConfig = {
     user: 'postgres',
-    host: 'database-2.c8vulry6drc6.ap-south-1.rds.amazonaws.com',
-    database: 'employee-data',
+    host: 'my-database-instance.cudkus0mfoea.ap-south-1.rds.amazonaws.com',
+    database: 'employee_data',
     password: 'mypassword',
     port: 5432
 }
