@@ -62,7 +62,8 @@ resource "aws_lambda_function" "lambda_employee_node_server" {
   filename         = data.archive_file.employee_lambda.output_path
   # source_code_hash = "{filebase64sha256$(${path.module}/${var.filename})}"
   source_code_hash = "${filebase64sha256(data.archive_file.employee_lambda.output_path)}"
-  role             = aws_iam_role.iam_for_lambda_node.arn # arn:aws:iam::678323926802:role/iam_for_lambda_node
+  # role             = aws_iam_role.iam_for_lambda_node.arn # arn:aws:iam::678323926802:role/iam_for_lambda_node
+  role             = var.role
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   memory_size      = "128"
