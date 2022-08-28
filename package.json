@@ -32,7 +32,7 @@
         },
         "npm": {
             "publish": false,
-            "publishPath": "",
+            "publishPath": "https://amiya.devops.com/artifactory/api/npm/npm/releases",
             "access": null,
             "otp": null
         }
@@ -43,11 +43,34 @@
     },
     "author": "Amiya Kumar Rana",
     "license": "ISC",
-    "dependencies": {
+    "devDependencies": {
         "cors": "^2.8.5",
         "express": "^4.18.1",
         "pg": "^8.7.3",
         "postgres": "^3.2.2",
-        "postgres-uno": "^2.1.0"
-    }
+        "postgres-uno": "^2.1.0",
+        "gulp": "^4.0.2",
+        "gulp-rename": "^1.4.0",
+        "gulp-tap": "^0.1.3",
+        "gulp-zip": "^3.2.0",
+        "gulp4-run-sequence": "^1.0.1",
+        "mocha-sonarqube-reporter": "1.0.1",
+        "nyc": "^14.1.1",
+        "release-it": "13.5.3",
+        "aws-sdk": "^2.580.0",
+        "chai": "^4.2.0",
+        "del": "^2.2.2",
+        "dotenv": "^8.2.0",
+        "jsdoc": "^3.6.3",
+        "mocha": "^6.2.2",
+        "sinon": "^1.17.6",
+        "run-sequence": "^2.2.1",
+        "sonar-scanner": "^3.1.0",
+        "sonarqube-scanner": "^2.6.0",
+        "sinon-stub-promise": "^4.0.0",
+        "log4js": "^2.11.0"
+    },
+    "files": [
+        "target/*"
+    ]
 }
