@@ -103,7 +103,7 @@ jobs:
       tag: prod
   
   npm_test:
-    <<: *npm_build_and_test
+    <<: *npm_test
     environment:
       tag: dev
       
