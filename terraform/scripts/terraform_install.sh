@@ -7,5 +7,5 @@ chmod +x terraform
 file terraform
 uname -a
 sudo mv terraform /usr/local/bin
-cd terraform
-terraform -v
+# cd terraform
+# terraform -v
