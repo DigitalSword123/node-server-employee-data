@@ -11,36 +11,37 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY
           aws-secret-access-key: AWS_SECRET_KEY
   
-  build:
+  # build:
+  #   docker:
+  #     - image: circleci/node:latest
+  #   working_directory: ~/node-server-employee-data
+    
+  #   steps:
+  #    - checkout
+  #    - setup_remote_docker
+  #    - run: echo "build docker image with required instllation of node and git"
+  #    - run: echo "Node versiopn in docker is"
+  #    - run: node --version
+  #    - run: npm install --save-dev
+    
+  npm_build: &npm_build
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
-    
     steps:
-     - checkout
-     - setup_remote_docker
-     - run: echo "build docker image with required instllation of node and git"
-     - run: echo "Node versiopn in docker is"
-     - run: node --version
-     - run: npm install --save-dev
-    
-  npm_build_and_test: &npm_build_and_test # this can be any name you choose
+      - checkout
+      - run: bash ./terraform_project/scripts/npm_build_branches.sh
+  npm_test: &npm_test
     docker:
       - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm test
-          name: Run tests
-      - run:
-          command: npm build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/node-server-employee-data
-          paths:
-            - .
+      - variables:
+          POSTGRESS_USER:
+          POSTGRESS_DB:  
+          PGPASSWORD: 
+          Artifactory_URL: 
+      - run: bash ./terraform_project/scripts/npm-test.sh
 
   deploy: &deploy-env
     docker:
@@ -79,10 +80,6 @@ jobs:
             terraform -v
       - run: ls -al
       - run: bash ./terraform_project/scripts/apply_${tag}.sh
-      # - run: bash terraform -v
-      # - run: bash terraform init
-      # - run: bash ./scripts/terraform_plan.sh
-      # - run: bash ./scripts/terraform_apply.sh
       - run: echo `deployed successfully in ${tag} environment`
 
   deploy_dev:
@@ -105,10 +102,11 @@ jobs:
     environment:
       tag: prod
   
-  npm_build_test:
+  npm_test:
     <<: *npm_build_and_test
     environment:
       tag: dev
+      
 
 workflows:
   version: 2
@@ -160,7 +158,7 @@ workflows:
           filters:
             branches:
               only: main
-      - npm_build_test:
+      - npm_test:
           filters:
             branches:
               only: main

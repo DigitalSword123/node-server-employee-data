@@ -5,9 +5,43 @@
     "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "echo \"Error: no build specified\" && exit 1"
+        "build": "echo \"Error: no build specified\" && exit 1",
+        "release": ""
     },
-    "author": "",
+    "release-it": {
+        "hooks":{
+            "after:bump": "npm run build",
+            "beforeRelease": "ls -lrt"
+        },
+        "git": {
+            "changelog": "git log --pretty=format: \"* %s (%h)\" ${latestTag}...HEAD",
+            "requireCleanWorkingDir": false,
+            "requireUpstream": false,
+            "requiureCommits": true,
+            "addUntrackedFiles": false,
+            "commit": true,
+            "commitMessage": "Relesase ${name}-${version}",
+            "commitArgs": "",
+            "tag": true,
+            "tagName": "${version}",
+            "tagAnnotation": "${name}-${version}",
+            "tagArgs": "",
+            "push": true,
+            "pushArgs": "--follow-tags",
+            "pushRepo": "origin"
+        },
+        "npm": {
+            "publish": false,
+            "publishPath": "",
+            "access": null,
+            "otp": null
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DigitalSword123/node-server-employee-data.git"
+    },
+    "author": "Amiya Kumar Rana",
     "license": "ISC",
     "dependencies": {
         "cors": "^2.8.5",
