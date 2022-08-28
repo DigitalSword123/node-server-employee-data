@@ -7,7 +7,7 @@
 const { Client } = require('pg')
 const cors = require("cors");
 const FILE = "src/index.js";
-const utils = require('./utils');
+const utils = require('./lib/utils');
 const postgresUno = require('postgres-uno')
 
 // https://node-server-employee-data-aws.herokuapp.com/

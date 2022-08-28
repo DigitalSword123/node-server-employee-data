@@ -5,11 +5,13 @@
     "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "echo \"Error: no build specified\" && exit 1",
-        "release": ""
+        "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
+        "build-uber": "node_modules/.bin/gulp --gulpfile gulpfile.js build",
+        "build": "npm run build-employee-data && npm run build-uber",
+        "release": "node_modules/.bin/release-it --ci -VV"
     },
     "release-it": {
-        "hooks":{
+        "hooks": {
             "after:bump": "npm run build",
             "beforeRelease": "ls -lrt"
         },
