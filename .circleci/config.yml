@@ -24,76 +24,117 @@ jobs:
   #    - run: node --version
   #    - run: npm install --save-dev
     
-npm_build: &npm_build
-  docker:
-    - image: circleci/node:latest
-  working_directory: ~/node-server-employee-data
-  steps:
-    - checkout
-    - run: bash ./terraform/scripts/npm_build_branches.sh
+  npm_build: &npm_build
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout
+      - run: bash ./terraform/scripts/npm_build_branches.sh
 
-npm_unit_test: &npm_unit_test
-  docker:
-    - image: circleci/node:latest # use the default executor defined within the orb
-  steps:
-    - checkout
-    - variables:
-        POSTGRESS_USER:
-        POSTGRESS_DB:  
-        PGPASSWORD: 
-        Artifactory_URL: 
-    - run: bash ./terraform/scripts/npm-test.sh
+  npm_unit_test: &npm_unit_test
+    docker:
+      - image: circleci/node:latest # use the default executor defined within the orb
+    steps:
+      - checkout
+      - variables:
+          POSTGRESS_USER:
+          POSTGRESS_DB:  
+          PGPASSWORD: 
+          Artifactory_URL: 
+      - run: bash ./terraform/scripts/npm-test.sh
 
-deploy: &deploy-env
-  docker:
-    - image: circleci/node:latest
+  deploy: &deploy-env
+    docker:
+      - image: circleci/node:latest
+    
+    working_directory: ~/node-server-employee-data/terraform
+
+    steps:
+      - checkout 
+      - setup_remote_docker
+
+      # - run: echo "deploy"
+      # - run: bash ./scripts/install_terraform.sh
+      # - run: bash ./scripts/apply_${tag}.sh
+      # - run: echo "deployed successfully"
+
+      - run: echo "deploy"
+      - run: echo $(pwd)
+      - run: echo ${tag}
+      - run: echo $PATH
+      - run: echo $TARGET_ENV_DEV
+      # - run: sudo chmod 777 install_terraform.sh
+      # - run: bash install_terraform.sh
+      - run : 
+          name: terraform installation
+          command: |
+            sudo apt-get install wget unzip -y
+            sudo apt-get install file
+            wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
+            unzip terraform_1.2.2_linux_amd64.zip
+            ls -a
+            chmod +x terraform
+            file terraform
+            uname -a
+            sudo mv terraform /usr/local/bin
+            terraform -v
+      - run: ls -al
+      - run: bash ./terraform/scripts/apply_${tag}.sh
+      - run: echo `deployed successfully in ${tag} environment`
+
+  deploy_dev:
+    <<: *deploy-env
+    environment:
+      tag: dev
+
+  deploy_qa:
+    <<: *deploy-env
+    environment:
+      tag: qa
+    
+  deploy_uat:
+    <<: *deploy-env
+    environment:
+      tag: uat
+
+  deploy_prod:
+    <<: *deploy-env
+    environment:
+      tag: prod
+
+  build:
+    <<: *npm_build
+    environment:
+      tag: dev
+
+  test:
+    <<: *npm_unit_test
+    environment:
+      tag: dev
   
-  working_directory: ~/node-server-employee-data/terraform
 
-  steps:
-    - checkout 
-    - setup_remote_docker
-
-    # - run: echo "deploy"
-    # - run: bash ./scripts/install_terraform.sh
-    # - run: bash ./scripts/apply_${tag}.sh
-    # - run: echo "deployed successfully"
-
-    - run: echo "deploy"
-    - run: echo $(pwd)
-    - run: echo ${tag}
-    - run: echo $PATH
-    - run: echo $TARGET_ENV_DEV
-    # - run: sudo chmod 777 install_terraform.sh
-    # - run: bash install_terraform.sh
-    - run : 
-        name: terraform installation
-        command: |
-          sudo apt-get install wget unzip -y
-          sudo apt-get install file
-          wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
-          unzip terraform_1.2.2_linux_amd64.zip
-          ls -a
-          chmod +x terraform
-          file terraform
-          uname -a
-          sudo mv terraform /usr/local/bin
-          terraform -v
-    - run: ls -al
-    - run: bash ./terraform/scripts/apply_${tag}.sh
-    - run: echo `deployed successfully in ${tag} environment`
 
 workflows:
   version: 2
   # this aws-cli workflow for terraform work
+  stage_workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: main
+      - test:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build
   aws-cli:
     jobs:
       - aws-cli-cred-setup:
           context: aws
       - deploy_dev:
-          <<: *deploy-env
-          environment:
-           tag: dev
           filters:
             branches:
               only: main
@@ -102,9 +143,6 @@ workflows:
       - trigger_qa:
           type: approval
       - deploy_qa:
-          <<: *deploy-env
-          environment:
-           tag: qa 
           filters:
             branches:
               only: main
@@ -115,9 +153,6 @@ workflows:
       - trigger_uat:
           type: approval
       - deploy_uat:
-          <<: *deploy-env
-          environment:
-           tag: uat
           filters:
             branches:
               only: main
@@ -128,9 +163,6 @@ workflows:
       - trigger_prod:
           type: approval
       - deploy_prod:
-          <<: *deploy-env
-          environment:
-           tag: prod
           filters:
             branches:
               only: main
@@ -138,18 +170,3 @@ workflows:
             - trigger_prod
             - aws-cli-cred-setup
             - deploy_uat
-    # this stage_workflow for node js code
-  stage_workflow:
-    jobs:
-      - build:
-          <<: *npm_build
-          filters:
-            branches:
-              only: main
-      - test:
-          <<: *npm_unit_test
-          filters:
-            branches:
-              only: main
-          requires:
-            - build
