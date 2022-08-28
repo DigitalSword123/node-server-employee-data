@@ -61,19 +61,7 @@ jobs:
       - run: echo $TARGET_ENV_DEV
       # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
-      - run: 
-          name: terraform installation
-          command: |
-            sudo apt-get install wget unzip -y
-            sudo apt-get install file
-            wget https://releases.hashicorp.com/terraform/1.2.2/terraform_1.2.2_linux_amd64.zip
-            unzip terraform_1.2.2_linux_amd64.zip
-            ls -a
-            chmod +x terraform
-            file terraform
-            uname -a
-            sudo mv terraform /usr/local/bin
-            terraform -v
+      - run: bash ./terraform/scripts/terraform_install.sh   
       - run: ls -al
       - run: bash ./terraform/scripts/apply_${tag}.sh
       - run: echo `deployed successfully in ${tag} environment`
