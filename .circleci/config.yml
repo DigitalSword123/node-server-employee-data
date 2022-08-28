@@ -30,20 +30,20 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - run: bash ./terraform/scripts/npm_build_branches.sh
+      - run: bash ./terraform_project/scripts/npm_build_branches.sh
 
   npm_unit_test: &npm_unit_test
     docker:
       - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
-      - run: bash ./terraform/scripts/npm-test.sh
+      - run: bash ./terraform_project/scripts/npm-test.sh
 
   deploy: &deploy-env
     docker:
       - image: circleci/node:latest
     
-    working_directory: ~/node-server-employee-data/terraform
+    working_directory: ~/node-server-employee-data/terraform_project
 
     steps:
       - checkout 
@@ -61,9 +61,9 @@ jobs:
       - run: echo $TARGET_ENV_DEV
       # - run: sudo chmod 777 install_terraform.sh
       # - run: bash install_terraform.sh
-      - run: bash ./terraform/scripts/terraform_install.sh   
+      - run: bash ./terraform_project/scripts/terraform_install.sh   
       - run: ls -al
-      - run: bash ./terraform/scripts/apply_${tag}.sh
+      - run: bash ./terraform_project/scripts/apply_${tag}.sh
       - run: echo `deployed successfully in ${tag} environment`
 
   deploy_dev:
