@@ -37,11 +37,6 @@ jobs:
       - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
-      - variables:
-          POSTGRESS_USER:
-          POSTGRESS_DB:  
-          PGPASSWORD: 
-          Artifactory_URL: 
       - run: bash ./terraform/scripts/npm-test.sh
 
   deploy: &deploy-env
@@ -107,13 +102,15 @@ jobs:
     <<: *npm_build
     environment:
       tag: dev
-
+      ARTIFACTORY_URL: "https://amiya.devops.com/artifactory/api/npm/npm/releases"
+      
   test:
     <<: *npm_unit_test
     environment:
       tag: dev
-  
-
+      POSTGRESS_USER: "postgres"
+      POSTGRESS_DB: "employee_data"
+      PGPASSWORD: "mypassword"
 
 workflows:
   version: 2

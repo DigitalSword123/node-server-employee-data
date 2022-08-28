@@ -23,5 +23,5 @@ npm run build
 echo "=================build Snapshot Artifacts END====================="
 
 echo "=================publish snapshot to Artifactory BEGIN====================="
-npm publish --registry $Artifactory_URL
+npm publish --registry $ARTIFACTORY_URL
 echo "=================publish snapshot to Artifactory END====================="
