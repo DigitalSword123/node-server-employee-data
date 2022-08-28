@@ -83,6 +83,32 @@ deploy: &deploy-env
     - run: bash ./terraform/scripts/apply_${tag}.sh
     - run: echo `deployed successfully in ${tag} environment`
 
+deploy_dev:
+  <<: *deploy-env
+  environment:
+    tag: dev
+
+deploy_qa:
+  <<: *deploy-env
+  environment:
+    tag: qa
+  
+deploy_uat:
+  <<: *deploy-env
+  environment:
+    tag: uat
+
+deploy_prod:
+  <<: *deploy-env
+  environment:
+    tag: prod
+
+npm_test:
+  <<: *npm_unit_test
+  environment:
+    tag: dev
+    
+
 workflows:
   version: 2
   # this aws-cli workflow for terraform work
@@ -142,12 +168,10 @@ workflows:
   stage_workflow:
     jobs:
       - build:
-          <<: *npm_build
           filters:
             branches:
               only: main
-      - test:
-          <<: *npm_unit_test
+      - npm_test:
           filters:
             branches:
               only: main
