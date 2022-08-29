@@ -110,6 +110,7 @@ jobs:
             if["$DEBUG"=true]; then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
             fi
+      - run :
           name: script
           command: |
             touch ${VARIABLE_FILE}
