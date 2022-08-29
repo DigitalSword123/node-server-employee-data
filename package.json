@@ -41,7 +41,8 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/DigitalSword123/node-server-employee-data.git"
+        "url": "git@github.com:DigitalSword123/node-server-employee-data.git",
+        "http_url": "https://github.com/DigitalSword123/node-server-employee-data.git"
     },
     "author": "Amiya Kumar Rana",
     "license": "ISC",

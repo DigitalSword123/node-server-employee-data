@@ -65,6 +65,90 @@ jobs:
       - run: ls -al
       - run: bash ./terraform_project/scripts/apply_${tag}.sh
       - run: echo `deployed successfully in ${tag} environment`
+  
+  .debug_logic: &debug_logic
+    - run : 
+        command: |
+          if ["$DEBUG=true"] ; then
+            set -xv
+            echo "ARTIFACT_ID is $ARTIFACT_ID"
+            echo "VERSION is $APP_VERSION"
+            echo "NEXT_DEVELOPEMENT_VERSION is $NEXT_DEVELOPEMENT_VERSION"
+            echo "prinitng package.json file"
+            cat package.json
+            git config --list
+          fi
+  
+  .only_branch_default: &only_branch_default
+    only:
+      - /^feature/.*$/
+      - /^hotfix/.*$/
+      - /^bugfix/.*$/
+      - merge_requests
+    except:
+      refs:
+        - main
+        - tags
+  
+  .except_master: &except_master
+    rules:
+      - if: $CIRCLE_BRANCH=="master"
+        when: never
+      - when: on_success
+  
+  # .only_merge_request: &only_merge_request
+    
+
+  init-script: &init-script
+    docker:
+        - image: cimg/python:3.10.6
+    steps:
+      - run : 
+          name: beofre_script
+          command: |
+            pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
+            if["$DEBUG"=true]; then
+              ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
+            fi
+          name: script
+          command: |
+            touch ${VARIABLE_FILE}
+            echo ARTIFACT_ID=$(jq -r .name package.json) >> ${VARIABLE_FILE}
+            VERSION=$(jq -r .version package.json) 
+            now=`date + %Y%m%d%h%M`
+            echo CURRENT_SNAPSHOT_VER="VERSION.$now" >> ${VARIABLE_FILE}
+            CURRENT_SNAPSHOT_VER="$VERSION.$now"
+            echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
+            TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
+            echo NEXT_DEVELOPEMENT_VERSION="$(pysemver bump patch $TEMP_VAR)-SNAPSHOT
+            REP_URL=$(jq -r .repository.url package.json)
+            STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
+            COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
+            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
+            echo HTTPS_URL=$(jq -r .repository.http_url package.json)
+            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
+
+            if[$CIRCLE_BRANCH=="master"]
+            then
+              echo RELEASE_VERSION=$TEMP_VAR
+              echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
+              echo APP_VERSION=$TEMP_VAR >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_RELEASE/" >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_TYPE=$ARTIFACTORY_RELEASE >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_RELEASE/"
+            elif [$CIRCLE_TAG!=nul]
+            then
+              echo "deploying tag: $CIRCLE_TAG"
+              echo "APP_VERSION=$VERSION" >> ${VARIABLE_FILE}
+              echo "artifactory_type=$ARTIFACTORY_RELEASE" >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_TYPE=$ARTIFACTORY_RELEASE >> ${VARIABLE_FILE}
+            else
+              echo SNAPSHOT_VERSION=$CURRENT_SNAPSHOT_VER
+              echo APP_VERSION=$CURRENT_SNAPSHOT_VER >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/" >> ${VARIABLE_FILE}
+              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/"
+              echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
+            fi
 
   deploy_dev:
     <<: *deploy-env
@@ -85,6 +169,11 @@ jobs:
     <<: *deploy-env
     environment:
       tag: prod
+  
+  init:
+    <<: *init-script
+    environment:
+      DEBUG: false
 
   build:
     <<: *npm_build
