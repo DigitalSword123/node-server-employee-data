@@ -66,35 +66,35 @@ jobs:
       - run: bash ./terraform_project/scripts/apply_${tag}.sh
       - run: echo `deployed successfully in ${tag} environment`
   
-  .debug_logic: &debug_logic
-    - run : 
-        command: |
-          if ["$DEBUG=true"] ; then
-            set -xv
-            echo "ARTIFACT_ID is $ARTIFACT_ID"
-            echo "VERSION is $APP_VERSION"
-            echo "NEXT_DEVELOPEMENT_VERSION is $NEXT_DEVELOPEMENT_VERSION"
-            echo "prinitng package.json file"
-            cat package.json
-            git config --list
-          fi
+  # .debug_logic: &debug_logic
+  #   - run : 
+  #       command: |
+  #         if ["$DEBUG=true"] ; then
+  #           set -xv
+  #           echo "ARTIFACT_ID is $ARTIFACT_ID"
+  #           echo "VERSION is $APP_VERSION"
+  #           echo "NEXT_DEVELOPEMENT_VERSION is $NEXT_DEVELOPEMENT_VERSION"
+  #           echo "prinitng package.json file"
+  #           cat package.json
+  #           git config --list
+  #         fi
   
-  .only_branch_default: &only_branch_default
-    only:
-      - /^feature/.*$/
-      - /^hotfix/.*$/
-      - /^bugfix/.*$/
-      - merge_requests
-    except:
-      refs:
-        - main
-        - tags
+  # .only_branch_default: &only_branch_default
+  #   only:
+  #     - /^feature/.*$/
+  #     - /^hotfix/.*$/
+  #     - /^bugfix/.*$/
+  #     - merge_requests
+  #   except:
+  #     refs:
+  #       - main
+  #       - tags
   
-  .except_master: &except_master
-    rules:
-      - if: $CIRCLE_BRANCH=="master"
-        when: never
-      - when: on_success
+  # .except_master: &except_master
+  #   rules:
+  #     - if: $CIRCLE_BRANCH=="master"
+  #       when: never
+  #     - when: on_success
   
   # .only_merge_request: &only_merge_request
     
