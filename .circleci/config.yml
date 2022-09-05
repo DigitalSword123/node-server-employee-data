@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.0'
 orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@2.0
@@ -124,8 +124,8 @@ jobs:
             now=`date + %Y%m%d%h%M`
             echo CURRENT_SNAPSHOT_VER="VERSION.$now" >> ${VARIABLE_FILE}
             CURRENT_SNAPSHOT_VER="$VERSION.$now"
-            echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' \\<<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
-            TEMP_VAR=$(sed 's/-SNAPSHOT//' \\<<<$(jq -r .version package.json))
+            echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
+            TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
             echo NEXT_DEVELOPEMENT_VERSION="$(pysemver bump patch $TEMP_VAR)-SNAPSHOT
             REP_URL=$(jq -r .repository.url package.json)
             STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
