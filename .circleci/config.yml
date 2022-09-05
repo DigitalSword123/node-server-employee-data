@@ -40,11 +40,6 @@ jobs:
     steps:
       - checkout 
       - setup_remote_docker
-
-      # - run: echo "deploy"
-      # - run: bash ./scripts/install_terraform.sh
-      # - run: bash ./scripts/apply_${tag}.sh
-      # - run: echo "deployed successfully"
       - run : 
           name: beofre_script
           command: |
@@ -53,8 +48,6 @@ jobs:
             echo ${tag}
             echo $PATH
             echo $TARGET_ENV_DEV
-      # sudo chmod 777 install_terraform.sh
-      #bash install_terraform.sh
             bash ./terraform_project/scripts/terraform_install.sh   
             ls -al
             bash ./terraform_project/scripts/before_script_deploy.sh
