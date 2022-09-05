@@ -25,6 +25,7 @@ if[$CIRCLE_BRANCH=="main"]; then
     cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
     cat ~/ssh_keys/known_hosts >> ls -alrt ~/.ssh/known_hosts
     chmod 400 ~/.ssh/id_rsa && chmod 400 ~/.ssh/known_hosts
+    ls -alrt ~/.ssh
     git remote set-url origin $COMPUTED_SSH_URL
     git checkout main
     echo "=================build release Artifacts BEGIN====================="

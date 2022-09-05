@@ -45,18 +45,21 @@ jobs:
       # - run: bash ./scripts/install_terraform.sh
       # - run: bash ./scripts/apply_${tag}.sh
       # - run: echo "deployed successfully"
-
-      - run: echo "deploy"
-      - run: echo $(pwd)
-      - run: echo ${tag}
-      - run: echo $PATH
-      - run: echo $TARGET_ENV_DEV
-      # - run: sudo chmod 777 install_terraform.sh
-      # - run: bash install_terraform.sh
-      - run: bash ./terraform_project/scripts/terraform_install.sh   
-      - run: ls -al
-      - run: bash ./terraform_project/scripts/apply_${tag}.sh
-      - run: echo `deployed successfully in ${tag} environment`
+      - run : 
+          name: beofre_script
+          command: |
+            echo "deploy"
+            echo $(pwd)
+            echo ${tag}
+            echo $PATH
+            echo $TARGET_ENV_DEV
+      # sudo chmod 777 install_terraform.sh
+      #bash install_terraform.sh
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
   
   # .debug_logic: &debug_logic
   #   - run : 
@@ -98,6 +101,9 @@ jobs:
       - run : 
           name: beofre_script
           command: |
+            mkdir .aws
+            mkdir .jfrog
+            mkdir .m2
             pip install --upgrade pip
             pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
             if [ "$DEBUG" = true ] ; then
@@ -148,26 +154,6 @@ jobs:
               echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
             fi
 
-  deploy_dev:
-    <<: *deploy-env
-    environment:
-      tag: dev
-
-  deploy_qa:
-    <<: *deploy-env
-    environment:
-      tag: qa
-    
-  deploy_uat:
-    <<: *deploy-env
-    environment:
-      tag: uat
-
-  deploy_prod:
-    <<: *deploy-env
-    environment:
-      tag: prod
-  
   init:
     <<: *init-script
     environment:
@@ -187,6 +173,26 @@ jobs:
       POSTGRESS_USER: "postgres"
       POSTGRESS_DB: "employee_data"
       PGPASSWORD: "mypassword"
+
+  deploy_dev:
+    <<: *deploy-env
+    environment:
+      DEPLOY_ENVIRONMENT: dev
+
+  deploy_qa:
+    <<: *deploy-env
+    environment:
+      DEPLOY_ENVIRONMENT: qa
+    
+  deploy_uat:
+    <<: *deploy-env
+    environment:
+      DEPLOY_ENVIRONMENT: uat
+
+  deploy_prod:
+    <<: *deploy-env
+    environment:
+      DEPLOY_ENVIRONMENT: prod
 
 workflows:
   version: 2
