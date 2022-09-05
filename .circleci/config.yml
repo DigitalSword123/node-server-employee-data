@@ -172,7 +172,7 @@ jobs:
   init:
     <<: *init-script
     environment:
-      DEBUG: false
+      DEBUG: true
       VARIABLE_FILE: build.env
 
   build:
