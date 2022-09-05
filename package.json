@@ -34,7 +34,7 @@
         },
         "npm": {
             "publish": false,
-            "publishPath": "https://amiya.devops.com/artifactory/api/npm/npm/releases",
+            "publishPath": "https://devopsamiya.jfrog.io/artifactory/api/npm/releases-npm/",
             "access": null,
             "otp": null
         }

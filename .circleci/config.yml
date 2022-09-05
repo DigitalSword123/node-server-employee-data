@@ -113,6 +113,10 @@ jobs:
       - run :
           name: script
           command: |
+            ARTIFACTORY_URL="https://devopsamiya.jfrog.io/artifactory/api/npm"
+            ARTIFACTORY_BASE_URL="https://devopsamiya.jfrog.io/artifactory"
+            ARTIFACTORY_RELEASE="releases-npm"
+            ARTIFACTORY_SNAPSHOTS="snapshots-npm"
             touch ${VARIABLE_FILE}
             echo ARTIFACT_ID=$(jq -r .name package.json) >> ${VARIABLE_FILE}
             VERSION=$(jq -r .version package.json) 
@@ -129,7 +133,7 @@ jobs:
             echo HTTPS_URL=$(jq -r .repository.http_url package.json)
             echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
 
-            if[$CIRCLE_BRANCH=="master"]
+            if[$CIRCLE_BRANCH=="main"]
             then
               echo RELEASE_VERSION=$TEMP_VAR
               echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
@@ -180,7 +184,7 @@ jobs:
     <<: *npm_build
     environment:
       tag: dev
-      ARTIFACTORY_URL: "https://amiya.devops.com/artifactory/api/npm/npm/releases"
+      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/api/npm/employee-data-npm/"
       
   test:
     <<: *npm_unit_test
