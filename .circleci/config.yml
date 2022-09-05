@@ -1,16 +1,8 @@
 version: '2.0'
 orbs:
   node: circleci/node@5.0.2
-  aws-cli: circleci/aws-cli@2.0
 jobs:
 # https://medium.com/geekculture/configure-aws-credentials-in-circle-ci-8353d765aa15
-  aws-cli-cred-setup:
-    executor: aws-cli/default
-    steps:
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_SECRET_KEY
-  
   # build:
   #   docker:
   #     - image: circleci/node:latest
@@ -217,15 +209,12 @@ workflows:
               only: /^feature/.*$/
           requires:
             - build
-      - aws-cli-cred-setup:
-          context: aws
       - deploy_dev:
           filters:
             branches:
               only: /^feature/.*$/
           requires:
             - build
-            - aws-cli-cred-setup
       - trigger_qa:
           type: approval
       - deploy_qa:
@@ -234,7 +223,6 @@ workflows:
               only: main
           requires:
             - trigger_qa
-            - aws-cli-cred-setup
             - deploy_dev
       - trigger_uat:
           type: approval
@@ -244,7 +232,6 @@ workflows:
               only: main
           requires:
             - trigger_uat
-            - aws-cli-cred-setup
             - deploy_qa
       - trigger_prod:
           type: approval
@@ -254,5 +241,4 @@ workflows:
               only: main
           requires:
             - trigger_prod
-            - aws-cli-cred-setup
             - deploy_uat
