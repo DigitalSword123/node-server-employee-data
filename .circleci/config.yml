@@ -1,4 +1,4 @@
-version: '2.0'
+version: '2.1'
 orbs:
   node: circleci/node@5.0.2
   aws-cli: circleci/aws-cli@2.0
@@ -106,6 +106,7 @@ jobs:
       - run : 
           name: beofre_script
           command: |
+            pip install --upgrade pip
             pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
             if["$DEBUG"=true]; then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
