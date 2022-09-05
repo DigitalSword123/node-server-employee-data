@@ -90,6 +90,7 @@ jobs:
   init-script: &init-script
     docker:
         - image: cimg/python:3.10.6
+    working_directory: ~/
     steps:
       - run : 
           name: beofre_script
