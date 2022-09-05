@@ -100,7 +100,8 @@ jobs:
           command: |
             pip install --upgrade pip
             pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
-            if["$DEBUG"=true]; then
+            if["$DEBUG"=true]
+            then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
             fi
       - run :
