@@ -94,9 +94,11 @@ jobs:
       - run : 
           name: beofre_script
           command: |
+            echo $(pwd)
             mkdir .aws
             mkdir .jfrog
             mkdir .m2
+            ls -al
             pip install --upgrade pip
             pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
             if [ "$DEBUG" = true ] ; then
