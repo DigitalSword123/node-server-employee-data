@@ -30,7 +30,7 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm_build_branches.sh
+      - run: bash ./terraform_project/scripts/npm_build.sh
 
   npm_unit_test: &npm_unit_test
     docker:
@@ -179,6 +179,7 @@ jobs:
     <<: *init-script
     environment:
       DEBUG: false
+      VARIABLE_FILE: build.env
 
   build:
     <<: *npm_build
@@ -199,14 +200,20 @@ workflows:
   # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
+      - init:
+          filters:
+            branches:
+              only: /^feature/.*$/
       - build:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
+          requires:
+            - init
       - test:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
           requires:
             - build
       - aws-cli-cred-setup:
@@ -214,7 +221,7 @@ workflows:
       - deploy_dev:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
           requires:
             - build
             - aws-cli-cred-setup
