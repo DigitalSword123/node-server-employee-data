@@ -107,9 +107,12 @@ jobs:
             fi
   init-script: &init-script
     docker:
-        - image: cimg/python:3.10.6
+      - image: cimg/python:3.10.6
+    
     working_directory: ~/node-server-employee-data
     steps:
+      - checkout 
+      - setup_remote_docker
       - run :
           name: script
           command: |
