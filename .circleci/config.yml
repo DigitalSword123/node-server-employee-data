@@ -160,7 +160,7 @@ jobs:
     <<: *npm_build
     environment:
       tag: dev
-      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/api/npm/employee-data-npm/"
+      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
       PROJECT_NAME: node-server-employee-data
       
   test:
