@@ -36,7 +36,7 @@ if  [ $? -eq 0 ]; then
 else
     echo "failed"
 fi
-envl=$(echo "$DEPLOY_ENVIRONMENT" | tr '[:upper]' '[:lower:]')
+envl=$(echo "$DEPLOY_ENVIRONMENT" | tr '[:upper:]' '[:lower:]')
 export AWSENVLOWER=$envl
 echo "printing terragrunt.hcl file"
 cat terragrunt.hcl
@@ -46,13 +46,17 @@ terraform --version
 
 cd terraform_project
 
-export VAR_FILE=vars/$AWSENVLOWER-ap-south-1.tfvars
+echo "$(pwd)"
+
+ls -al
+
+export VAR_FILE=vars/$DEPLOY_ENVIRONMENT-ap-south-1.tfvars
 
 echo "${VAR_FILE}"
 
 
 terraform init \
- -backend-config="key=employe-node-server/$AWSENVLOWER/terraform.tfstate" \
+ -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \
  -backend-config="access_key=${AWS_ACCESS_KEY}" \
  -backend-config="secret_key=${AWS_SECRET_KEY}"
 
