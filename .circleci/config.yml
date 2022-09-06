@@ -136,9 +136,9 @@ jobs:
             REP_URL=$(jq -r .repository.url package.json)
             STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
             COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
+            echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
             echo HTTPS_URL=$(jq -r .repository.http_url package.json)
-            echo $COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
+            echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
             git --version
             git branch -r
             echo SNAPSHOT_VERSION=$CURRENT_SNAPSHOT_VER
