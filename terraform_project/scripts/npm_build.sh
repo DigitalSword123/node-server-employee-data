@@ -20,7 +20,8 @@ npm install --save-dev
 # https://devopsamiya.jfrog.io/ui/admin/repositories/local/
 
 
-if[$CIRCLE_BRANCH=="main"]; then
+if[$CIRCLE_BRANCH=="main"] 
+then
     mkdir ~/.ssh && ls -alrt ~/.ssh
     cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
     cat ~/ssh_keys/known_hosts >> ls -alrt ~/.ssh/known_hosts
