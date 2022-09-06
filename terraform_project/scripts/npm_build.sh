@@ -55,6 +55,12 @@ npm install --save-dev
 # fi
 
 
+ls -al
+
+echo "******************reading VARIABLE_FILE start*****************"
+cat ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE end*****************"
+
 echo "=================build snapshot Artifacts BEGIN====================="
 echo "building Zip files for deployement"
 npm run build

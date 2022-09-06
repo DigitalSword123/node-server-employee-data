@@ -149,7 +149,9 @@ jobs:
 
             ls -al
 
+            echo "******************reading VARIABLE_FILE start*****************"
             cat ${VARIABLE_FILE}
+            echo "******************reading VARIABLE_FILE end*****************"
 
   init-before:
     <<: *init-before-script
@@ -166,7 +168,7 @@ jobs:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
       PROJECT_NAME: node-server-employee-data
-      
+      VARIABLE_FILE: build.env      
   test:
     <<: *npm_unit_test
     environment:
