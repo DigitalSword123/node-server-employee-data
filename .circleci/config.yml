@@ -155,12 +155,15 @@ jobs:
               echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
             fi
 
-  init:
+  init-before:
     <<: *init-before-script
     environment:
       DEBUG: true
+  init:
+    <<: *init-script
+    environment:
+      DEBUG: true
       VARIABLE_FILE: build.env
-
   build:
     <<: *npm_build
     environment:
@@ -200,10 +203,16 @@ workflows:
   # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
+      - init-before:
+          filters:
+            branches:
+              only: /^feature/.*$/
       - init:
           filters:
             branches:
               only: /^feature/.*$/
+          requires:
+            - init-before
       - build:
           filters:
             branches:
