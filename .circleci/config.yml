@@ -125,7 +125,7 @@ jobs:
             touch ${VARIABLE_FILE}
             echo ARTIFACT_ID=$(jq -r .name package.json) >> ${VARIABLE_FILE}
             VERSION=$(jq -r .version package.json) 
-            now=`date + '%Y%m%d%h%M'`
+            now=`date +'%Y%m%d%h%M'`
             echo CURRENT_SNAPSHOT_VER="VERSION.$now" >> ${VARIABLE_FILE}
             CURRENT_SNAPSHOT_VER="$VERSION.$now"
             echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
