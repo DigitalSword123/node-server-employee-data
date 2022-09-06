@@ -140,7 +140,7 @@ jobs:
             echo HTTPS_URL=$(jq -r .repository.http_url package.json)
             echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
  
-            if[$CIRCLE_BRANCH=="main"]
+            if[$CIRCLE_BRANCH==main]
             then
               echo RELEASE_VERSION=$TEMP_VAR
               echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
