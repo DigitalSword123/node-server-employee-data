@@ -17,7 +17,8 @@ export AWSENVLOWER=$envl
 echo "APP_VERSION=$APP_VERSION"
 
 echo ">>>>>>>>>>>>> Downloading artifacts from artifactory >>>>>>>>>>>>>>>>>"
-cat ~/jfrog_keys/jfrog-cli.conf >> ~/.jfrog/jfrog-cli.pkg-conf
+cat ~/$PROJECT_NAME/jfrog_keys/jfrog-cli.conf >> ~/.jfrog/jfrog-cli.pkg-conf
+jf rt ping
 rm -rf CF_OUTPUT
 echo "jfrog rt dl $ARTIFACTORY_TYPE/$PROJECT_NAME/-/$PROJECT_NAME-$APP_VERSION.tgz CF_OUTPUT/ --explode=true --sort-order=desc --limit=1 --flat=true"
 jfrog rt dl $ARTIFACTORY_TYPE/$PROJECT_NAME/-/$PROJECT_NAME-$APP_VERSION.tgz CF_OUTPUT/ --explode=true --sort-order=desc --limit=1 --flat=true

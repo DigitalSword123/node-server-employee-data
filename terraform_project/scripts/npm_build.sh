@@ -1,8 +1,10 @@
 echo ${TARGET_ENV_PROD}
 
+echo "$(pwd)"
+ 
 npm version 
 git submodule update --init
-cp ~/npmrc-config/ .npmrc ~/.npmrc
+cp ~/$PROJECT_NAME/npmrc-config/.npmrc ~/.npmrc
 node --version
 npm install --save-dev
 

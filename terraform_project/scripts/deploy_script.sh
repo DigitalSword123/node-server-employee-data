@@ -36,7 +36,8 @@ if  [ $? -eq 0 ]; then
 else
     echo "failed"
 fi
-
+envl=$(echo "$DEPLOY_ENVIRONMENT" | tr '[:upper]' '[:lower:]')
+export AWSENVLOWER=$envl
 echo "printing terragrunt.hcl file"
 cat terragrunt.hcl
 echo "printing $AWSENVLOWER-terraform.tfvars file"
