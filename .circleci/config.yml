@@ -147,6 +147,10 @@ jobs:
             echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/"
             echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
 
+            ls -al
+
+            cat ${VARIABLE_FILE}
+
   init-before:
     <<: *init-before-script
     environment:
