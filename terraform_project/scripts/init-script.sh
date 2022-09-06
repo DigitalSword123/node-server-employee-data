@@ -8,7 +8,7 @@ touch ${VARIABLE_FILE}
 echo "export ARTIFACT_ID=$(jq -r .name package.json)" >> ${VARIABLE_FILE}
 VERSION=$(jq -r .version package.json) 
 now=`date +'%Y%m%d%h%M'`
-echo "export CURRENT_SNAPSHOT_VER="VERSION.$now"" >> ${VARIABLE_FILE}
+echo "export CURRENT_SNAPSHOT_VER='$VERSION.$now'" >> ${VARIABLE_FILE}
 CURRENT_SNAPSHOT_VER="$VERSION.$now"
 echo "export RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))" >> ${VARIABLE_FILE}
 TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
@@ -25,7 +25,7 @@ git --version
 git branch -r
 echo SNAPSHOT_VERSION=$CURRENT_SNAPSHOT_VER
 echo "export APP_VERSION=$CURRENT_SNAPSHOT_VER" >> ${VARIABLE_FILE}
-echo "export ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/" >> ${VARIABLE_FILE}
+echo "export ARTIFACTORY_LOC=$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/" >> ${VARIABLE_FILE}
 echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/"
 echo "export ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS" >> ${VARIABLE_FILE}
 ls -al
