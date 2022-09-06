@@ -66,8 +66,9 @@ const copyLibFiles = () => {
         .pipe(gulp.dest(`${DIST_DIR}/lib`))
 };
 
+// this below registry url in artifactory has package.json file which has all dependencies
 const installpackages = (cb) => {
-    exec(`cd ${DIST_DIR} && npm install --production=true --registry https://amiya.devops.com/artifactory/api/npm/npm/packages`, (err => {
+    exec(`cd ${DIST_DIR} && npm install --production=true --registry https://devopsamiya.jfrog.io/artifactory/project-virtual-npm/`, (err => {
             cb(err)
         }
 
