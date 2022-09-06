@@ -4,7 +4,7 @@ echo "$(pwd)"
  
 npm version 
 git submodule update --init
-cp ~/$PROJECT_NAME/npmrc-config/.npmrc ~/.npmrc
+cp ./npmrc-config/.npmrc ~/.npmrc
 node --version
 npm install --save-dev
 
