@@ -157,7 +157,6 @@ jobs:
 
   init:
     <<: *init-before-script
-        *init-script
     environment:
       DEBUG: true
       VARIABLE_FILE: build.env
