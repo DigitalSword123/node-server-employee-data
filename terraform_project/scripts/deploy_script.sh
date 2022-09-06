@@ -43,9 +43,12 @@ echo "printing $AWSENVLOWER-terraform.tfvars file"
 echo "Terraform Version : "
 terraform --version
 
+cd terraform_project
+
 export VAR_FILE=vars/$AWSENVLOWER-ap-south-1.tfvars
 
 echo "${VAR_FILE}"
+
 
 terraform init \
  -backend-config="key=employe-node-server/$AWSENVLOWER/terraform.tfstate" \

@@ -1,5 +1,7 @@
+echo "********************before deploy script start*****************"
 echo "APP_VERSION=$APP_VERSION"
-mkdir ~/.ssh && ls -alrt ~/.ssh
+# mkdir ~/.ssh && 
+ls -alrt ~/.ssh
 cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
 cat ~/ssh_keys/known_hosts >> ls -alrt ~/.ssh/known_hosts
 chmod 400 ~/.ssh/id_rsa && chmod 400 ~/.ssh/known_hosts
@@ -27,3 +29,5 @@ else
 fi
 pwd
 ls -alrt
+
+echo "********************before deploy script end*****************"
