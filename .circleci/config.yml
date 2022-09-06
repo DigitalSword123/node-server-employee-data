@@ -41,7 +41,7 @@ jobs:
       - checkout 
       - setup_remote_docker
       - run : 
-          name: beofre_script
+          name: deploy-script
           command: |
             echo "deploy"
             echo $(pwd)
