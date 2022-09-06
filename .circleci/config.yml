@@ -105,70 +105,48 @@ jobs:
             if [ "$DEBUG" = true ] ; then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
             fi
-  init-script: &init-script
-    docker:
-      - image: cimg/python:3.10.6
-    
-    working_directory: ~/node-server-employee-data
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - run :
-          name: script
-          command: |
-            echo $(pwd)
-            ls -al
-            ARTIFACTORY_URL="https://devopsamiya.jfrog.io/artifactory/api/npm"
-            ARTIFACTORY_BASE_URL="https://devopsamiya.jfrog.io/artifactory"
-            ARTIFACTORY_RELEASE="releases-npm"
-            ARTIFACTORY_SNAPSHOTS="snapshots-npm"
-            touch ${VARIABLE_FILE}
-            echo ARTIFACT_ID=$(jq -r .name package.json) >> ${VARIABLE_FILE}
-            VERSION=$(jq -r .version package.json) 
-            now=`date +'%Y%m%d%h%M'`
-            echo CURRENT_SNAPSHOT_VER="VERSION.$now" >> ${VARIABLE_FILE}
-            CURRENT_SNAPSHOT_VER="$VERSION.$now"
-            echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
-            TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
-            pip install --upgrade pip
-            pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
-            echo NEXT_DEVELOPEMENT_VERSION="$(pysemver bump patch $TEMP_VAR)-SNAPSHOT"
-            REP_URL=$(jq -r .repository.url package.json)
-            STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
-            COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-            echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
-            echo HTTPS_URL=$(jq -r .repository.http_url package.json)
-            echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-            git --version
-            git branch -r
-            echo SNAPSHOT_VERSION=$CURRENT_SNAPSHOT_VER
-            echo APP_VERSION=$CURRENT_SNAPSHOT_VER >> ${VARIABLE_FILE}
-            echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/" >> ${VARIABLE_FILE}
-            echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/"
-            echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
-
-            ls -al
-
-            echo "******************reading VARIABLE_FILE start*****************"
-            cat ${VARIABLE_FILE}
-            echo "******************reading VARIABLE_FILE end*****************"
 
   init-before:
     <<: *init-before-script
     environment:
       DEBUG: true
+
   init:
-    <<: *init-script
+    docker:
+      - image: cimg/python:3.10.6
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - run: bash ./terraform_project/scripts/init-script.sh
+          # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+          # Must be relative path from root
+          paths:
+            - build.env
     environment:
       DEBUG: true
       VARIABLE_FILE: build.env
+            
   build:
-    <<: *npm_build
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run: bash ./terraform_project/scripts/npm_build.sh
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
       PROJECT_NAME: node-server-employee-data
-      VARIABLE_FILE: build.env      
+      VARIABLE_FILE: build.env  
+
   test:
     <<: *npm_unit_test
     environment:
