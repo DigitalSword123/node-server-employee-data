@@ -141,7 +141,7 @@ jobs:
             echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
             git --version
             git branch -r
-            if[$CIRCLE_BRANCH==main]
+            if[origin/$CIRCLE_BRANCH==origin/main]
             then
               echo RELEASE_VERSION=$TEMP_VAR
               echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
