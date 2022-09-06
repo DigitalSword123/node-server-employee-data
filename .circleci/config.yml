@@ -114,6 +114,7 @@ jobs:
           name: script
           command: |
             echo $(pwd)
+            ls -al
             ARTIFACTORY_URL="https://devopsamiya.jfrog.io/artifactory/api/npm"
             ARTIFACTORY_BASE_URL="https://devopsamiya.jfrog.io/artifactory"
             ARTIFACTORY_RELEASE="releases-npm"
