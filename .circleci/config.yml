@@ -87,7 +87,7 @@ jobs:
   # .only_merge_request: &only_merge_request
     
 
-  init-script: &init-script
+  init-before-script: &init-before-script
     docker:
         - image: cimg/python:3.10.6
     working_directory: ~/
@@ -105,6 +105,11 @@ jobs:
             if [ "$DEBUG" = true ] ; then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
             fi
+  init-script: &init-script
+    docker:
+        - image: cimg/python:3.10.6
+    working_directory: ~/node-server-employee-data
+    steps:
       - run :
           name: script
           command: |
@@ -151,7 +156,8 @@ jobs:
             fi
 
   init:
-    <<: *init-script
+    <<: *init-before-script
+        *init-script
     environment:
       DEBUG: true
       VARIABLE_FILE: build.env
