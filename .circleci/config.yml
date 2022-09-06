@@ -138,7 +138,7 @@ jobs:
             COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
             echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
             echo HTTPS_URL=$(jq -r .repository.http_url package.json)
-            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
+            echo $COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
             git --version
             git branch -r
             if[ "origin/$CIRCLE_BRANCH" == "origin/main" ]
