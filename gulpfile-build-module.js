@@ -14,6 +14,8 @@ let knownOptions = {
     default: {}
 }
 
+// this comes from this script "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
+//  in package.json
 // get the name of the Module and its entry point
 let options = minimist(process.argv.slice(2), knownOptions);
 

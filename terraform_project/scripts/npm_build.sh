@@ -60,6 +60,7 @@ echo "building Zip files for deployement"
 npm run build
 echo "=================build snapshot Artifacts END====================="
 
+echo "ARTIFACTORY_LOC : " $ARTIFACTORY_LOC
 echo "=================publish snapshot to Artifactory BEGIN====================="
-npm publish --registry $ARTIFACTORY_URL
+npm publish --registry $ARTIFACTORY_LOC
 echo "=================publish snapshot to Artifactory END====================="
