@@ -70,7 +70,7 @@ const copyLibFiles = () => {
 
 // this below registry url in artifactory has package.json file which has all dependencies
 const installpackages = (cb) => {
-    exec(`cd ${DIST_DIR} && rm package-lock.json && rm -rf node_modules && npm install --production=true --registry https://devopsamiya.jfrog.io/artifactory/project-virtual-npm/`, (err => {
+    exec(`cd ${DIST_DIR} && npm install --production=true --registry https://devopsamiya.jfrog.io/artifactory/project-virtual-npm/`, (err => {
             cb(err)
         }
 
