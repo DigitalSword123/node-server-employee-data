@@ -1,8 +1,16 @@
 echo ${TARGET_ENV_PROD}
 
 echo "$(pwd)"
+
+ls -al
+
+echo "******************reading VARIABLE_FILE start*****************"
+cat ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE end*****************"
+
+source ${VARIABLE_FILE}
  
-npm version 
+npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 cp ./npmrc-config/.npmrc ~/.npmrc
 node --version
@@ -53,15 +61,6 @@ npm install --save-dev
 #     npm publish --registry $ARTIFACTORY_URL
 #     echo "=================publish snapshot to Artifactory END====================="
 # fi
-
-
-ls -al
-
-echo "******************reading VARIABLE_FILE start*****************"
-cat ${VARIABLE_FILE}
-echo "******************reading VARIABLE_FILE end*****************"
-
-source ${VARIABLE_FILE}
 
 echo "=================build snapshot Artifacts BEGIN====================="
 echo "building Zip files for deployement"
