@@ -23,7 +23,7 @@ let options = minimist(process.argv.slice(2), knownOptions);
 const MODULE_NAME = options["module-name"];
 const PROJECT_ROOT = ".";
 const BUILD_DIR = ".";
-const SRC_DIR = `${PROJECT_ROOT}/src`;
+const SRC_DIR = `${PROJECT_ROOT}/src/employee-data`;
 const MODULE_DIR = `${SRC_DIR}/${MODULE_NAME}`;
 const DIST_DIR = `${BUILD_DIR}/dist-${MODULE_NAME}`;
 const TARGET_DIR = `${BUILD_DIR}/target-${MODULE_NAME}`;
@@ -45,10 +45,10 @@ const cleanTarget = () => {
 const copyBaseFiles = () => {
     gulp.src(
             [
-                `${MODULE_DIR}/index.js`,
-                `${MODULE_DIR}/locals.js`
+                `${MODULE_DIR}/index.js`
             ], { allowEmpty: true }
         )
+        .pipe(rename('index.js'))
         .pipe(gulp.dest(DIST_DIR));
     return gulp.src(
         [
