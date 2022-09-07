@@ -96,7 +96,8 @@ const ziplit = () => {
     let dirmode = parseInt('40755', 8);
     let filemode = parseInt('100644', 8);
 
-    return gulp.src(tap((file) => {
+    return gulp.src(`${DIST_DIR}/**/*`)
+        .pipe(tap((file) => {
             if (file.stat.isDirectory()) {
                 file.stat.mode = dirmode;
             } else {
