@@ -7,9 +7,21 @@ const zip = require('gulp-zip');
 const packageJson = require('./package.json')
 const replaceInFile = require('replace-in-file');
 const { readdirSync } = require('fs');
+const minimist = require('minimist');
+
+let knownOptions = {
+    string: ['module-name', 'index-name'],
+    default: {}
+}
+
+// this comes from this script "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
+//  in package.json
+// get the name of the Module and its entry point
+let options = minimist(process.argv.slice(2), knownOptions);
 
 // define where the files will be placed
 const PROJECT_ROOT = ".";
+const MODULE_NAME = options["module-name"];
 const DIST_DIR = `${PROJECT_ROOT}/dist-${MODULE_NAME}`;
 const TARGET_DIR = `${PROJECT_ROOT}/target-${MODULE_NAME}`;
 const UBER_ZIP = getArtifactName();
