@@ -92,7 +92,7 @@ const installpackages = (cb) => {
 // file and set the mode explicitly in the zip file
 // this allows windows builds to work correctly when unzipping to Linux
 const ziplit = () => {
-    del(`${DIST_DIR}/common-lib`);
+    // del(`${DIST_DIR}/common-lib`);
     let dirmode = parseInt('40755', 8);
     let filemode = parseInt('100644', 8);
 
@@ -102,7 +102,7 @@ const ziplit = () => {
             } else {
                 file.stat.mode = filemode;
             }
-        }), { allowEmpty: true })
+        }))
         .pipe(zip(OUTPUT_FILE_NAME))
         .pipe(gulp.dest(`${TARGET_DIR}`));
 };
