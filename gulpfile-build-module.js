@@ -80,7 +80,7 @@ const copyLibFiles = () => {
 
 // this function will install npm package present in local package.json file
 const installpackages = (cb) => {
-    exec(`cd ${DIST_DIR} && npm cache clean --force && cp ../package.json . && npm install --save-dev`, (err => {
+    exec(`cd ${DIST_DIR} && npm cache clean --force && cp ../package.json . && npm install --save-dev && ls -al`, (err => {
             cb(err)
         }
 
