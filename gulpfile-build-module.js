@@ -8,6 +8,7 @@ const zip = require('gulp-zip');
 const tap = require('gulp-tap');
 const exec = require('child_process').exec;
 const packageJson = require('./package.json')
+const rename = require('gulp-rename')
 
 let knownOptions = {
     string: ['module-name', 'index-name'],
