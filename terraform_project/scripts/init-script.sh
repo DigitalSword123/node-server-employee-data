@@ -7,7 +7,7 @@ ARTIFACTORY_SNAPSHOTS="snapshots-npm"
 touch ${VARIABLE_FILE}
 echo "export ARTIFACT_ID=$(jq -r .name package.json)" >> ${VARIABLE_FILE}
 VERSION=$(jq -r .version package.json) 
-now=`date +'%Y%m%d%h%M'`
+now=`date +'%Y%m%d%H%M'`
 echo "export CURRENT_SNAPSHOT_VER='$VERSION.$now'" >> ${VARIABLE_FILE}
 CURRENT_SNAPSHOT_VER="$VERSION.$now"
 echo "export RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))" >> ${VARIABLE_FILE}
