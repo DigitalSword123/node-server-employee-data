@@ -53,7 +53,7 @@ const copyBaseFiles = () => {
     return gulp.src(
         [
             `${PROJECT_ROOT}/package.json`
-        ]
+        ], { allowEmpty: true }
     )
 
     .pipe(gulp.dest(DIST_DIR));
@@ -63,7 +63,7 @@ const copyLibFiles = () => {
     return gulp.src(
             [
                 `${MODULE_DIR}/lib/**`
-            ]
+            ], { allowEmpty: true }
         )
         .pipe(gulp.dest(`${DIST_DIR}/lib`))
 };
@@ -102,7 +102,7 @@ const ziplit = () => {
             } else {
                 file.stat.mode = filemode;
             }
-        }))
+        }), { allowEmpty: true })
         .pipe(zip(OUTPUT_FILE_NAME))
         .pipe(gulp.dest(`${TARGET_DIR}`));
 };
