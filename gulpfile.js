@@ -22,13 +22,13 @@ let options = minimist(process.argv.slice(2), knownOptions);
 // define where the files will be placed
 const PROJECT_ROOT = ".";
 const MODULE_NAME = options["module-name"];
-const DIST_DIR = `${PROJECT_ROOT}/dist-${MODULE_NAME}`;
-const TARGET_DIR = `${PROJECT_ROOT}/target-${MODULE_NAME}`;
+const DIST_DIR = `${PROJECT_ROOT}/dist`;
+const TARGET_DIR = `${PROJECT_ROOT}/target`;
 const UBER_ZIP = getArtifactName();
 const VERSION = getVersion();
 
 // Terraform
-const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform`;
+const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform_project`;
 
 // delete the dist directory and everything under it
 const cleanDist = () => {
