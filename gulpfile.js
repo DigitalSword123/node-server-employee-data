@@ -10,8 +10,8 @@ const { readdirSync } = require('fs');
 
 // define where the files will be placed
 const PROJECT_ROOT = ".";
-const DIST_DIR = `${PROJECT_ROOT}/dist`;
-const TARGET_DIR = `${PROJECT_ROOT}/target`;
+const DIST_DIR = `${PROJECT_ROOT}/dist-${MODULE_NAME}`;
+const TARGET_DIR = `${PROJECT_ROOT}/target-${MODULE_NAME}`;
 const UBER_ZIP = getArtifactName();
 const VERSION = getVersion();
 
