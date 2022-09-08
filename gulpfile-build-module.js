@@ -88,6 +88,15 @@ const installpackages = (cb) => {
     ));
 };
 
+const copyTerraformFiles = () => {
+    return gulp.src(
+            [
+                `${TERRAFORM_DIR}/**/*`
+            ]
+        )
+        .pipe(gulp.dest(DIST_DIR));
+};
+
 // zip the dist directory
 // we use a tap to determine if the file should be a directory, executable, config or regular
 // file and set the mode explicitly in the zip file
