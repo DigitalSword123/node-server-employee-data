@@ -2,20 +2,7 @@ version: '2.0'
 orbs:
   node: circleci/node@5.0.2
 jobs:
-# https://medium.com/geekculture/configure-aws-credentials-in-circle-ci-8353d765aa15
-  # build:
-  #   docker:
-  #     - image: circleci/node:latest
-  #   working_directory: ~/node-server-employee-data
-    
-  #   steps:
-  #    - checkout
-  #    - setup_remote_docker
-  #    - run: echo "build docker image with required instllation of node and git"
-  #    - run: echo "Node versiopn in docker is"
-  #    - run: node --version
-  #    - run: npm install --save-dev
-    
+  
   npm_build: &npm_build
     docker:
       - image: circleci/node:latest
@@ -29,7 +16,7 @@ jobs:
       - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm-test.sh
+      - run: bash ./scripts/npm-test.sh
 
   deploy: &deploy-env
     docker:
@@ -118,7 +105,7 @@ jobs:
     steps:
       - checkout 
       - setup_remote_docker
-      - run: bash ./terraform_project/scripts/init-script.sh
+      - run: bash ./scripts/init-script.sh
           # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
@@ -140,7 +127,7 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
-      - run: bash ./terraform_project/scripts/npm_build.sh
+      - run: bash ./scripts/npm_build.sh
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
