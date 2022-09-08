@@ -1,10 +1,11 @@
 source dist-${MODULE_NAME}
-echo "Switching to target directory"
+echo "--------------------Switching to dist directory-------------------"
 cd dist-${MODULE_NAME}
 echo "printing all files in target directory"
 
 ls -altr
 
+echo "------------------printing all files in target directory end --------------------------"
 echo "STATE_BUCKET" $STATE_BUCKET
 echo "AWSENV" $AWSENV
 echo "AWS_REGION" $AWS_REGION
@@ -55,8 +56,9 @@ pwd
 
 export VAR_FILE=vars/$DEPLOY_ENVIRONMENT-ap-south-1.tfvars
 
-echo "${VAR_FILE}"
+cat ${VAR_FILE}
 
+echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
 terraform init \
  -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \
