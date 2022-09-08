@@ -15,9 +15,6 @@ let knownOptions = {
     default: {}
 }
 
-// Terraform
-const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform_project`;
-
 // this comes from this script "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
 //  in package.json
 // get the name of the Module and its entry point
@@ -32,6 +29,9 @@ const MODULE_DIR = `${SRC_DIR}/${MODULE_NAME}`;
 const DIST_DIR = `${BUILD_DIR}/dist-${MODULE_NAME}`;
 const TARGET_DIR = `${BUILD_DIR}/target-${MODULE_NAME}`;
 const OUTPUT_FILE_NAME = getArtifactName();
+
+// Terraform folder
+const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform_project`;
 
 // delete the dist directory and everything under it
 const cleanDist = () => {
