@@ -17,29 +17,6 @@ jobs:
     steps:
       - checkout
       - run: bash ./scripts/npm-test.sh
-
-  deploy: &deploy-env
-    docker:
-      - image: circleci/node:latest
-    
-    working_directory: ~/node-server-employee-data/terraform_project
-
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - run : 
-          name: deploy-script
-          command: |
-            echo "deploy"
-            echo $(pwd)
-            echo ${tag}
-            echo $PATH
-            echo $TARGET_ENV_DEV
-            bash ./terraform_project/scripts/terraform_install.sh   
-            ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
   
   # .debug_logic: &debug_logic
   #   - run : 
@@ -145,12 +122,29 @@ jobs:
       PGPASSWORD: "mypassword"
 
   deploy_dev:
-    <<: *deploy-env
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ./target
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    - attach_workspace:
+        at: ./target
     environment:
       DEPLOY_ENVIRONMENT: dev
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - run : 
+          name: deploy-script
+          command: |
+            echo "deploy"
+            echo $(pwd)
+            echo ${tag}
+            echo $PATH
+            echo $TARGET_ENV_DEV
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
 
   deploy_qa:
     <<: *deploy-env

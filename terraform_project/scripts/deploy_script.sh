@@ -1,3 +1,4 @@
+source target
 echo "Switching to target directory"
 cd target
 echo "printing all files in target directory"
