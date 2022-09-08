@@ -1,6 +1,6 @@
-source target
+source dist
 echo "Switching to target directory"
-cd target
+cd dist
 echo "printing all files in target directory"
 ls -altr
 echo "STATE_BUCKET" $STATE_BUCKET

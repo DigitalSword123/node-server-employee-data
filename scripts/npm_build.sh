@@ -74,3 +74,5 @@ npm publish --registry $ARTIFACTORY_LOC
 # npm config set registry $ARTIFACTORY_LOC
 # npm publish
 echo "=================publish snapshot to Artifactory END====================="
+
+ls -al
