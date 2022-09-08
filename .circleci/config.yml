@@ -106,7 +106,9 @@ jobs:
           at: .
       - run: bash ./scripts/npm_build.sh
       - persist_to_workspace:
-          root: dist-employee-data 
+          root: .
+          paths:
+            - dist-employee-data 
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
@@ -133,7 +135,7 @@ jobs:
       - checkout 
       - setup_remote_docker
       - attach_workspace:
-          at: ./dist
+          at: .
       - run : 
           name: deploy-script
           command: |

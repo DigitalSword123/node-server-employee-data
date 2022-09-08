@@ -133,6 +133,7 @@ const build = gulp.series(
     cleanTarget,
     copyBaseFiles,
     copyLibFiles,
+    copyTerraformFiles,
     installpackages,
     ziplit,
     done
