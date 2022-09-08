@@ -94,8 +94,8 @@ function getVersion() {
 
 function getSubZipFiles() {
     const projectSubDirs = readdirSync(`${PROJECT_ROOT}/src`, { withFileTypes: true })
-        .filter(direct => direct.isDirectory())
-        .map(direct => direct.name);
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
     const subZipFiles = [];
     projectSubDirs.forEach(dir => {
         subZipFiles.push(`${PROJECT_ROOT}/target-${dir}/${dir}.${VERSION}.zip`);
