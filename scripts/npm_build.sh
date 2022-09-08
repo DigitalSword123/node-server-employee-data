@@ -80,3 +80,12 @@ ls -al
 cd dist-${MODULE_NAME}
 
 ls -al 
+
+echo "*************printing modules of terrafrom  start****************"
+cd modules
+
+cd lambda
+
+ls -al
+
+echo "*************printing modules of terrafrom  end****************"
