@@ -106,12 +106,13 @@ jobs:
           at: .
       - run: bash ./scripts/npm_build.sh
       - persist_to_workspace:
-          root: dist
+          root: dist-employee-data 
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
       PROJECT_NAME: node-server-employee-data
-      VARIABLE_FILE: build.env  
+      VARIABLE_FILE: build.env 
+      MODULE_NAME: employee-data 
 
   test:
     <<: *npm_unit_test
@@ -127,6 +128,7 @@ jobs:
     working_directory: ~/node-server-employee-data
     environment:
       DEPLOY_ENVIRONMENT: dev
+      MODULE_NAME: employee-data
     steps:
       - checkout 
       - setup_remote_docker

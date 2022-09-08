@@ -76,3 +76,7 @@ npm publish --registry $ARTIFACTORY_LOC
 echo "=================publish snapshot to Artifactory END====================="
 
 ls -al
+
+cd dist-${MODULE_NAME}
+
+ls -al
