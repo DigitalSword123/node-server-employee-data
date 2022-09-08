@@ -4,8 +4,6 @@
 * create a lambda function for inserting employee data
 */
 
-const { Client } = require('pg')
-const cors = require("cors");
 const FILE = "src/index.js";
 const utils = require('./lib/utils');
 const postgresUno = require('postgres-uno')
