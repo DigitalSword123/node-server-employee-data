@@ -1,70 +1,22 @@
-version: '2.1'
+version: '2.0'
 orbs:
   node: circleci/node@5.0.2
-  aws-cli: circleci/aws-cli@2.0
 jobs:
-# https://medium.com/geekculture/configure-aws-credentials-in-circle-ci-8353d765aa15
-  aws-cli-cred-setup:
-    executor: aws-cli/default
-    steps:
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY
-          aws-secret-access-key: AWS_SECRET_KEY
   
-  # build:
-  #   docker:
-  #     - image: circleci/node:latest
-  #   working_directory: ~/node-server-employee-data
-    
-  #   steps:
-  #    - checkout
-  #    - setup_remote_docker
-  #    - run: echo "build docker image with required instllation of node and git"
-  #    - run: echo "Node versiopn in docker is"
-  #    - run: node --version
-  #    - run: npm install --save-dev
-    
   npm_build: &npm_build
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm_build_branches.sh
+      - run: bash ./terraform_project/scripts/npm_build.sh
 
   npm_unit_test: &npm_unit_test
     docker:
       - image: circleci/node:latest # use the default executor defined within the orb
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm-test.sh
-
-  deploy: &deploy-env
-    docker:
-      - image: circleci/node:latest
-    
-    working_directory: ~/node-server-employee-data/terraform_project
-
-    steps:
-      - checkout 
-      - setup_remote_docker
-
-      # - run: echo "deploy"
-      # - run: bash ./scripts/install_terraform.sh
-      # - run: bash ./scripts/apply_${tag}.sh
-      # - run: echo "deployed successfully"
-
-      - run: echo "deploy"
-      - run: echo $(pwd)
-      - run: echo ${tag}
-      - run: echo $PATH
-      - run: echo $TARGET_ENV_DEV
-      # - run: sudo chmod 777 install_terraform.sh
-      # - run: bash install_terraform.sh
-      - run: bash ./terraform_project/scripts/terraform_install.sh   
-      - run: ls -al
-      - run: bash ./terraform_project/scripts/apply_${tag}.sh
-      - run: echo `deployed successfully in ${tag} environment`
+      - run: bash ./scripts/npm-test.sh
   
   # .debug_logic: &debug_logic
   #   - run : 
@@ -99,89 +51,71 @@ jobs:
   # .only_merge_request: &only_merge_request
     
 
-  init-script: &init-script
+  init-before-script: &init-before-script
     docker:
         - image: cimg/python:3.10.6
+    working_directory: ~/
     steps:
       - run : 
           name: beofre_script
           command: |
+            echo $(pwd)
+            mkdir .aws
+            mkdir .jfrog
+            mkdir .m2
+            ls -al
+            pip install --upgrade pip
             pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
-            if["$DEBUG"=true]; then
+            if [ "$DEBUG" = true ] ; then
               ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
             fi
-      - run :
-          name: script
-          command: |
-            touch ${VARIABLE_FILE}
-            echo ARTIFACT_ID=$(jq -r .name package.json) >> ${VARIABLE_FILE}
-            VERSION=$(jq -r .version package.json) 
-            now=`date + %Y%m%d%h%M`
-            echo CURRENT_SNAPSHOT_VER="VERSION.$now" >> ${VARIABLE_FILE}
-            CURRENT_SNAPSHOT_VER="$VERSION.$now"
-            echo RELEASE_VERSION=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json)) >> ${VARIABLE_FILE}
-            TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
-            echo NEXT_DEVELOPEMENT_VERSION="$(pysemver bump patch $TEMP_VAR)-SNAPSHOT
-            REP_URL=$(jq -r .repository.url package.json)
-            STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
-            COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL >> ${VARIABLE_FILE}
-            echo HTTPS_URL=$(jq -r .repository.http_url package.json)
-            echo COMPUTED_SSH_URLgit@github.com:$STRIPPED_URL
 
-            if[$CIRCLE_BRANCH=="master"]
-            then
-              echo RELEASE_VERSION=$TEMP_VAR
-              echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
-              echo APP_VERSION=$TEMP_VAR >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_RELEASE/" >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_TYPE=$ARTIFACTORY_RELEASE >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_RELEASE/"
-            elif [$CIRCLE_TAG!=nul]
-            then
-              echo "deploying tag: $CIRCLE_TAG"
-              echo "APP_VERSION=$VERSION" >> ${VARIABLE_FILE}
-              echo "artifactory_type=$ARTIFACTORY_RELEASE" >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_TYPE=$ARTIFACTORY_RELEASE >> ${VARIABLE_FILE}
-            else
-              echo SNAPSHOT_VERSION=$CURRENT_SNAPSHOT_VER
-              echo APP_VERSION=$CURRENT_SNAPSHOT_VER >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/" >> ${VARIABLE_FILE}
-              echo ARTIFACTORY_LOC="$ARTIFACTORY_URL/$ARTIFACTORY_SNAPSHOTS/"
-              echo ARTIFACTORY_TYPE=$ARTIFACTORY_SNAPSHOTS >> ${VARIABLE_FILE}
-            fi
-
-  deploy_dev:
-    <<: *deploy-env
+  init-before:
+    <<: *init-before-script
     environment:
-      tag: dev
-
-  deploy_qa:
-    <<: *deploy-env
-    environment:
-      tag: qa
-    
-  deploy_uat:
-    <<: *deploy-env
-    environment:
-      tag: uat
-
-  deploy_prod:
-    <<: *deploy-env
-    environment:
-      tag: prod
-  
+      DEBUG: true
+# https://circleci.com/docs/workspaces
   init:
-    <<: *init-script
+    docker:
+      - image: cimg/python:3.10.6
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - run: bash ./scripts/init-script.sh
+          # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+          # Must be relative path from root
+          paths:
+            - build.env
     environment:
-      DEBUG: false
-
+      DEBUG: true
+      VARIABLE_FILE: build.env
+            
   build:
-    <<: *npm_build
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run: bash ./scripts/npm_build.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
     environment:
       tag: dev
-      ARTIFACTORY_URL: "https://amiya.devops.com/artifactory/api/npm/npm/releases"
-      
+      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
+      PROJECT_NAME: node-server-employee-data
+      VARIABLE_FILE: build.env 
+      MODULE_NAME: employee-data 
+
   test:
     <<: *npm_unit_test
     environment:
@@ -190,30 +124,120 @@ jobs:
       POSTGRESS_DB: "employee_data"
       PGPASSWORD: "mypassword"
 
+  deploy_dev:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: dev
+      MODULE_NAME: employee-data
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+
+  deploy_qa:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: qa
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: ./target
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+    
+  deploy_uat:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: uat
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: ./target
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+
+  deploy_prod:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: prod
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: ./target
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./terraform_project/scripts/terraform_install.sh   
+            ls -al
+            bash ./terraform_project/scripts/before_script_deploy.sh
+            bash ./terraform_project/scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+
 workflows:
   version: 2
   # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
+      - init-before:
+          filters:
+            branches:
+              only: /^feature/.*$/
+      - init:
+          filters:
+            branches:
+              only: /^feature/.*$/
+          requires:
+            - init-before
       - build:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
+          requires:
+            - init
       - test:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
           requires:
             - build
-      - aws-cli-cred-setup:
-          context: aws
       - deploy_dev:
           filters:
             branches:
-              only: main
+              only: /^feature/.*$/
           requires:
             - build
-            - aws-cli-cred-setup
       - trigger_qa:
           type: approval
       - deploy_qa:
@@ -222,7 +246,6 @@ workflows:
               only: main
           requires:
             - trigger_qa
-            - aws-cli-cred-setup
             - deploy_dev
       - trigger_uat:
           type: approval
@@ -232,7 +255,6 @@ workflows:
               only: main
           requires:
             - trigger_uat
-            - aws-cli-cred-setup
             - deploy_qa
       - trigger_prod:
           type: approval
@@ -242,5 +264,4 @@ workflows:
               only: main
           requires:
             - trigger_prod
-            - aws-cli-cred-setup
             - deploy_uat

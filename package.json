@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
+        "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data --index-name index.js",
         "build-uber": "node_modules/.bin/gulp --gulpfile gulpfile.js build",
         "build": "npm run build-employee-data && npm run build-uber",
         "release": "node_modules/.bin/release-it --ci -VV"
@@ -34,7 +34,7 @@
         },
         "npm": {
             "publish": false,
-            "publishPath": "https://amiya.devops.com/artifactory/api/npm/npm/releases",
+            "publishPath": "https://devopsamiya.jfrog.io/artifactory/api/npm/releases-npm/",
             "access": null,
             "otp": null
         }
@@ -48,7 +48,7 @@
     "license": "ISC",
     "devDependencies": {
         "cors": "^2.8.5",
-        "express": "^4.18.1",
+        "replace-in-file": "^4.2.0",
         "pg": "^8.7.3",
         "postgres": "^3.2.2",
         "postgres-uno": "^2.1.0",
@@ -68,8 +68,6 @@
         "mocha": "^6.2.2",
         "sinon": "^1.17.6",
         "run-sequence": "^2.2.1",
-        "sonar-scanner": "^3.1.0",
-        "sonarqube-scanner": "^2.6.0",
         "sinon-stub-promise": "^4.0.0",
         "log4js": "^2.11.0"
     },

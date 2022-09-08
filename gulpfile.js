@@ -7,17 +7,28 @@ const zip = require('gulp-zip');
 const packageJson = require('./package.json')
 const replaceInFile = require('replace-in-file');
 const { readdirSync } = require('fs');
+const minimist = require('minimist');
+
+let knownOptions = {
+    string: ['module-name', 'index-name'],
+    default: {}
+}
+
+// this comes from this script "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
+//  in package.json
+// get the name of the Module and its entry point
+let options = minimist(process.argv.slice(2), knownOptions);
 
 // define where the files will be placed
 const PROJECT_ROOT = ".";
-const MODULE_DIR = `${SRC_DIR}/${MODULE_NAME}`;
-const DIST_DIR = `${BUILD_DIR}/dist-${MODULE_NAME}`;
-const TARGET_DIR = `${BUILD_DIR}/target-${MODULE_NAME}`;
+const MODULE_NAME = options["module-name"];
+const DIST_DIR = `${PROJECT_ROOT}/dist`;
+const TARGET_DIR = `${PROJECT_ROOT}/target`;
 const UBER_ZIP = getArtifactName();
 const VERSION = getVersion();
 
 // Terraform
-const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform`;
+const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform_project`;
 
 // delete the dist directory and everything under it
 const cleanDist = () => {
@@ -83,8 +94,8 @@ function getVersion() {
 
 function getSubZipFiles() {
     const projectSubDirs = readdirSync(`${PROJECT_ROOT}/src`, { withFileTypes: true })
-        .filter(direct => direct.isDirectory())
-        .map(direct => direct.name);
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
     const subZipFiles = [];
     projectSubDirs.forEach(dir => {
         subZipFiles.push(`${PROJECT_ROOT}/target-${dir}/${dir}.${VERSION}.zip`);
