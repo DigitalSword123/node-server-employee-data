@@ -1,6 +1,6 @@
-source dist
+source dist-${MODULE_NAME}
 echo "Switching to target directory"
-cd dist
+cd dist-${MODULE_NAME}
 echo "printing all files in target directory"
 ls -altr
 echo "STATE_BUCKET" $STATE_BUCKET

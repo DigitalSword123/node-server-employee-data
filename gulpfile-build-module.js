@@ -15,6 +15,9 @@ let knownOptions = {
     default: {}
 }
 
+// Terraform
+const TERRAFORM_DIR = `${PROJECT_ROOT}/terraform_project`;
+
 // this comes from this script "build-employee-data": "node_modules/.bin/gulp --gulpfile gulpfile-build-module.js build --module-name employee-data",
 //  in package.json
 // get the name of the Module and its entry point
