@@ -70,5 +70,6 @@ echo "=================build snapshot Artifacts END====================="
 
 echo "ARTIFACTORY_LOC : " $ARTIFACTORY_LOC
 echo "=================publish snapshot to Artifactory BEGIN====================="
-npm publish --registry $ARTIFACTORY_LOC
+npm config set registry $ARTIFACTORY_LOC
+npm publish
 echo "=================publish snapshot to Artifactory END====================="
