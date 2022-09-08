@@ -5,7 +5,7 @@ echo "printing all files in target directory"
 
 ls -altr
 
-echo `total size of the deployement package : + du -sh .`
+echo total size of the deployement package=$(du -sh .)
 echo "------------------printing all files in target directory end --------------------------"
 echo "STATE_BUCKET" $STATE_BUCKET
 echo "AWSENV" $AWSENV
