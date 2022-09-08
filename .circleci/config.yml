@@ -101,12 +101,12 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - persist_to_workspace:
-          root: target
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
       - run: bash ./scripts/npm_build.sh
+      - persist_to_workspace:
+          root: target
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
