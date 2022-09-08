@@ -4,5 +4,5 @@ id_ed25519
 help.txt
 **/.terraform/*
 new Folder/
-*.zip
+*.zip 
 *.exe
