@@ -1,6 +1,6 @@
-echo "Switching to CF_OUTPUT directory"
-cd CF_OUTPUT
-echo "printing all files in CF_OUTPUT directory"
+echo "Switching to target directory"
+cd target
+echo "printing all files in target directory"
 ls -altr
 echo "STATE_BUCKET" $STATE_BUCKET
 echo "AWSENV" $AWSENV
@@ -12,7 +12,7 @@ echo "IAM_ROLE" $IAM_ROLE
 echo "**********************************************************"
 pwd
 echo "unzip ZIP from tgz from tgz_output directory"
-cd package/target && unzip -o TF_OUTPUT
+unzip -o *.zip -d TF_OUTPUT
 pwd
 ls -altr
 RESULT=$?

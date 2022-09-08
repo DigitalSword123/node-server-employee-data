@@ -5,3 +5,4 @@ help.txt
 **/.terraform/*
 new Folder/
 *.zip
+*.exe

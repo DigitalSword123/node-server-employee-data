@@ -124,6 +124,8 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
+      - persist_to_workspace:
+          root: target
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
@@ -144,6 +146,9 @@ jobs:
 
   deploy_dev:
     <<: *deploy-env
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: ./target
     environment:
       DEPLOY_ENVIRONMENT: dev
 
