@@ -1,7 +1,7 @@
 "use strict";
 /**
  @Module
-* create a lambda function for inserting employee data
+* create a lambda function for inserting employee data to pg server
 */
 
 const FILE = "src/index.js";
