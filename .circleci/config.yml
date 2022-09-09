@@ -9,7 +9,7 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm_build.sh
+      - run: bash ./scripts/npm_build.sh
 
   npm_unit_test: &npm_unit_test
     docker:
@@ -139,10 +139,10 @@ jobs:
       - run : 
           name: deploy-script
           command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
+            bash ./scripts/terraform_install.sh   
             ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
 
   deploy_qa:
@@ -159,10 +159,10 @@ jobs:
       - run : 
           name: deploy-script
           command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
+            bash ./scripts/terraform_install.sh   
             ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
     
   deploy_uat:
@@ -179,10 +179,10 @@ jobs:
       - run : 
           name: deploy-script
           command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
+            bash ./scripts/terraform_install.sh   
             ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
 
   deploy_prod:
@@ -199,10 +199,10 @@ jobs:
       - run : 
           name: deploy-script
           command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
+            bash ./scripts/terraform_install.sh   
             ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
 
 workflows:
