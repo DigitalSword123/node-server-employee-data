@@ -231,10 +231,20 @@ workflows:
   # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
-      - init-before
+      - init-before:
+          filters:
+            branches:
+              only: 
+                - /^feature/.*$/
+                - main
       - init:
           requires:
             - init-before
+          filters:
+            branches:
+              only: 
+                - /^feature/.*$/
+                - main
       - build:
           filters:
             branches:
@@ -252,8 +262,9 @@ workflows:
       - deploy_dev:
           filters:
             branches:
-              only: /^feature/.*$/
-                    main
+              only: 
+                - /^feature/.*$/
+                - main
           requires:
             - build
       - trigger_qa:
