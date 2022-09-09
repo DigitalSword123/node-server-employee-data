@@ -13,6 +13,9 @@ source ${VARIABLE_FILE}
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 cp ./npmrc-config/.npmrc ~/.npmrc
+ls -al
+echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
+cat .npmrc
 echo node version=$(node --version)
 echo npm version=$(npm --version)
 npm install --save-dev
