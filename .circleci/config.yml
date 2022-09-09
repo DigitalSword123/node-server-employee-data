@@ -232,19 +232,14 @@ workflows:
   stage_workflow:
     jobs:
       - init-before:
-          filters:
-            branches:
-              only: /^feature/.*$/
       - init:
-          filters:
-            branches:
-              only: /^feature/.*$/
           requires:
             - init-before
       - build:
           filters:
             branches:
               only: /^feature/.*$/
+                    main
           requires:
             - init
       - test:
@@ -257,6 +252,7 @@ workflows:
           filters:
             branches:
               only: /^feature/.*$/
+                    main
           requires:
             - build
       - trigger_qa:
