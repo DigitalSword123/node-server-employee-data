@@ -13,8 +13,8 @@ source ${VARIABLE_FILE}
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 cp ./npmrc-config/.npmrc ~/.npmrc
-node --version
-npm --version
+echo node version=$(node --version)
+echo npm version=$(npm --version)
 npm install --save-dev
 
 # https://www.jfrog.com/confluence/display/JFROG/QuickStart+Guide%3A+JFrog+Self-Hosted
