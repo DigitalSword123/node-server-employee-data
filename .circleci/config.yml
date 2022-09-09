@@ -167,7 +167,7 @@ jobs:
       POSTGRESS_DB: "employee_data"
       PGPASSWORD: "mypassword"
 
-  deploy_dev:
+  deploy_dev_branch:
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
@@ -193,6 +193,34 @@ jobs:
           paths:
             - dist-employee-data 
             - build.env
+
+  deploy_dev_main:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: dev
+      MODULE_NAME: employee-data
+      VARIABLE_FILE: build.env
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./scripts/terraform_install.sh   
+            ls -al
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
+
   deploy_qa:
     docker:
       - image: circleci/node:latest
@@ -299,28 +327,35 @@ workflows:
               only: 
                 - /^feature/.*$/
           requires:
-            - init
+            - init-branch
       - build-main:
           filters:
             branches:
               only: 
                 - main
           requires:
-            - init
+            - init-main
       - test:
           filters:
             branches:
               only: /^feature/.*$/
           requires:
-            - build
-      - deploy_dev:
+            - build-branch
+      - deploy_dev_branch:
           filters:
             branches:
               only: 
                 - /^feature/.*$/
                 - main
           requires:
-            - build
+            - build-branch
+      - deploy_dev_main:
+          filters:
+            branches:
+              only: 
+                - main
+          requires:
+            - build-main
       - trigger_qa:
           type: approval
       - deploy_qa:
@@ -329,7 +364,7 @@ workflows:
               only: main
           requires:
             - trigger_qa
-            - deploy_dev
+            - deploy_dev_main
       - trigger_uat:
           type: approval
       - deploy_uat:
