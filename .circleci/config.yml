@@ -222,83 +222,88 @@ jobs:
             - build.env
 
   deploy_qa:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: qa
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./scripts/terraform_install.sh   
-            ls -al
-            bash ./scripts/before_script_deploy.sh
-            bash ./scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist-employee-data 
-            - build.env
-    
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: qa
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
+
   deploy_uat:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: uat
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./scripts/terraform_install.sh   
-            ls -al
-            bash ./scripts/before_script_deploy.sh
-            bash ./scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist-employee-data 
-            - build.env
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: uat
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
 
   deploy_prod:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: prod
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./scripts/terraform_install.sh   
-            ls -al
-            bash ./scripts/before_script_deploy.sh
-            bash ./scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist-employee-data 
-            - build.env
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: prod
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
 
 workflows:
   version: 2
-  # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
       - init-before:
