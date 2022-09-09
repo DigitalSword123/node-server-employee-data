@@ -35,9 +35,10 @@ echo "=================build snapshot Artifacts END====================="
 
 echo "ARTIFACTORY_LOC : " $ARTIFACTORY_LOC
 echo "=================publish snapshot to Artifactory BEGIN====================="
-npm publish --registry $ARTIFACTORY_LOC
+# npm publish --registry $ARTIFACTORY_LOC
 # npm config set registry $ARTIFACTORY_LOC
 # npm publish
+npm publish --registry https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
 echo "=================publish snapshot to Artifactory END====================="
 
 ls -al
@@ -45,4 +46,9 @@ ls -al
 cd target
 
 echo "------------printing target folder files ------------------"
+ls -al 
+
+cd dist
+
+echo "------------printing dist folder files ------------------"
 ls -al 
