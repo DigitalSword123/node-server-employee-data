@@ -27,8 +27,8 @@ locals {
 
 data "archive_file" "employee_lambda"{
   type="zip"
-  source_dir = "${path.module}/../../"
   output_path="${path.module}/${var.filename}"
+  source_file = var.filename
 }
 
 # https://stackoverflow.com/questions/70232248/not-able-to-create-zip-file-for-aws-lambda-fx-in-gitlab-through-terraform

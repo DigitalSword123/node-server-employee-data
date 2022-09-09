@@ -132,6 +132,7 @@ jobs:
     environment:
       DEPLOY_ENVIRONMENT: dev
       MODULE_NAME: employee-data
+      VARIABLE_FILE: build.env
     steps:
       - checkout 
       - setup_remote_docker
@@ -145,7 +146,11 @@ jobs:
             bash ./scripts/before_script_deploy.sh
             bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
-
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
   deploy_qa:
     docker:
       - image: circleci/node:latest
@@ -165,6 +170,11 @@ jobs:
             bash ./scripts/before_script_deploy.sh
             bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
     
   deploy_uat:
     docker:
@@ -185,6 +195,11 @@ jobs:
             bash ./scripts/before_script_deploy.sh
             bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
 
   deploy_prod:
     docker:
@@ -205,6 +220,11 @@ jobs:
             bash ./scripts/before_script_deploy.sh
             bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
 
 workflows:
   version: 2

@@ -66,6 +66,10 @@ cat ${VAR_FILE}
 
 echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
+echo "----------creating zip file for lambda deployement------------"
+zip ${ARTIFACT_ID}.${APP_VERSION}.zip *.js *.json lib
+echo "----------creating zip file for lambda deployement end------------"
+
 terraform init \
  -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \
  -backend-config="access_key=${AWS_ACCESS_KEY}" \

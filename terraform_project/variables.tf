@@ -45,7 +45,7 @@ variable "_lambda_properties" {
   type        = map(string)
   default = {
     Lambda_function_name          = "node_employee_data"
-    lambda_zip_file_employee_data = "employee-node-data.1.0.0-SNAPSHOT.zip"
+    lambda_zip_file_employee_data = "employee-node-data.${version}.zip"
     # lambda_zip_file_employee_data = "employee-node-data.${version}.zip"
     lambda_handler                = "index.handler"
   }
