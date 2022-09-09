@@ -238,8 +238,7 @@ workflows:
       - build:
           filters:
             branches:
-              only: /^feature/.*$/
-                    main
+              only: /^feature/.*$/, main    
           requires:
             - init
       - test:
