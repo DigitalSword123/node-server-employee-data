@@ -95,25 +95,25 @@ jobs:
       DEBUG: true
       VARIABLE_FILE: build.env
 
-init-main:
-    docker:
-      - image: cimg/python:3.10.6
-    working_directory: ~/node-server-employee-data
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - run: bash ./scripts/init-script-main.sh
-          # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
-      - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-          # taken to be the root directory of the workspace.
-          root: .
-          # Must be relative path from root
-          paths:
-            - build.env
-    environment:
-      DEBUG: true
-      VARIABLE_FILE: build.env
+  init-main:
+      docker:
+        - image: cimg/python:3.10.6
+      working_directory: ~/node-server-employee-data
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - run: bash ./scripts/init-script-main.sh
+            # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
+        - persist_to_workspace:
+            # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+            # taken to be the root directory of the workspace.
+            root: .
+            # Must be relative path from root
+            paths:
+              - build.env
+      environment:
+        DEBUG: true
+        VARIABLE_FILE: build.env
             
   build-branch:
     docker:
