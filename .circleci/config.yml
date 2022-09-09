@@ -109,6 +109,7 @@ jobs:
           root: .
           paths:
             - dist-employee-data 
+            - build.env
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"

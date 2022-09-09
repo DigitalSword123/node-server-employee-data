@@ -1,3 +1,8 @@
+source ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE start*****************"
+cat ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE end*****************"
+
 source dist-${MODULE_NAME}
 echo "--------------------Switching to dist directory-------------------"
 cd dist-${MODULE_NAME}
