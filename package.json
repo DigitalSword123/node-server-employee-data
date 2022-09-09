@@ -45,7 +45,10 @@
         "http_url": "https://github.com/DigitalSword123/node-server-employee-data.git"
     },
     "author": "Amiya Kumar Rana",
-    "license": "ISC",
+    "license": "UNLICENSED",
+    "files": [
+        "target/*"
+    ],
     "devDependencies": {
         "replace-in-file": "^4.2.0",
         "gulp": "^4.0.2",
@@ -65,9 +68,6 @@
         "sinon-stub-promise": "^4.0.0",
         "log4js": "^2.11.0"
     },
-    "files": [
-        "target/*"
-    ],
     "dependencies": {
         "jsonschema": "^1.4.1",
         "moment": "^2.29.4",
