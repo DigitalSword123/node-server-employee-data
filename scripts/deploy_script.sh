@@ -67,8 +67,12 @@ cat ${VAR_FILE}
 echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
 echo "----------creating zip file for lambda deployement------------"
-zip ${ARTIFACT_ID}.${APP_VERSION}.zip *.js *.json lib
+zip -r ${ARTIFACT_ID}.${APP_VERSION}.zip *.js *.json lib
 echo "----------creating zip file for lambda deployement end------------"
+
+echo "***************printing all files after zip************************"
+ls -al
+echo "***************printing all files after zip end************************"
 
 terraform init \
  -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \
