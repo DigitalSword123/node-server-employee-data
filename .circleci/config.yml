@@ -75,14 +75,34 @@ jobs:
     environment:
       DEBUG: true
 # https://circleci.com/docs/workspaces
-  init:
+  init-branch:
     docker:
       - image: cimg/python:3.10.6
     working_directory: ~/node-server-employee-data
     steps:
       - checkout 
       - setup_remote_docker
-      - run: bash ./scripts/init-script.sh
+      - run: bash ./scripts/init-script-branch.sh
+          # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+          # Must be relative path from root
+          paths:
+            - build.env
+    environment:
+      DEBUG: true
+      VARIABLE_FILE: build.env
+
+init-main:
+    docker:
+      - image: cimg/python:3.10.6
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - run: bash ./scripts/init-script-main.sh
           # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
@@ -95,7 +115,7 @@ jobs:
       DEBUG: true
       VARIABLE_FILE: build.env
             
-  build:
+  build-branch:
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
@@ -104,7 +124,7 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
-      - run: bash ./scripts/npm_build.sh
+      - run: bash ./scripts/npm_build_branch.sh
       - persist_to_workspace:
           root: .
           paths:
@@ -116,6 +136,28 @@ jobs:
       PROJECT_NAME: node-server-employee-data
       VARIABLE_FILE: build.env 
       MODULE_NAME: employee-data 
+
+  build-main:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run: bash ./scripts/npm_build_main.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
+    environment:
+      tag: dev
+      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
+      PROJECT_NAME: node-server-employee-data
+      VARIABLE_FILE: build.env 
+      MODULE_NAME: employee-data
 
   test:
     <<: *npm_unit_test
@@ -237,19 +279,31 @@ workflows:
               only: 
                 - /^feature/.*$/
                 - main
-      - init:
+      - init-branch:
           requires:
             - init-before
           filters:
             branches:
               only: 
                 - /^feature/.*$/
+      - init-main:
+          requires:
+            - init-before
+          filters:
+            branches:
+              only: 
                 - main
-      - build:
+      - build-branch:
           filters:
             branches:
               only: 
                 - /^feature/.*$/
+          requires:
+            - init
+      - build-main:
+          filters:
+            branches:
+              only: 
                 - main
           requires:
             - init
