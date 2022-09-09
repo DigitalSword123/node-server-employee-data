@@ -74,6 +74,10 @@ echo "***************printing all files after zip************************"
 ls -al
 echo "***************printing all files after zip end************************"
 
+echo "app version : " ${APP_VERSION}
+export TF_VAR_version=${APP_VERSION}
+echo "TF_VAR_version : " ${TF_VAR_version}
+
 terraform init \
  -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \
  -backend-config="access_key=${AWS_ACCESS_KEY}" \
