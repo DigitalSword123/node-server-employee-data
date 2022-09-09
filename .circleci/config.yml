@@ -231,7 +231,7 @@ workflows:
   # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
-      - init-before:
+      - init-before
       - init:
           requires:
             - init-before
