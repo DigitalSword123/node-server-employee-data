@@ -67,7 +67,7 @@ cat ${VAR_FILE}
 echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
 echo "----------creating zip file for lambda deployement------------"
-zip -r ${ARTIFACT_ID}.${APP_VERSION}.zip *.js *.json lib
+zip -r ${ARTIFACT_ID}.${APP_VERSION}.zip *.js *.json lib node_modules
 echo "----------creating zip file for lambda deployement end------------"
 
 echo "***************printing all files after zip************************"
