@@ -15,6 +15,7 @@ git submodule update --init
 cp ./npmrc-config/.npmrc ~/.npmrc
 ls -al
 echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
+cd ~
 cat .npmrc
 echo node version=$(node --version)
 echo npm version=$(npm --version)
