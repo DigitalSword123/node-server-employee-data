@@ -17,9 +17,11 @@ ls -al
 echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
 cd ~
 cat .npmrc
+cd ~/node-server-employee-data
 echo node version=$(node --version)
 echo npm version=$(npm --version)
 npm install --save-dev
+
 
 # https://www.jfrog.com/confluence/display/JFROG/QuickStart+Guide%3A+JFrog+Self-Hosted
 # http://localhost:8081/artifactory
@@ -52,7 +54,7 @@ cd target
 echo "------------printing target folder files ------------------"
 ls -al 
 
-cd dist
+cd ../dist
 
 echo "------------printing dist folder files ------------------"
 ls -al 
