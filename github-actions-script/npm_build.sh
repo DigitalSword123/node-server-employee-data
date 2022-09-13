@@ -15,7 +15,7 @@ echo "******************reading VARIABLE_FILE start*****************"
 cat ${VARIABLE_FILE}
 echo "******************reading VARIABLE_FILE end*****************"
 
-npm version $CURRENT_SNAPSHOT_VER --no-git-tag-version
+npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 cp ./npmrc-config/.npmrc /.npmrc
 
