@@ -100,7 +100,7 @@ jobs:
           source $VARIABLE_FILE
           cd target
           ls -al
-          jf rt u "(*).zip" --url $ARTIFACTORY_LOC
+          jf rt u "(*).zip" --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
         env:
           VARIABLE_FILE: build.env
         
