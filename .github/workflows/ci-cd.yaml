@@ -93,6 +93,7 @@ jobs:
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
       - run: |
+          sudo mkdir /.jfrog
           sudo cp ./jfrog_keys/jfrog-cli.conf /.jfrog/jfrog-cli.conf
           jf --version
           jf rt ping --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
