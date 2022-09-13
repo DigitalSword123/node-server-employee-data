@@ -3,11 +3,12 @@ name: node server employee data CI/CD pipeline
 on:
   push:
     branches: 
-      - /^feature/.*$/
-      - /^hotfix/.*$/
-      - /^bugfix/.*$/
-  pull_request:
-    branches: /^feature/.*$/
+      - feature/dev-2
+      # - /^feature/.*$/
+      # - /^hotfix/.*$/
+      # - /^bugfix/.*$/
+  # pull_request:
+  #   branches: /^feature/.*$/
 
 jobs:
   init-before:
