@@ -1,4 +1,5 @@
 echo $(pwd)
+echo "-----------------init-script started-------------"
 ls -al
 ARTIFACTORY_URL="https://devopsamiya.jfrog.io/artifactory/api/npm"
 ARTIFACTORY_BASE_URL="https://devopsamiya.jfrog.io/artifactory"
@@ -25,7 +26,7 @@ git --version
 echo "************prtining branch*************"
 git branch -r
 
-if[ $CIRCLE_BRANCH == "main" ]
+if [$GITHUB_REF_NAME == 'main']
 then
     echo RELEASE_VERSION=$TEMP_VAR
     echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION

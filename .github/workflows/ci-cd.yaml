@@ -34,10 +34,18 @@ jobs:
             ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
           fi
   
-  # init:
-  #   needs: init-before
-
-
+  init:
+    needs: init-before
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        env:
+          VARIABLE_FILE: build.env
+      - name: Run init-before stage
+        working-directory: /
+        run: |
+          bash ./github-actions-script/init-script.sh
+          
   # build:
   #   needs: init 
   # test: 
