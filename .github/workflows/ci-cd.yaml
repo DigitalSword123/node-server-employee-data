@@ -3,7 +3,7 @@ name: node server employee data CI/CD pipeline
 on:
   push:
     branches: 
-      - /^feature/.*$/
+      - /^feature/*$/
       # - /^hotfix/.*$/
       # - /^bugfix/.*$/
   # pull_request:
