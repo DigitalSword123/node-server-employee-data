@@ -22,13 +22,13 @@ jobs:
         run: |
           echo "staring init-before stage"
           echo $(pwd)
-          mkdir .aws
-          mkdir .jfrog
-          mkdir .m2
+          sudo mkdir .aws
+          sudo mkdir .jfrog
+          sudo mkdir .m2
           echo "**************printing files in home directory***************"
           ls -al
-          pip install --upgrade pip
-          pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
+          sudo pip install --upgrade pip
+          sudo pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
           if [ "$DEBUG" = true ] ; then
             ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
           fi
