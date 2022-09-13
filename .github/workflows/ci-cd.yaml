@@ -18,10 +18,12 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run a one-line script
         working-directory: /
-        # if: github.ref.name == 'feature/dev-2'
+        if: github.ref.name == 'feature/dev-2'
         run: |
           echo "staring init-before stage"
           echo $(pwd)
+          echo "--------printing current branch name-------------"
+          echo ${github.ref.name}
           sudo mkdir .aws
           sudo mkdir .jfrog
           sudo mkdir .m2
