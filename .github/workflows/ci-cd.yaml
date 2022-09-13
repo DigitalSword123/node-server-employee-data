@@ -33,45 +33,45 @@ jobs:
             ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
           fi
 
-  init:
-    needs: init-before
-  build:
-    needs: init
-  test: 
-    needs: build
+  # init:
+  #   needs: init-before
+  # build:
+  #   needs: init
+  # test: 
+  #   needs: build
 
-  deploy_dev:
-    needs: build
-    name: deploy_dev stage
-    runs-on: ubuntu-latest
-    steps:
+  # deploy_dev:
+  #   needs: build
+  #   name: deploy_dev stage
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-    - name: Checkout Repo
-      uses: actions/checkout@v1
+  #   - name: Checkout Repo
+  #     uses: actions/checkout@v1
 
-    - name: Terraform Init
-      uses: hashicorp/terraform-github-actions/init@v0.4.0
+  #   - name: Terraform Init
+  #     uses: hashicorp/terraform-github-actions/init@v0.4.0
 
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: '../../terraform_project'
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
+  #     env:
+  #       # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       TF_ACTION_WORKING_DIR: '../../terraform_project'
+  #       AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+  #       AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
 
-    - name: Terraform Validate
-      uses: hashicorp/terraform-github-actions/validate@v0.3.7
+  #   - name: Terraform Validate
+  #     uses: hashicorp/terraform-github-actions/validate@v0.3.7
 
-    - name: Terraform Apply
-      uses: hashicorp/terraform-github-actions/apply@v0.4.0
+  #   - name: Terraform Apply
+  #     uses: hashicorp/terraform-github-actions/apply@v0.4.0
 
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: '../../terraform_project'
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       TF_ACTION_WORKING_DIR: '../../terraform_project'
+  #       AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
 
-  deploy_qa:
-    needs: dev
-  deploy_uat:
-    needs: deploy_qa
-  deploy_prod:
-    needs: deploy_uat
+  # deploy_qa:
+  #   needs: dev
+  # deploy_uat:
+  #   needs: deploy_qa
+  # deploy_prod:
+  #   needs: deploy_uat
