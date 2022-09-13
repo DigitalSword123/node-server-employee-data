@@ -23,6 +23,7 @@ npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 
 sudo cp ./npmrc-config/.npmrc /.npmrc
+sudo cp ./jfrog_keys/jfrog-cli.conf /jfrog-cli.conf
 echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
 sudo cat /.npmrc
 
@@ -79,8 +80,11 @@ else
     # npm config set registry $ARTIFACTORY_LOC
     # npm publish
     
-    npm login
-    npm publish --registry https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+    # npm login
+    # npm publish --registry https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+    jf rt ping
+    cd target
+    jf rt u "(*).zip" https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
     echo "=================publish snapshot to Artifactory END====================="
 
     ls -al
