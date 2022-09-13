@@ -21,11 +21,11 @@ COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
 echo "export COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL" >> ${VARIABLE_FILE}
 echo HTTPS_URL=$(jq -r .repository.http_url package.json)
 echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-git --version
+git --version 
 echo "************prtining branch*************"
 git branch -r
 
-if[ $CIRCLE_BRANCH == "main" ]
+if[ $CIRCLE_BRANCH == "main" ] 
 then
     echo RELEASE_VERSION=$TEMP_VAR
     echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
