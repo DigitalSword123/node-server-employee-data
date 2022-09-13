@@ -89,8 +89,12 @@ jobs:
 
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
+        working-directory: .
       - run: |
           jf --version
+          jf rt ping
+          cd target
+          jf rt u "(*).zip" https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
         
 
   # test: 
