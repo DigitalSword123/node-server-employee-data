@@ -93,7 +93,6 @@ jobs:
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
       - run: |
-          ls -al
           jf --version
           jf rt ping --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
           cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
@@ -101,6 +100,8 @@ jobs:
           cd target
           ls -al
           jf rt u "(*).zip" --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+          cd /
+          ls -al
         env:
           VARIABLE_FILE: build.env
         
