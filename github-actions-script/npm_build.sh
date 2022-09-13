@@ -22,10 +22,10 @@ echo $CURRENT_SNAPSHOT_VER
 
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
-cp ./npmrc-config/.npmrc /.npmrc
+sudo cp ./npmrc-config/.npmrc /.npmrc
 
 echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
-cat /.npmrc
+sudo cat /.npmrc
 
 echo node version=$(node --version)
 echo npm version=$(npm --version)
