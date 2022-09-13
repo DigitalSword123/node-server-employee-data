@@ -1,9 +1,14 @@
+
+ls -al
+cp ./build_output/${VARIABLE_FILE} ../${VARIABLE_FILE}
+cd ..
+
 source ${VARIABLE_FILE}
 echo "******************reading VARIABLE_FILE start*****************"
 cat ${VARIABLE_FILE}
 echo "******************reading VARIABLE_FILE end*****************"
 
-source dist-${MODULE_NAME}
+cp ./build_output/dist-${MODULE_NAME}/** ../dist-${MODULE_NAME}
 echo "--------------------Switching to dist directory-------------------"
 cd dist-${MODULE_NAME}
 echo "printing all files in target directory"
