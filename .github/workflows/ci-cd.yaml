@@ -37,9 +37,12 @@ jobs:
   init:
     needs: init-before
     runs-on: ubuntu-latest
+    outputs:
+      VARIABLE_FILE: ${{ steps.init-output-variable-file.outputs.build.env }}
     steps:
       - uses: actions/checkout@v3
       - name: Run init stage
+        id: init-output-variable-file
         working-directory: .
         run: |
           bash ./github-actions-script/init-script.sh
@@ -51,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run init stage
+      - name: Run init stage 
         working-directory: .
         run: |
           bash ./github-actions-script/npm_build.sh
