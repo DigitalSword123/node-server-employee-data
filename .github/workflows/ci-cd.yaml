@@ -98,7 +98,6 @@ jobs:
         with:
           name: build_output
           path: |
-            ls -al
             dist-employee-data/*
             build.env
 
