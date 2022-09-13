@@ -98,7 +98,8 @@ jobs:
         with:
           name: build_output
           path: |
-            dist-employee-data
+            ls -al
+            dist-employee-data/*
             build.env
 
       - name: jfrog upload
