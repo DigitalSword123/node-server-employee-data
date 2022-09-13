@@ -54,4 +54,9 @@ echo "******************reading VARIABLE_FILE start*****************"
 cat $VARIABLE_FILE
 echo "******************reading VARIABLE_FILE end*****************"
 
+echo "******************.npmrc reading start*****************"
+cd /
+cat .npmrc
+echo "******************.npmrc reading end*****************"
+
 # echo "::set-output name=output_file::$VARIABLE_FILE"
