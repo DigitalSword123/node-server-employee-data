@@ -33,12 +33,15 @@ jobs:
           if [ "$DEBUG" = true ] ; then
             ls -alrt /.aws && ls -alrt ~ && ls -alrtr /.jfrog/ && ls -alrt /.m2
           fi
-      - name: Upload config files as artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: config_files
-          path: |
-            /.aws
+        env: 
+          DEBUG : true
+
+      # - name: Upload config files as artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: config_files
+      #     path: |
+      #       /.aws
   
   init:
     needs: init-before
@@ -48,10 +51,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download artifact config_files from init stage
-        uses: actions/download-artifact@v1
-        with:
-          name: config_files
+      # - name: Download artifact config_files from init stage
+      #   uses: actions/download-artifact@v1
+      #   with:
+      #     name: config_files
 
       - name: Run init stage
         working-directory: .
