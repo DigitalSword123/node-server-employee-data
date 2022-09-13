@@ -72,6 +72,9 @@ jobs:
   build:
     needs: init 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
     steps:
       - uses: actions/checkout@v3
 
@@ -89,8 +92,8 @@ jobs:
 
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
-        working-directory: .
       - run: |
+          ls -al
           jf --version
           jf rt ping
           cd target
