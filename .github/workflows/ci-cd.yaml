@@ -82,7 +82,7 @@ jobs:
 
       - name: Run build stage 
         working-directory: .
-        uses: jfrog/setup-jfrog-cli@v2
+      - uses: jfrog/setup-jfrog-cli@v2
       - run: |
           bash ./github-actions-script/npm_build.sh
         env:
