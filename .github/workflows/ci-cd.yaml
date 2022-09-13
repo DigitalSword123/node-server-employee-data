@@ -98,7 +98,7 @@ jobs:
         with:
           name: build_output
           path: |
-            ./dist-$MODULE_NAME
+            ./dist-employee-data
             ./build.env
 
       - name: jfrog upload
