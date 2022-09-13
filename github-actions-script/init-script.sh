@@ -5,6 +5,7 @@ ARTIFACTORY_URL="https://devopsamiya.jfrog.io/artifactory/api/npm"
 ARTIFACTORY_BASE_URL="https://devopsamiya.jfrog.io/artifactory"
 ARTIFACTORY_RELEASE="releases-npm"
 ARTIFACTORY_SNAPSHOTS="snapshots-npm"
+echo `VARIABLE_FILE : $VARIABLE_FILE`
 touch $VARIABLE_FILE
 echo "export ARTIFACT_ID=$(jq -r .name package.json)" >> $VARIABLE_FILE
 VERSION=$(jq -r .version package.json) 

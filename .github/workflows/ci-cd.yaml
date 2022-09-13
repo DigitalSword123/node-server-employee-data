@@ -39,12 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        env:
-          VARIABLE_FILE: build.env
       - name: Run init stage
         working-directory: .
         run: |
           bash ./github-actions-script/init-script.sh
+        env:
+          VARIABLE_FILE: build.env
           
   # build:
   #   needs: init 
