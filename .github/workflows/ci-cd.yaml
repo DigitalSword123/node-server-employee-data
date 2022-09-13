@@ -38,9 +38,9 @@ jobs:
         with:
           name: config_files
           path: |
-            .aws
-            .jfrog
-            .m2
+            /.aws
+            /.jfrog
+            /.m2
   
   init:
     needs: init-before
