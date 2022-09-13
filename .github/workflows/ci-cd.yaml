@@ -35,14 +35,14 @@ jobs:
             ls -alrt ~/.aws && ls -alrt ~ && ls -alrtr ~/.jfrog/ && ls -alrt ~/.m2
           fi
   
-  init:
-    needs: init-before
+  # init:
+  #   needs: init-before
 
 
-  build:
-    needs: init
-  test: 
-    needs: build
+  # build:
+  #   needs: init
+  # test: 
+  #   needs: build
 
   # deploy_dev:
   #   needs: build
