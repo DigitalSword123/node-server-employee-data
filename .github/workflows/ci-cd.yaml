@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v3
         env:
           VARIABLE_FILE: build.env
-      - name: Run init-before stage
+      - name: Run init stage
         working-directory: .
         run: |
           bash ./github-actions-script/init-script.sh
