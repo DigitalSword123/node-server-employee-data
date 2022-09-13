@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
-        working-directory: ~
+        working-directory: /
         # if: github.ref.name == 'feature/dev-2'
         run: |
           echo "staring init-before stage"
