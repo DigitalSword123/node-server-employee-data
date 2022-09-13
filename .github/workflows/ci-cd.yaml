@@ -95,7 +95,7 @@ jobs:
       - run: |
           ls -al
           jf --version
-          jf rt ping
+          jf rt ping --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
           cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
           source $VARIABLE_FILE
           cd target
