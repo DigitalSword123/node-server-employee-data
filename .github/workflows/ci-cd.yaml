@@ -49,11 +49,23 @@ jobs:
         env:
           VARIABLE_FILE: build.env
 
+      - name: Upload file build.env as an artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: variable_file_init
+          path: build.env
+
   build:
     needs: init 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Download artifact variable_file_init from init stage
+        uses: actions/download-artifact@v1
+        with:
+          name: variable_file_init
+
       - name: Run build stage 
         working-directory: .
         run: |

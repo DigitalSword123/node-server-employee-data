@@ -54,4 +54,4 @@ echo "******************reading VARIABLE_FILE start*****************"
 cat $VARIABLE_FILE
 echo "******************reading VARIABLE_FILE end*****************"
 
-echo "::set-output name=output_file::$VARIABLE_FILE"
+# echo "::set-output name=output_file::$VARIABLE_FILE"
