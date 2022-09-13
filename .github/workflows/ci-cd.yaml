@@ -42,7 +42,7 @@ jobs:
         env:
           VARIABLE_FILE: build.env
       - name: Run init-before stage
-        working-directory: /
+        working-directory: .
         run: |
           bash ./github-actions-script/init-script.sh
           
