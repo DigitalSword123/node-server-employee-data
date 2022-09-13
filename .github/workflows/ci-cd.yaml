@@ -89,8 +89,7 @@ jobs:
 
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
-        working-directory: .
-        run: |
+      - run: |
           jf --version
         
 
