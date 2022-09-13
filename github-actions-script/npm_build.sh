@@ -22,11 +22,10 @@ echo $CURRENT_SNAPSHOT_VER
 
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
-# cp ./npmrc-config/.npmrc /.npmrc
+cp ./npmrc-config/.npmrc /.npmrc
 
-# echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
-# cd /
-# cat .npmrc
+echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
+cat /.npmrc
 
 echo node version=$(node --version)
 echo npm version=$(npm --version)
@@ -97,3 +96,7 @@ else
     echo "------------printing dist folder files ------------------"
     ls -al 
 fi
+
+cd /
+echo "printing root directory files"
+ls -al
