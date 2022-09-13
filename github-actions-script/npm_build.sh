@@ -3,6 +3,12 @@ echo "$(pwd)"
 
 ls -al
 
+cd variable_file_init
+ls -al
+cp ${VARIABLE_FILE} ../${VARIABLE_FILE}
+cd ..
+
+
 # echo '${{ needs.init.outputs.VARIABLE_FILE }}' > ./$VARIABLE_FILE
 
 echo "******************reading VARIABLE_FILE start*****************"
