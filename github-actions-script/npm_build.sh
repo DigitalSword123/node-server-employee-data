@@ -19,11 +19,10 @@ source $VARIABLE_FILE
 
 echo "-------printitng CURRENT_SNAPSHOT_VER---------------"
 echo $CURRENT_SNAPSHOT_VER
-
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
-sudo cp ./npmrc-config/.npmrc /.npmrc
 
+sudo cp ./npmrc-config/.npmrc /.npmrc
 echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
 sudo cat /.npmrc
 
