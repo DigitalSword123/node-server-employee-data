@@ -10,3 +10,6 @@ https://www.youtube.com/watch?v=PkoFGmgWDU0
 
 # for nexus 3.0
 https://stackoverflow.com/questions/40545824/how-to-install-nexus-3-on-windows
+
+# for deploying to AWS through github terraform action
+https://acloudguru.com/blog/engineering/how-to-use-github-actions-to-automate-terraform
