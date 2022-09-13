@@ -1,0 +1,84 @@
+
+echo "$(pwd)"
+
+ls -al
+
+echo "******************reading VARIABLE_FILE start*****************"
+cat ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE end*****************"
+
+npm version $CURRENT_SNAPSHOT_VER --no-git-tag-version
+git submodule update --init
+cp ./npmrc-config/.npmrc /.npmrc
+
+# echo "^^^^^^^^^^^^printing .npmrc file^^^^^^^^^^^^^^^^^"
+# cd /
+# cat .npmrc
+
+echo node version=$(node --version)
+echo npm version=$(npm --version)
+npm install --save-dev
+
+
+if [$GITHUB_REF_NAME == 'main']
+then
+    mkdir ~/.ssh && ls -alrt ~/.ssh
+    cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
+    cat ~/ssh_keys/known_hosts >> ls -alrt ~/.ssh/known_hosts
+    chmod 400 ~/.ssh/id_rsa && chmod 400 ~/.ssh/known_hosts
+    ls -alrt ~/.ssh
+    git remote set-url origin $COMPUTED_SSH_URL
+    git checkout main
+    echo "=================build release Artifacts BEGIN====================="
+    npm run release
+    echo "=================build release Artifacts END====================="
+
+    echo "=================publish release to Artifactory BEGIN====================="
+    npm publish --registry $ARTIFACTORY_LOC
+    echo "=================publish release to Artifactory END====================="
+
+    echo "=================post release - updating the next snapshot version in package.json====================="
+    rm -f package-lock.json
+    npm version $NEXT_DEVELOPEMENT_VERSION -m "next developement version $NEXT_DEVELOPEMENT_VERSION updated in package.json"
+    git push --set-upstream origin main
+
+    ls -al
+
+    cd dist-${MODULE_NAME}
+
+    ls -al 
+
+    echo "*************printing modules of terrafrom  start****************"
+    cd modules
+
+    cd lambda
+
+    ls -al
+
+    echo "*************printing modules of terrafrom  end****************"
+else
+    echo "=================build snapshot Artifacts BEGIN====================="
+    echo "building Zip files for deployement"
+    npm run build
+    echo "=================build snapshot Artifacts END====================="
+
+    echo "ARTIFACTORY_LOC : " $ARTIFACTORY_LOC
+    echo "=================publish snapshot to Artifactory BEGIN====================="
+    # npm publish --registry $ARTIFACTORY_LOC
+    # npm config set registry $ARTIFACTORY_LOC
+    # npm publish
+    npm publish --registry https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+    echo "=================publish snapshot to Artifactory END====================="
+
+    ls -al
+
+    cd target
+
+    echo "------------printing target folder files ------------------"
+    ls -al 
+
+    cd ../dist
+
+    echo "------------printing dist folder files ------------------"
+    ls -al 
+fi

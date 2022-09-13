@@ -15,11 +15,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Run a one-line script
+      - name: Run init-before script
         working-directory: /
         if: github.ref_name != 'main'
         run: |
-          echo "staring init-before stage"
+          echo "starting init-before stage"
           echo $(pwd)
           echo "--------printing current branch name-------------"
           echo $GITHUB_REF_NAME
@@ -45,9 +45,19 @@ jobs:
           bash ./github-actions-script/init-script.sh
         env:
           VARIABLE_FILE: build.env
-          
-  # build:
-  #   needs: init 
+
+  build:
+    needs: init 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run init stage
+        working-directory: .
+        run: |
+          bash ./github-actions-script/npm_build.sh
+        env:
+          VARIABLE_FILE: build.env
+
   # test: 
   #   needs: build
 

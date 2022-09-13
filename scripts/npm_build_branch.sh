@@ -1,5 +1,3 @@
-echo ${TARGET_ENV_PROD}
-
 echo "$(pwd)"
 
 ls -al
