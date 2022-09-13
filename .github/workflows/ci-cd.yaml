@@ -96,8 +96,13 @@ jobs:
           ls -al
           jf --version
           jf rt ping
+          cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
+          source $VARIABLE_FILE
           cd target
-          jf rt u "(*).zip" https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+          ls -al
+          jf rt u "(*).zip" --url $ARTIFACTORY_LOC
+        env:
+          VARIABLE_FILE: build.env
         
 
   # test: 
