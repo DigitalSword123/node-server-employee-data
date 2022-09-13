@@ -105,7 +105,7 @@ jobs:
         env: 
           VARIABLE_FILE: build.env
           JF_USER: "ranaamiya70@gmail.com"
-          JF_ACCESS_TOKEN: "cmFuYWFtaXlhNzBAZ21haWwuY29tOkFQNHc1UXFxeFRiU2Z1ZmI3dHJIeDF4NWdUNw=="
+          JF_PASSWORD: "amiya1234"
           JF_URL: "https://devopsamiya.jfrog.io/"
 
 
