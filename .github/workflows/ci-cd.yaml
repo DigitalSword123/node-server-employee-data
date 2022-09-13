@@ -93,8 +93,8 @@ jobs:
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
       - run: |
-          sudo mkdir /.jfrog
-          sudo cp ./jfrog_keys/jfrog-cli.conf /.jfrog/jfrog-cli.conf
+          # sudo mkdir /.jfrog
+          # sudo cp ./jfrog_keys/jfrog-cli.conf /.jfrog/jfrog-cli.conf
           jf --version
           jf rt ping --url=https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
           cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
@@ -104,7 +104,10 @@ jobs:
           jf rt u "(*).zip" --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
         env: 
           VARIABLE_FILE: build.env
-        
+          JF_USER: "ranaamiya70@gmail.com"
+          JF_ACCESS_TOKEN: "cmFuYWFtaXlhNzBAZ21haWwuY29tOkFQNHc1UXFxeFRiU2Z1ZmI3dHJIeDF4NWdUNw=="
+          JF_URL: "https://devopsamiya.jfrog.io/"
+
 
   # test: 
   #   needs: build
