@@ -98,8 +98,8 @@ jobs:
         with:
           name: build_output
           path: |
-            ./dist-employee-data
-            ./build.env
+            dist-employee-data
+            build.env
 
       - name: jfrog upload
         uses: jfrog/setup-jfrog-cli@v2
