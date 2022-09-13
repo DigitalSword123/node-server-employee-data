@@ -17,7 +17,9 @@ echo "******************reading VARIABLE_FILE end*****************"
 
 source $VARIABLE_FILE
 
-echo `CURRENT_SNAPSHOT_VER : $CURRENT_SNAPSHOT_VER`
+echo "-------printitng CURRENT_SNAPSHOT_VER---------------"
+echo $CURRENT_SNAPSHOT_VER
+
 npm version $CURRENT_SNAPSHOT_VER --no---git-tag-version
 git submodule update --init
 # cp ./npmrc-config/.npmrc /.npmrc
