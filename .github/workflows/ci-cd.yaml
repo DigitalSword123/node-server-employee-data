@@ -23,7 +23,7 @@ jobs:
           echo "staring init-before stage"
           echo $(pwd)
           echo "--------printing current branch name-------------"
-          echo $github.ref.name
+          echo $GITHUB_REF_NAME
           sudo mkdir .aws
           sudo mkdir .jfrog
           sudo mkdir .m2
