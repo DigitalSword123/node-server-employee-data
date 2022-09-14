@@ -79,7 +79,7 @@ jobs:
     defaults:
       run:
         working-directory: .
-    if: $GITHUB_REF_NAME != 'main'
+    if: github.ref == 'main'
     steps:
       - uses: actions/checkout@v3
 
