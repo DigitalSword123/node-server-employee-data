@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run init-before script
         working-directory: /
-      - run: |
+        run: |
           echo "starting init-before stage"
           echo $(pwd)
           echo "--------printing current branch name-------------"
