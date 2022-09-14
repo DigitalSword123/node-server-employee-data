@@ -75,7 +75,7 @@ echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
 echo "----------creating zip file for lambda deployement------------"
 # zip -r ${ARTIFACT_ID}.current.zip *.js *.json lib node_modules
-zip -r ${ARTIFACT_ID}.current.zip . -x '*.tf*' 'vars/*' 'modules/*' -x '*.tfplan'
+zip -r ${ARTIFACT_ID}.current.zip . -x '*.tf*' 'vars/*' 'modules/*' -x '*.tfplan' -x 'tfplan'
 echo "----------creating zip file for lambda deployement end------------"
 
 echo "***************printing all files after zip************************"
