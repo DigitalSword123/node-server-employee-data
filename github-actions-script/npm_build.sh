@@ -36,16 +36,12 @@ echo $GITHUB_REF_NAME
 if [ $GITHUB_REF_NAME == "main" ]
 then
     sudo mkdir /.ssh
-    ls -lrt /
-    cd /.ssh
-    ls -al
+    ls -lrt /.ssh
     # sudo cat ./ssh_keys/id_ed25519 >> ls -alrt /.ssh/id_ed25519
     # sudo cat ./ssh_keys/known_hosts >> ls -alrt /.ssh/known_hosts
     sudo cp ./ssh_keys/id_ed25519 /.ssh/id_ed25519
     sudo cp ./ssh_keys/known_hosts /.ssh/known_hosts
     sudo chmod 400 /.ssh/id_rsa && chmod 400 /.ssh/known_hosts
-    eval "$(ssh-agent -s)"
-    ssh-add /.ssh/id_ed25519
     ls -alrt /.ssh
     git remote set-url origin $COMPUTED_SSH_URL
     git checkout main
