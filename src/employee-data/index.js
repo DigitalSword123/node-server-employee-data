@@ -8,7 +8,7 @@
 
 const FILE = "src/index.js";
 const utils = require('./lib/utils');
-const postgresUno = require('postgres-uno')
+const postgresUno = require('postgres-uno');
 
 // https://node-server-employee-data-aws.herokuapp.com/
 
@@ -25,7 +25,7 @@ var dbConfig = {
     database: 'employee_data',
     password: 'mypassword',
     port: 5432
-}
+};
 
 // lambda entry point
 module.exports.handler = async function(event, context, callback) {
@@ -48,4 +48,4 @@ module.exports.handler = async function(event, context, callback) {
         response = utils.buildFailureResponse(err);
     }
     return response;
-}
+};

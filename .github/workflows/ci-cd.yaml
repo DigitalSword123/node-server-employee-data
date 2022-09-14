@@ -155,7 +155,7 @@ jobs:
     name: deploy_qa stage
     runs-on: ubuntu-latest
     environment:
-      name: deploy-qa-manual
+      name: deploy_qa_manual
     steps:
 
     - name: Checkout Repo
