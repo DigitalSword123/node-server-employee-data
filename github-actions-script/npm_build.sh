@@ -99,9 +99,11 @@ else
     echo "------------printing dist folder files ------------------"
     ls -al 
 
-    echo "------------printing project folder files ------------------"
     cd ..
-    ls -al
 
     zip -r dist-${MODULE_NAME}.zip  dist-${MODULE_NAME}
+    echo "------------printing project folder files ------------------"
+    ls -al
+
+
 fi
