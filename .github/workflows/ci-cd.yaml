@@ -160,7 +160,7 @@ jobs:
     needs: npm-build-branch
     name: deploy_dev_auto stage
     runs-on: ubuntu-latest
-    if: $GITHUB_REF_NAME != 'main'
+    if: github.ref.name == 'main'
     steps:
 
       - name: Checkout Repo
