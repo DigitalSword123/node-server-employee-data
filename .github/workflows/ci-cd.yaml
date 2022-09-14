@@ -79,7 +79,7 @@ jobs:
     defaults:
       run:
         working-directory: .
-    if: github.ref == 'main'
+    if: github.ref.name != 'main'
     steps:
       - uses: actions/checkout@v3
 
@@ -160,7 +160,7 @@ jobs:
     needs: npm-build-branch
     name: deploy_dev_auto stage
     runs-on: ubuntu-latest
-    if: github.ref.name == 'main'
+    if: github.ref.name != 'main'
     steps:
 
       - name: Checkout Repo
