@@ -15,17 +15,17 @@ TEMP_VAR=$(sed 's/-SNAPSHOT//' <<<$(jq -r .version package.json))
 pip install --upgrade pip
 pip install semver # https://python-semver.readthedocs.io/en/2.9.0/index.html
 echo NEXT_DEVELOPEMENT_VERSION="$(pysemver bump patch $TEMP_VAR)-SNAPSHOT"
-REP_URL=$(jq -r .repository.url package.json)
+REP_URL=$(jq -r .repository.url package.json) 
 STRIPPED_URL=$(echo $REP_URL | sed 's~.*github.com/~~')
 COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
 echo "export COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL" >> ${VARIABLE_FILE}
 echo HTTPS_URL=$(jq -r .repository.http_url package.json)
 echo COMPUTED_SSH_URL=git@github.com:$STRIPPED_URL
-git --version
+git --version 
 echo "************prtining branch*************"
 git branch -r
 
-if[ $CIRCLE_BRANCH == "main" ]
+if[ $CIRCLE_BRANCH == "main" ] 
 then
     echo RELEASE_VERSION=$TEMP_VAR
     echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION

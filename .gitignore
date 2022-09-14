@@ -4,5 +4,7 @@ id_ed25519
 help.txt
 **/.terraform/*
 new Folder/
-*.zip
+*.zip 
 *.exe
+aws_zip_test
+yaml comparison

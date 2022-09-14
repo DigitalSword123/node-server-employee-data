@@ -1,0 +1,21 @@
+  BASH_ENV=/tmp/.bash_env-631aec3012e2954e0c92c75b-0-build
+  CI=true
+  CIRCLECI=true
+  CIRCLE_BRANCH=feature/dev-2
+  CIRCLE_BUILD_NUM=1420
+  CIRCLE_BUILD_URL=https://circleci.com/gh/DigitalSword123/node-server-employee-data/1420
+  CIRCLE_JOB=init-before
+  CIRCLE_NODE_INDEX=0
+  CIRCLE_NODE_TOTAL=1
+  CIRCLE_PROJECT_REPONAME=node-server-employee-data
+  CIRCLE_PROJECT_USERNAME=DigitalSword123
+  CIRCLE_REPOSITORY_URL=git@github.com:DigitalSword123/node-server-employee-data.git
+  CIRCLE_SHA1=37081f99534225847a1d41964b1598921843639f
+  CIRCLE_SHELL_ENV=/tmp/.bash_env-631aec3012e2954e0c92c75b-0-build
+  CIRCLE_USERNAME=DigitalSword123
+  CIRCLE_WORKFLOW_ID=00174e4c-c2fb-4b42-9e49-43b29d44e8af
+  CIRCLE_WORKFLOW_JOB_ID=75974c63-ce00-4e72-a70f-d58c587ba974
+  CIRCLE_WORKFLOW_WORKSPACE_ID=00174e4c-c2fb-4b42-9e49-43b29d44e8af
+  CIRCLE_WORKING_DIRECTORY=~/
+
+  

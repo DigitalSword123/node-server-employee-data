@@ -75,16 +75,16 @@ const copyLibFiles = () => {
 // this below registry url in artifactory has package.json file which has all dependencies
 // const installpackages = (cb) => {
 //     exec(`cd ${DIST_DIR} && npm cache clean --force && npm cache verify && 
-//     npm install --registry https://devopsamiya.jfrog.io/artifactory/project-virtual-npm/`, (err => {
+//     npm install --registry https://devopsamiya.jfrog.io/artifactory/api/npm/project-virtual-npm/`, (err => {
 //             cb(err)
 //         }
 
 //     ));
 // };
 
-// this function will install npm package present in local package.json file
+// this function will install only dependencies not devDependencies present in local package.json file
 const installpackages = (cb) => {
-    exec(`cd ${DIST_DIR} && npm cache clean --force && cp ../package.json . && npm install --save-dev && ls -al`, (err => {
+    exec(`cd ${DIST_DIR} && npm cache clean --force && cp ../package.json . && npm install --production=true`, (err => {
             cb(err)
         }
 

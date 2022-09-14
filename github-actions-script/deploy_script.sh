@@ -1,4 +1,16 @@
-source dist-${MODULE_NAME}
+
+ls -al
+cp build_output_1/${VARIABLE_FILE} ./${VARIABLE_FILE}
+
+cp build_output_1/dist-${MODULE_NAME}.zip .
+
+unzip dist-${MODULE_NAME}.zip
+
+source ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE start*****************"
+cat ${VARIABLE_FILE}
+echo "******************reading VARIABLE_FILE end*****************"
+
 echo "--------------------Switching to dist directory-------------------"
 cd dist-${MODULE_NAME}
 echo "printing all files in target directory"
@@ -60,6 +72,19 @@ export VAR_FILE=vars/$DEPLOY_ENVIRONMENT-ap-south-1.tfvars
 cat ${VAR_FILE}
 
 echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
+
+echo "----------creating zip file for lambda deployement------------"
+# zip -r ${ARTIFACT_ID}.current.zip *.js *.json lib node_modules
+zip -r ${ARTIFACT_ID}.current.zip . -x '*.tf*' 'vars/*' 'modules/*' -x '*.tfplan' -x 'tfplan'
+echo "----------creating zip file for lambda deployement end------------"
+
+echo "***************printing all files after zip************************"
+ls -al
+echo "***************printing all files after zip end************************"
+
+echo "app version : " ${APP_VERSION}
+export TF_VAR_version=${APP_VERSION}
+echo "TF_VAR_version : " ${TF_VAR_version}
 
 terraform init \
  -backend-config="key=employe-node-server/$DEPLOY_ENVIRONMENT/terraform.tfstate" \

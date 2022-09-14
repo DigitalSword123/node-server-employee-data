@@ -9,7 +9,7 @@ jobs:
     working_directory: ~/node-server-employee-data
     steps:
       - checkout
-      - run: bash ./terraform_project/scripts/npm_build.sh
+      - run: bash ./scripts/npm_build.sh
 
   npm_unit_test: &npm_unit_test
     docker:
@@ -75,14 +75,14 @@ jobs:
     environment:
       DEBUG: true
 # https://circleci.com/docs/workspaces
-  init:
+  init-branch:
     docker:
       - image: cimg/python:3.10.6
     working_directory: ~/node-server-employee-data
     steps:
       - checkout 
       - setup_remote_docker
-      - run: bash ./scripts/init-script.sh
+      - run: bash ./scripts/init-script-branch.sh
           # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
@@ -94,8 +94,28 @@ jobs:
     environment:
       DEBUG: true
       VARIABLE_FILE: build.env
+
+  init-main:
+      docker:
+        - image: cimg/python:3.10.6
+      working_directory: ~/node-server-employee-data
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - run: bash ./scripts/init-script-main.sh
+            # Persist the specified paths (workspace/build.env) into the workspace for use in build job.
+        - persist_to_workspace:
+            # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+            # taken to be the root directory of the workspace.
+            root: .
+            # Must be relative path from root
+            paths:
+              - build.env
+      environment:
+        DEBUG: true
+        VARIABLE_FILE: build.env
             
-  build:
+  build-branch:
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
@@ -104,17 +124,40 @@ jobs:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: .
-      - run: bash ./scripts/npm_build.sh
+      - run: bash ./scripts/npm_build_branch.sh
       - persist_to_workspace:
           root: .
           paths:
             - dist-employee-data 
+            - build.env
     environment:
       tag: dev
       ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
       PROJECT_NAME: node-server-employee-data
       VARIABLE_FILE: build.env 
       MODULE_NAME: employee-data 
+
+  build-main:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: .
+      - run: bash ./scripts/npm_build_main.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
+    environment:
+      tag: dev
+      ARTIFACTORY_URL: "https://devopsamiya.jfrog.io/artifactory/snapshots-npm/"
+      PROJECT_NAME: node-server-employee-data
+      VARIABLE_FILE: build.env 
+      MODULE_NAME: employee-data
 
   test:
     <<: *npm_unit_test
@@ -124,13 +167,14 @@ jobs:
       POSTGRESS_DB: "employee_data"
       PGPASSWORD: "mypassword"
 
-  deploy_dev:
+  deploy_dev_branch:
     docker:
       - image: circleci/node:latest
     working_directory: ~/node-server-employee-data
     environment:
       DEPLOY_ENVIRONMENT: dev
       MODULE_NAME: employee-data
+      VARIABLE_FILE: build.env
     steps:
       - checkout 
       - setup_remote_docker
@@ -139,105 +183,184 @@ jobs:
       - run : 
           name: deploy-script
           command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
+            bash ./scripts/terraform_install.sh   
             ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
             echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
+
+  deploy_dev_main:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/node-server-employee-data
+    environment:
+      DEPLOY_ENVIRONMENT: dev
+      MODULE_NAME: employee-data
+      VARIABLE_FILE: build.env
+    steps:
+      - checkout 
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - run : 
+          name: deploy-script
+          command: |
+            bash ./scripts/terraform_install.sh   
+            ls -al
+            bash ./scripts/before_script_deploy.sh
+            bash ./scripts/deploy_script.sh
+            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist-employee-data 
+            - build.env
 
   deploy_qa:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: qa
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
-            ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
-    
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: qa
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
+
   deploy_uat:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: uat
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
-            ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: uat
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
 
   deploy_prod:
-    docker:
-      - image: circleci/node:latest
-    working_directory: ~/node-server-employee-data
-    environment:
-      DEPLOY_ENVIRONMENT: prod
-    steps:
-      - checkout 
-      - setup_remote_docker
-      - attach_workspace:
-          at: ./target
-      - run : 
-          name: deploy-script
-          command: |
-            bash ./terraform_project/scripts/terraform_install.sh   
-            ls -al
-            bash ./terraform_project/scripts/before_script_deploy.sh
-            bash ./terraform_project/scripts/deploy_script.sh
-            echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+      docker:
+        - image: circleci/node:latest
+      working_directory: ~/node-server-employee-data
+      environment:
+        DEPLOY_ENVIRONMENT: prod
+        MODULE_NAME: employee-data
+        VARIABLE_FILE: build.env
+      steps:
+        - checkout 
+        - setup_remote_docker
+        - attach_workspace:
+            at: .
+        - run : 
+            name: deploy-script
+            command: |
+              bash ./scripts/terraform_install.sh   
+              ls -al
+              bash ./scripts/before_script_deploy.sh
+              bash ./scripts/deploy_script.sh
+              echo `deployed successfully in $DEPLOY_ENVIRONMENT environment`
+        - persist_to_workspace:
+            root: .
+            paths:
+              - dist-employee-data 
+              - build.env
 
 workflows:
   version: 2
-  # this aws-cli workflow for terraform work
   stage_workflow:
     jobs:
       - init-before:
           filters:
             branches:
-              only: /^feature/.*$/
-      - init:
-          filters:
-            branches:
-              only: /^feature/.*$/
+              only: 
+                - /^feature/.*$/
+                - main
+      - init-branch:
           requires:
             - init-before
-      - build:
           filters:
             branches:
-              only: /^feature/.*$/
+              only: 
+                - /^feature/.*$/
+      - init-main:
           requires:
-            - init
+            - init-before
+          filters:
+            branches:
+              only: 
+                - main
+      - build-branch:
+          filters:
+            branches:
+              only: 
+                - /^feature/.*$/
+          requires:
+            - init-branch
+      - build-main:
+          filters:
+            branches:
+              only: 
+                - main
+          requires:
+            - init-main
       - test:
           filters:
             branches:
               only: /^feature/.*$/
           requires:
-            - build
-      - deploy_dev:
+            - build-branch
+      - deploy_dev_branch:
           filters:
             branches:
-              only: /^feature/.*$/
+              only: 
+                - /^feature/.*$/
+                - main
           requires:
-            - build
+            - build-branch
+      - deploy_dev_main:
+          filters:
+            branches:
+              only: 
+                - main
+          requires:
+            - build-main
       - trigger_qa:
           type: approval
       - deploy_qa:
@@ -246,7 +369,7 @@ workflows:
               only: main
           requires:
             - trigger_qa
-            - deploy_dev
+            - deploy_dev_main
       - trigger_uat:
           type: approval
       - deploy_uat:
