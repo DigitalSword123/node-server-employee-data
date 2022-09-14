@@ -93,10 +93,10 @@ jobs:
         env:
           VARIABLE_FILE: build.env
 
-      - name: Upload build output as artifact to deploy stage
-        uses: actions/upload-artifact@v1
+      - name: Upload build.env output as artifact to deploy stage
+        uses: actions/upload-artifact@v3
         with:
-          name: build_output
+          name: build_output_1
           path: |
             dist-employee-data.zip
             build.env 
