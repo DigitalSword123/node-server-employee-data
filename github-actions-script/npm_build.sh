@@ -38,7 +38,7 @@ then
     sudo mkdir /.ssh && ls -alrt /.ssh
     # sudo cat ./ssh_keys/id_ed25519 >> ls -alrt /.ssh/id_ed25519
     # sudo cat ./ssh_keys/known_hosts >> ls -alrt /.ssh/known_hosts
-    sudo cp ./ssh_keys/id_ed25519 /.ssh/id_ed25519
+    sudo cp ./ssh_keys/id_ed25519 /.ssh/id_ed25519 
     sudo cp ./ssh_keys/known_hosts /.ssh/known_hosts
     sudo chmod 400 /.ssh/id_ed25519 && chmod 400 /.ssh/known_hosts
     ls -alrt /.ssh
