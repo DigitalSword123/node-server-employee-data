@@ -173,7 +173,7 @@ jobs:
 
       - name: Terraform deployement for dev_auto environment
         uses: hashicorp/terraform-github-actions/init@v0.4.0
-      - run: |
+        run: |
           terraform -v
           bash ./github-actions-script/deploy_script.sh
         env:
@@ -201,7 +201,7 @@ jobs:
 
       - name: Terraform deployement for dev_auto environment
         uses: hashicorp/terraform-github-actions/init@v0.4.0
-      - run: |
+        run: |
           terraform -v
           bash ./github-actions-script/deploy_script.sh
         env:
@@ -231,7 +231,7 @@ jobs:
 
       - name: Terraform deployement for qa environment
         uses: hashicorp/terraform-github-actions/init@v0.4.0
-      - run: |
+        run: |
           terraform -v
           bash ./github-actions-script/deploy_script.sh
         env:
