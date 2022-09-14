@@ -98,8 +98,8 @@ else
 
     echo "------------printing dist folder files ------------------"
     ls -al 
-fi
 
-cd /
-echo "printing root directory files"
-ls -al
+    echo "------------printing project folder files ------------------"
+    cd ..
+    ls -al
+fi
