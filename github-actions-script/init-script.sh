@@ -27,7 +27,7 @@ git --version
 echo "************prtining branch*************"
 git branch -r
 
-if [$GITHUB_REF_NAME == 'main']
+if [ $GITHUB_REF_NAME == 'main' ]
 then
     echo RELEASE_VERSION=$TEMP_VAR
     echo NEXT_DEVELOPEMENT_VERSION=$NEXT_DEVELOPEMENT_VERSION
