@@ -35,7 +35,8 @@ echo "branch name : "
 echo $GITHUB_REF_NAME
 if [ $GITHUB_REF_NAME == "main" ]
 then
-    sudo mkdir /.ssh && ls -alrt /.ssh
+    sudo mkdir /.ssh
+    ls -al
     cd /.ssh
     ls -al
     # sudo cat ./ssh_keys/id_ed25519 >> ls -alrt /.ssh/id_ed25519
