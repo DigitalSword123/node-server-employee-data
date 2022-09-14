@@ -163,26 +163,26 @@ jobs:
     if: $GITHUB_REF_NAME != 'main'
     steps:
 
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-    - name: Download artifact build_output from build stage
-      uses: actions/download-artifact@v1
-      with:
-        name: build_output_1
+      - name: Download artifact build_output from build stage
+        uses: actions/download-artifact@v1
+        with:
+          name: build_output_1
 
-    - name: Terraform deployement for dev_auto environment
-      uses: hashicorp/terraform-github-actions/init@v0.4.0
-    - run: |
-        terraform -v
-        bash ./github-actions-script/deploy_script.sh
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: .
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
-        VARIABLE_FILE: build.env
-        DEPLOY_ENVIRONMENT: dev
+      - name: Terraform deployement for dev_auto environment
+        uses: hashicorp/terraform-github-actions/init@v0.4.0
+      - run: |
+          terraform -v
+          bash ./github-actions-script/deploy_script.sh
+        env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_ACTION_WORKING_DIR: .
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
+          VARIABLE_FILE: build.env
+          DEPLOY_ENVIRONMENT: dev
 
   deploy_dev_manual:
     needs: npm-build-main
@@ -191,26 +191,26 @@ jobs:
     if: $GITHUB_REF_NAME == 'main'
     steps:
 
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-    - name: Download artifact build_output from build stage
-      uses: actions/download-artifact@v1
-      with:
-        name: build_output_1
+      - name: Download artifact build_output from build stage
+        uses: actions/download-artifact@v1
+        with:
+          name: build_output_1
 
-    - name: Terraform deployement for dev_auto environment
-      uses: hashicorp/terraform-github-actions/init@v0.4.0
-    - run: |
-        terraform -v
-        bash ./github-actions-script/deploy_script.sh
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: .
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
-        VARIABLE_FILE: build.env
-        DEPLOY_ENVIRONMENT: dev
+      - name: Terraform deployement for dev_auto environment
+        uses: hashicorp/terraform-github-actions/init@v0.4.0
+      - run: |
+          terraform -v
+          bash ./github-actions-script/deploy_script.sh
+        env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_ACTION_WORKING_DIR: .
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
+          VARIABLE_FILE: build.env
+          DEPLOY_ENVIRONMENT: dev
 
   deploy_qa:
     needs: [npm-build-main, deploy_dev_manual]
@@ -221,26 +221,26 @@ jobs:
     if: $GITHUB_REF_NAME == 'main'
     steps:
 
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-    - name: Download artifact build_output from build stage
-      uses: actions/download-artifact@v1
-      with:
-        name: build_output_1
+      - name: Download artifact build_output from build stage
+        uses: actions/download-artifact@v1
+        with:
+          name: build_output_1
 
-    - name: Terraform deployement for qa environment
-      uses: hashicorp/terraform-github-actions/init@v0.4.0
-    - run: |
-        terraform -v
-        bash ./github-actions-script/deploy_script.sh
-      env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: .
-        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
-        VARIABLE_FILE: build.env
-        DEPLOY_ENVIRONMENT: qa
+      - name: Terraform deployement for qa environment
+        uses: hashicorp/terraform-github-actions/init@v0.4.0
+      - run: |
+          terraform -v
+          bash ./github-actions-script/deploy_script.sh
+        env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_ACTION_WORKING_DIR: .
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
+          VARIABLE_FILE: build.env
+          DEPLOY_ENVIRONMENT: qa
 
   # deploy_uat: same as of deploy_qa stage
   #   needs: deploy_qa
