@@ -4,10 +4,12 @@ on:
   push:
     branches: 
       - 'feature/**'
-      # - /^hotfix/.*$/
-      # - /^bugfix/.*$/
-  # pull_request:
-  #   branches: /^feature/.*$/
+      - main
+  pull_request:
+    branches:
+      - 'feature/**'
+      - 'hotfix/**'
+      - 'bugfix/**'
 
 env:
   MODULE_NAME: employee-data
@@ -20,8 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run init-before script
         working-directory: /
-        if: github.ref_name != 'main'
-        run: |
+      - run: |
           echo "starting init-before stage"
           echo $(pwd)
           echo "--------printing current branch name-------------"
@@ -72,12 +73,13 @@ jobs:
           name: variable_file_init
           path: build.env
 
-  build:
+  npm-build-branch:
     needs: init 
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: .
+    if: $GITHUB_REF_NAME != 'main'
     steps:
       - uses: actions/checkout@v3
 
@@ -86,7 +88,38 @@ jobs:
         with:
           name: variable_file_init
 
-      - name: Run build stage 
+      - name: Run npm-build-branch stage 
+        working-directory: .
+        run: |
+          bash ./github-actions-script/npm_build.sh
+        env:
+          VARIABLE_FILE: build.env
+
+      - name: Upload build.env and dist folder output as artifact to deploy stage
+        uses: actions/upload-artifact@v3
+        with:
+          name: build_output_1
+          path: |
+            dist-employee-data.zip
+            build.env 
+
+
+  npm-build-main:
+    needs: init 
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    if: $GITHUB_REF_NAME == 'main'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download artifact variable_file_init from init stage
+        uses: actions/download-artifact@v1
+        with:
+          name: variable_file_init
+
+      - name: Run npm-build-branch stage 
         working-directory: .
         run: |
           bash ./github-actions-script/npm_build.sh
@@ -123,10 +156,11 @@ jobs:
   # test: 
   #   needs: build
 
-  deploy_dev:
-    needs: build
-    name: deploy_dev stage
+  deploy_dev_auto:
+    needs: npm-build-branch
+    name: deploy_dev_auto stage
     runs-on: ubuntu-latest
+    if: $GITHUB_REF_NAME != 'main'
     steps:
 
     - name: Checkout Repo
@@ -137,7 +171,35 @@ jobs:
       with:
         name: build_output_1
 
-    - name: Terraform deployement for dev environment
+    - name: Terraform deployement for dev_auto environment
+      uses: hashicorp/terraform-github-actions/init@v0.4.0
+    - run: |
+        terraform -v
+        bash ./github-actions-script/deploy_script.sh
+      env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TF_ACTION_WORKING_DIR: .
+        AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
+        VARIABLE_FILE: build.env
+        DEPLOY_ENVIRONMENT: dev
+
+  deploy_dev_manual:
+    needs: npm-build-main
+    name: deploy_dev_manual stage
+    runs-on: ubuntu-latest
+    if: $GITHUB_REF_NAME == 'main'
+    steps:
+
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: Download artifact build_output from build stage
+      uses: actions/download-artifact@v1
+      with:
+        name: build_output_1
+
+    - name: Terraform deployement for dev_auto environment
       uses: hashicorp/terraform-github-actions/init@v0.4.0
     - run: |
         terraform -v
@@ -151,11 +213,12 @@ jobs:
         DEPLOY_ENVIRONMENT: dev
 
   deploy_qa:
-    needs: [build, deploy_dev]
+    needs: [npm-build-main, deploy_dev_manual]
     name: deploy_qa stage
     runs-on: ubuntu-latest
     environment:
       name: deploy_qa_manual
+    if: $GITHUB_REF_NAME == 'main'
     steps:
 
     - name: Checkout Repo
@@ -179,7 +242,7 @@ jobs:
         VARIABLE_FILE: build.env
         DEPLOY_ENVIRONMENT: qa
 
-  # deploy_uat:
+  # deploy_uat: same as of deploy_qa stage
   #   needs: deploy_qa
   # deploy_prod:
   #   needs: deploy_uat
