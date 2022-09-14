@@ -36,10 +36,10 @@ echo $GITHUB_REF_NAME
 if [ $GITHUB_REF_NAME == "main" ]
 then
     mkdir ~/.ssh && ls -alrt ~/.ssh
-    cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
-    cat ~/ssh_keys/known_hosts >> ls -alrt ~/.ssh/known_hosts
-    chmod 400 ~/.ssh/id_rsa && chmod 400 ~/.ssh/known_hosts
-    ls -alrt ~/.ssh
+    sudo cat ./ssh_keys/id_ed25519 >> ls -alrt ./.ssh/id_ed25519
+    sudo cat ./ssh_keys/known_hosts >> ls -alrt ./.ssh/known_hosts
+    sudo chmod 400 /.ssh/id_rsa && chmod 400 /.ssh/known_hosts
+    ls -alrt /.ssh
     git remote set-url origin $COMPUTED_SSH_URL
     git checkout main
     echo "=================build release Artifacts BEGIN====================="
@@ -47,7 +47,7 @@ then
     echo "=================build release Artifacts END====================="
 
     echo "=================publish release to Artifactory BEGIN====================="
-    npm publish --registry $ARTIFACTORY_LOC
+    # npm publish --registry $ARTIFACTORY_LOC
     echo "=================publish release to Artifactory END====================="
 
     echo "=================post release - updating the next snapshot version in package.json====================="
