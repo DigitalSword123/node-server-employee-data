@@ -33,7 +33,7 @@ npm install --save-dev
 
 echo "branch name : "
 echo $GITHUB_REF_NAME
-if [$GITHUB_REF_NAME == main]
+if [ $GITHUB_REF_NAME == "main" ]
 then
     mkdir ~/.ssh && ls -alrt ~/.ssh
     cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
