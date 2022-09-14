@@ -67,8 +67,6 @@ pwd
 
 # ls -al
 
-cd terraform_project
-
 export VAR_FILE=vars/$DEPLOY_ENVIRONMENT-ap-south-1.tfvars
 
 cat ${VAR_FILE}
@@ -76,7 +74,8 @@ cat ${VAR_FILE}
 echo "DEPLOY_ENVIRONMENT : " $DEPLOY_ENVIRONMENT
 
 echo "----------creating zip file for lambda deployement------------"
-zip -r ${ARTIFACT_ID}.current.zip *.js *.json lib node_modules
+# zip -r ${ARTIFACT_ID}.current.zip *.js *.json lib node_modules
+zip -r ${ARTIFACT_ID}.current.zip . -x '*.tf*' 'vars/*' 'modules/*' -x '*.tfplan'
 echo "----------creating zip file for lambda deployement end------------"
 
 echo "***************printing all files after zip************************"
