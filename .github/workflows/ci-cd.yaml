@@ -121,7 +121,7 @@ jobs:
         with:
           name: variable_file_init
 
-      - name: Run npm-build-branch stage 
+      - name: Run npm-build-main stage 
         working-directory: .
         run: |
           bash ./github-actions-script/npm_build.sh

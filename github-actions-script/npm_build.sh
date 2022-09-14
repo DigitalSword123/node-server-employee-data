@@ -32,7 +32,7 @@ echo npm version=$(npm --version)
 npm install --save-dev
 
 
-if [$GITHUB_REF_NAME === 'main']
+if [github.ref == 'refs/heads/main']
 then
     mkdir ~/.ssh && ls -alrt ~/.ssh
     cat ~/ssh_keys/id_rsa >> ls -alrt ~/.ssh/id_rsa
