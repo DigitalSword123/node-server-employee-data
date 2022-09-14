@@ -163,7 +163,7 @@ jobs:
     name: deploy_dev_auto stage
     runs-on: ubuntu-latest
     # if: ${{ github.ref_name }} != 'main'
-    if: github.ref != 'refs/heads/master'
+    if: github.ref != 'refs/heads/main'
     steps:
 
       - name: Checkout Repo
@@ -192,7 +192,7 @@ jobs:
     name: deploy_dev_manual stage
     runs-on: ubuntu-latest
     # if: ${{ github.ref_name }} == 'main'
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     steps:
 
       - name: Checkout Repo
