@@ -1,8 +1,8 @@
 
 ls -al
-cp build_output/${VARIABLE_FILE} ./${VARIABLE_FILE}
+cp build_output_1/${VARIABLE_FILE} ./${VARIABLE_FILE}
 
-cp build_output/dist-${MODULE_NAME}.zip .
+cp build_output_1/dist-${MODULE_NAME}.zip .
 
 unzip dist-${MODULE_NAME}.zip
 

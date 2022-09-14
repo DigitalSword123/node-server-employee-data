@@ -93,7 +93,7 @@ jobs:
         env:
           VARIABLE_FILE: build.env
 
-      - name: Upload build.env output as artifact to deploy stage
+      - name: Upload build.env and dist folder output as artifact to deploy stage
         uses: actions/upload-artifact@v3
         with:
           name: build_output_1
@@ -101,23 +101,23 @@ jobs:
             dist-employee-data.zip
             build.env 
 
-      - name: jfrog upload
-        uses: jfrog/setup-jfrog-cli@v2
-      - run: |
-          # sudo mkdir /.jfrog
-          # sudo cp ./jfrog_keys/jfrog-cli.conf /.jfrog/jfrog-cli.conf
-          jf --version
-          jf rt ping --url=https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
-          cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
-          source $VARIABLE_FILE
-          cd target
-          ls -al
-          jf rt u "(*).zip" --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
-        env: 
-          VARIABLE_FILE: build.env
-          JF_USER: "ranaamiya70@gmail.com"
-          JF_PASSWORD: "amiya1234"
-          JF_URL: "https://devopsamiya.jfrog.io/"
+      # - name: jfrog upload
+      #   uses: jfrog/setup-jfrog-cli@v2
+      # - run: |
+      #     # sudo mkdir /.jfrog
+      #     # sudo cp ./jfrog_keys/jfrog-cli.conf /.jfrog/jfrog-cli.conf
+      #     jf --version
+      #     jf rt ping --url=https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+      #     cp variable_file_init/${VARIABLE_FILE} ../${VARIABLE_FILE}
+      #     source $VARIABLE_FILE
+      #     cd target
+      #     ls -al
+      #     jf rt u "(*).zip" --url https://devopsamiya.jfrog.io/artifactory/api/npm/snapshots-npm/
+      #   env: 
+      #     VARIABLE_FILE: build.env
+      #     JF_USER: "ranaamiya70@gmail.com"
+      #     JF_PASSWORD: "amiya1234"
+      #     JF_URL: "https://devopsamiya.jfrog.io/"
 
 
   # test: 
@@ -135,7 +135,7 @@ jobs:
     - name: Download artifact build_output from build stage
       uses: actions/download-artifact@v1
       with:
-        name: build_output
+        name: build_output_1
 
     - name: Terraform deployement
       uses: hashicorp/terraform-github-actions/init@v0.4.0
