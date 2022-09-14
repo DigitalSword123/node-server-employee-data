@@ -149,7 +149,6 @@ jobs:
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
         VARIABLE_FILE: build.env
 
-
   # deploy_qa:
   #   needs: dev
   # deploy_uat:
