@@ -102,4 +102,6 @@ else
     echo "------------printing project folder files ------------------"
     cd ..
     ls -al
+
+    zip -r dist-${MODULE_NAME}.zip  dist-${MODULE_NAME}
 fi

@@ -98,7 +98,7 @@ jobs:
         with:
           name: build_output
           path: |
-            dist-employee-data/*
+            *.zip
             build.env 
 
       - name: jfrog upload
@@ -139,15 +139,17 @@ jobs:
 
     - name: Terraform deployement
       uses: hashicorp/terraform-github-actions/init@v0.4.0
+      working-directory: .
     - run: |
         terraform -v
         bash ./github-actions-script/deploy_script.sh
       env:
         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TF_ACTION_WORKING_DIR: '../../terraform_project'
+        # TF_ACTION_WORKING_DIR: 'terraform_project'
         AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_KEY }}
         VARIABLE_FILE: build.env
+        DEPLOY_ENVIRONMENT: dev
 
   # deploy_qa:
   #   needs: dev

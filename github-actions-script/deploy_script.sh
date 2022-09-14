@@ -1,14 +1,16 @@
 
 ls -al
-cp ./build_output/${VARIABLE_FILE} ../${VARIABLE_FILE}
-cd ..
+cp build_output/${VARIABLE_FILE} ./${VARIABLE_FILE}
+
+cp build_output/dist-${MODULE_NAME}.zip .
+
+unzip dist-${MODULE_NAME}.zip
 
 source ${VARIABLE_FILE}
 echo "******************reading VARIABLE_FILE start*****************"
 cat ${VARIABLE_FILE}
 echo "******************reading VARIABLE_FILE end*****************"
 
-cp ./build_output/dist-${MODULE_NAME}/** ../dist-${MODULE_NAME}
 echo "--------------------Switching to dist directory-------------------"
 cd dist-${MODULE_NAME}
 echo "printing all files in target directory"
@@ -64,6 +66,8 @@ pwd
 # echo "$(pwd)"
 
 # ls -al
+
+cd terraform_project
 
 export VAR_FILE=vars/$DEPLOY_ENVIRONMENT-ap-south-1.tfvars
 
