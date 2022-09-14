@@ -31,7 +31,8 @@ echo node version=$(node --version)
 echo npm version=$(npm --version)
 npm install --save-dev
 
-
+echo "branch name : "
+echo $GITHUB_REF_NAME
 if [github.ref == 'refs/heads/main']
 then
     mkdir ~/.ssh && ls -alrt ~/.ssh
